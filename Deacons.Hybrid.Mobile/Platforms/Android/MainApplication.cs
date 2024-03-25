@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace Deacons.Hybrid.Web
+namespace Deacons.Hybrid.Mobile
 {
     [Application]
     public class MainApplication : MauiApplication

@@ -2,7 +2,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using System;
 
-namespace Deacons.Hybrid.Web
+namespace Deacons.Hybrid.Mobile
 {
     internal class Program : MauiApplication
     {

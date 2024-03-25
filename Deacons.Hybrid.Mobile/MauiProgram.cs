@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Deacons.Hybrid.Web
+namespace Deacons.Hybrid.Mobile
 {
     public static class MauiProgram
     {

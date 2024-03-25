@@ -1,4 +1,4 @@
-﻿namespace Deacons.Hybrid.Web
+﻿namespace Deacons.Hybrid.Mobile
 {
     public partial class MainPage : ContentPage
     {

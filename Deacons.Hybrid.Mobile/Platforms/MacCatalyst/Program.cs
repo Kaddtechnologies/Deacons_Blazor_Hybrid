@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace Deacons.Hybrid.Web
+namespace Deacons.Hybrid.Mobile
 {
     public class Program
     {

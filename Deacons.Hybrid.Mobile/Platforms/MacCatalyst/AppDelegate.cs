@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Deacons.Hybrid.Web
+namespace Deacons.Hybrid.Mobile
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

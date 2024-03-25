@@ -1,8 +1,8 @@
 ﻿<maui:MauiWinUIApplication
-    x:Class="Deacons.Hybrid.Web.WinUI.App"
+    x:Class="Deacons.Hybrid.Mobile.WinUI.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maui="using:Microsoft.Maui"
-    xmlns:local="using:Deacons.Hybrid.Web.WinUI">
+    xmlns:local="using:Deacons.Hybrid.Mobile.WinUI">
 
 </maui:MauiWinUIApplication>

@@ -112,11 +112,15 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     </ItemGroup>
-  <ItemGroup Condition=" '$(Configuration)' != 'GooglePlay' ">
+<ItemGroup Condition=" '$(Configuration)' != 'GooglePlay' ">
+    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="3.3.0" />
+</ItemGroup>
+<ItemGroup Condition=" '$(Configuration)' == 'GooglePlay' ">
+    <PackageReference Include="Microsoft.AppCenter.DistributePlay" Version="3.3.0" />
+</ItemGroup>  <ItemGroup Condition=" '$(Configuration)' != 'GooglePlay' ">
     <PackageReference Include="Microsoft.AppCenter.Distribute" Version="3.3.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'GooglePlay' ">
     <PackageReference Include="Microsoft.AppCenter.DistributePlay" Version="3.3.0" />
-  </ItemGroup>
   
 </Project>
