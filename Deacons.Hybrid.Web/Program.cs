@@ -1,4 +1,5 @@
 using Deacons.Hybrid.Web.Components;
+using MudBlazor.Services;
 
 namespace Deacons.Hybrid.Web
 {
@@ -11,6 +12,7 @@ namespace Deacons.Hybrid.Web
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+            builder.Services.AddMudServices();
 
             var app = builder.Build();
 
