@@ -1,6 +1,6 @@
 ﻿using FirebaseAdmin.Auth;
 using FirebaseAdmin;
-using User = Deacons.Hybrid.Shared.DBModels.User;
+using User = Deacons.Hybrid.Shared.Models.User;
 
 namespace Deacons.Hybrid.Shared.Firebase
 {

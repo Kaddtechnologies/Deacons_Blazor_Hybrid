@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Deacons.Hybrid.Shared.DBModels;
+namespace Deacons.Hybrid.Shared.Models;
 
 public class ErrorDetails
 {

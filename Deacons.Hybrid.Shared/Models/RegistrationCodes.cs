@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Deacons.Hybrid.Shared.DBModels
+namespace Deacons.Hybrid.Shared.Models
 {
     [Table("DeaconCodes")]
     public class RegistrationCodes

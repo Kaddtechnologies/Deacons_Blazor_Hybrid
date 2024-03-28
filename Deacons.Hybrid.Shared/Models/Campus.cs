@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Deacons.Hybrid.Shared.DBModels
+namespace Deacons.Hybrid.Shared.Models
 {
     [Table("Campus")]
     public class Campus

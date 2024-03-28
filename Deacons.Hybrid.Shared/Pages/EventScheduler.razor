@@ -1,7 +1,565 @@
-﻿<h3>EventScheduler</h3>
+﻿@page "/events"
+@using Deacons.Hybrid.Shared.Utility
+@using Microsoft.Extensions.Configuration
+@using Microsoft.JSInterop
+@using Newtonsoft.Json;
+@using System.Text.Json;
+@using System.Collections.ObjectModel;
+@using System.ComponentModel.DataAnnotations;
+@using System.IO
+@using System.Collections;
+@using Syncfusion.Blazor.Notifications
+@inject IConfiguration configuration
+@inject HttpClient Http;
+@inject IEmailService EmailService;
+@inject IJSRuntime JSRuntime
+
+@if (Show)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: @(Show ? "block" : "none")">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cancel Event</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to cancel Event? </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick="@CancelEvent">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="@(()=> this.Show=false)">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 
+<div class="@divClass">
+
+    <div class="col-lg-12 control-section">
+        <SfSchedule TValue="EventsDataModel" @ref="scheduleRef" Height="550px" AllowDragAndDrop="false" @bind-SelectedDate="@CurrentDate">
+            <ScheduleEvents TValue="EventsDataModel" OnEventClick="OnEventClick" OnCellClick="OnCellClick" EventRendered="OnEventRendered"></ScheduleEvents>
+            <ScheduleEventSettings DataSource="@dataSource">
+                <ScheduleField Id="calendarId">
+                    <FieldSubject Name="eventName"></FieldSubject>
+                    <FieldLocation Name="eventAddress"></FieldLocation>
+                    <FieldDescription Name="notes"></FieldDescription>
+                    <FieldIsAllDay Name="isAllDay"></FieldIsAllDay>
+                    <FieldStartTime Name="startDate"></FieldStartTime>
+                    <FieldEndTime Name="endDate"></FieldEndTime>
+                    <FieldStartTimezone Name="startTimeZone"></FieldStartTimezone>
+                    <FieldEndTimezone Name="endTimeZone"></FieldEndTimezone>
+                </ScheduleField>
+            </ScheduleEventSettings>
+
+            <ScheduleViews>
+                <ScheduleView Option="View.Day"></ScheduleView>
+                <ScheduleView Option="View.Week"></ScheduleView>
+                @*<ScheduleView Option="View.WorkWeek"></ScheduleView>*@
+                <ScheduleView Option="View.Month"></ScheduleView>
+                <ScheduleView Option="View.Agenda"></ScheduleView>
+            </ScheduleViews>
+        </SfSchedule>
+    </div>
+</div>
+@if (showSidebar)
+{
+    <div class="right-sidebar edit-margin" style="height=550px;">
+        <div class="border border-1">
+            <div class="mt-3">
+                <h4 class=" d-flex justify-content-center" style="text-decoration:underline">Create New Event</h4>
+            </div>
+            <div class="col-lg-12 bd-example">
+                <div class="form-row max-width row-margin overflow-hidden">
+                    <EditForm Model="selectedData" OnValidSubmit="@OnSave" class="max-width">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div class="form-group col-md-12">
+                            <SfTextBox @bind-Value="@(selectedData.eventName)" Placeholder="Event Title" FloatLabelType="FloatLabelType.Always" Width="100%" CssClass="lbl-top"></SfTextBox>
+                            <ValidationMessage For="@(() => selectedData.eventName)"></ValidationMessage>
+                        </div>
+                        <div class="form-group col-md-12 mt-3">
+                            <SfTextBox Multiline=false @bind-Value="@(selectedData.zoomUrl)" Placeholder="Zoom or meeting details" FloatLabelType="FloatLabelType.Always" Width="100%"></SfTextBox>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="form-group col-md-5">
+                                <SfDateTimePicker @bind-Value="@(selectedData.startDate)" Placeholder="Event Date" FloatLabelType="FloatLabelType.Always" Width="100%"></SfDateTimePicker>
+                            </div>
+                            <div class="form-group col-md-6">
+
+                                <SfDropDownList TValue="string" TItem="TimeZoneInfo" DataSource="@timeZones" Placeholder="Start Time Zone"
+                                                AllowFiltering="true" FilterType="FilterType.Contains" CssClass="m-top" @bind-Value="@starttimeZoneDefaultVal">
+                                    <DropDownListFieldSettings Text="DisplayName" Value="Id" />
+                                </SfDropDownList>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <SfDateTimePicker @bind-Value="@(selectedData.endDate)" Placeholder="End date" FloatLabelType="FloatLabelType.Always" Width="100%"></SfDateTimePicker>
+                            </div>
+                            <div class="form-group col-md-6">
+
+                                <SfDropDownList TValue="string" TItem="TimeZoneInfo" DataSource="@timeZones" Placeholder="End Time Zone"
+                                                AllowFiltering="true" FilterType="FilterType.Contains" CssClass="m-top" @bind-Value="@endtimeZoneDefaultVal">
+                                    <DropDownListFieldSettings Text="DisplayName" Value="Id" />
+                                </SfDropDownList>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+
+                            <SfSwitch @bind-Checked="@(selectedData.isAllDay)"></SfSwitch>
+                            <label for="checked" style="padding: 10px 10px 0px 0">All Day</label>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <SfTextBox @bind-Value="@(selectedData.eventAddress)" Placeholder="Event Address" FloatLabelType="FloatLabelType.Always" Width="100%" CssClass="lbl-top"></SfTextBox>
+                            <ValidationMessage For="@(() => selectedData.eventAddress)"></ValidationMessage>
+                        </div>
+                        <div class="form-group col-md-12 mt-3">
+                            <SfMultiSelect Placeholder="Add Users or Groups" @bind-Value="@selectedEmail" DataSource="@GroupEmails">
+                            </SfMultiSelect>
+
+                        </div>
+                        <div class="form-group col-md-12 mt-3">
+                            <SfTextBox Multiline=true @bind-Value="@(selectedData.notes)" Placeholder="Meeting Details (aka Notes)" FloatLabelType="FloatLabelType.Always" Width="100%"></SfTextBox>
+                        </div>
+
+                        <div class="pull-right mt-2" style="min-height: 45px">
+                            <div style="float:left; padding: 2px 6px 0px 0px;">
+                                <SfButton IsPrimary="false" Type="button" @onclick="@OnCancel">
+                                    Cancel
+
+                                </SfButton>
+                            </div>
+                            <div style="float:left; padding: 2px 6px 0px 0px;"><SfButton IsPrimary="true">Save</SfButton></div>
+
+                        </div>
+
+                    </EditForm>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+@if (viewEvent)
+{
+    <div class="right-sidebar">
+        <div class="border border-1 top-margin">
+            <div class="col-lg-12 bd-example">
+                <div class="form-row row-margin">
+                    <div class="form-group col-md-12">
+                        <label id="event-name" class="lbl-top" style="font-size:x-large;">@(selectedData.eventName)</label>
+
+                    </div>
+                    <div class="row max-width">
+                        <div class="form-group col-md-1">
+                            <label><i class="fa fa-video-camera" aria-hidden="true"></i></label>
+                        </div>
+                        <div class="form-group  col-md-9">
+                            <SfTextBox Readonly="true" id="form-control" @bind-Value="@selectedData.zoomUrl" Placeholder="" FloatLabelType="FloatLabelType.Always" Width="100%" CssClass="row-top-margin"></SfTextBox>
+                        </div>
+                        <div class="form-group col-md-2">
+
+                            <button type="button" id="btn-copy" class="btn btn-primary" @onclick="CopyTextToClipboard">Copy</button>@*<i class="fa fa-clipboard" aria-hidden="true" tooltip="copy"></i>*@
+                        </div>
+                    </div>
+                    <div class="row max-width">
+                        <div class="form-group col-md-5 col-time">
+                            <label style="font-size:x-large;">@(selectedData.startDate.ToString("hh:mm tt"))</label>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label style="font-size:x-large;"><i class="fa fa-arrow-right"></i> </label>
+                        </div>
+                        <div class="form-group col-md-5 col-time">
+                            <label style="font-size:x-large;">@(selectedData.endDate.ToString("hh:mm tt"))</label>
+                        </div>
+                    </div>
+                    <div class="row max-width">
+                        <div class="form-group col-md-6">
+                            <label>@(selectedData.startDate.ToString("dddd, dd MMMM, yyyy"))</label>
+                        </div>
+
+                        <div class="form-group col-md-6" style="margin-top:0px !important">
+
+                            <SfDropDownList Readonly="true" TValue="string" TItem="TimeZoneInfo" DataSource="@timeZones" Placeholder=""
+                                            AllowFiltering="true" FilterType="FilterType.Contains" CssClass="e-top" @bind-Value="@starttimeZoneDefaultVal">
+                                <DropDownListFieldSettings Text="DisplayName" Value="Id" />
+                            </SfDropDownList>
+
+                        </div>
+                    </div>
+                    <div class="row max-width">
+                        <div class="form-group col-md-6">
+                            <label>@(selectedData.endDate.ToString("dddd, dd MMMM, yyyy"))</label>
+                        </div>
+                        <div class="form-group col-md-6" style="margin-top:0px !important">
+                            <SfDropDownList Readonly="true" TValue="string" TItem="TimeZoneInfo" DataSource="@timeZones" Placeholder=""
+                                            AllowFiltering="true" FilterType="FilterType.Contains" CssClass="e-top" @bind-Value="@endtimeZoneDefaultVal">
+                                <DropDownListFieldSettings Text="DisplayName" Value="Id" />
+                            </SfDropDownList>
+
+                        </div>
+                    </div>
+                    <div class="row max-width">
+                    <div class="form-group col-md-12">
+                        <SfMultiSelect Readonly="true" Placeholder="users or Groups" @bind-Value="@selectedEmail" DataSource="@GroupEmails">
+                        </SfMultiSelect>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <SfTextBox Readonly="true" Multiline=true @bind-Value="@(selectedData.notes)" Placeholder="Meeting Details (aka Notes)" FloatLabelType="FloatLabelType.Always" Width="100%"></SfTextBox>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @onclick="@OnEditClick">Edit</button>
+
+            </div>
+        </div>
+    </div>
+}
+
+<div class="col-lg-4 control-section">
+    <SfToast @ref="toastObj" ID="toast_type">
+        <ToastPosition X="@ToastPosition"></ToastPosition>
+    </SfToast>
+</div>
 
 @code {
+    View CurrentView = View.Month;
+    #region Declare Variables
+    string divClass = "scheduler-container container-width";
+    public bool isChecked = false;
+    private bool showSidebar = false;
+    private bool viewEvent = false;
+    private EventsDataModel selectedData;
+    SfSchedule<EventsDataModel> scheduleRef;
+    DateTime CurrentDate = DateTime.Now.Date;
+    List<EventsDataModel> dataSource = new List<EventsDataModel>();
+    public string starttimeZoneDefaultVal = "Central Standard Time";
+    public string endtimeZoneDefaultVal = "Central Standard Time";
+    public bool Show { get; set; } = false;
+    private ReadOnlyCollection<TimeZoneInfo> timeZones { get; set; }
+    private UsersOrGroups usersOrGroups;
+    private List<string> selectedEmail { get; set; } = new List<string>();
+    private List<string> GroupEmails { get; set; } = new List<string>();
+    private List<Group> groupsList { get; set; } = new List<Group>();
+    SfToast toastObj;
+    private string ToastPosition = "Right";
 
+    #endregion
+
+    #region Dropdown list
+
+    public class TimeZoneInfoItem
+    {
+        public string Id { get; set; }
+        public string DisplayName { get; set; }
+
+    }
+    #endregion
+
+    #region Functions
+
+    protected override void OnInitialized()
+    {
+        timeZones = TimeZoneInfo.GetSystemTimeZones();
+        //read path from config and users/groups data
+        string rootpath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "wwwroot");
+        string filepath = configuration.GetSection("UserGroups").GetSection("FilePath").Value;
+        string jsondata = File.ReadAllText(rootpath + "//" + filepath);
+        usersOrGroups = JsonConvert.DeserializeObject<UsersOrGroups>(jsondata);
+        GetEmailsForSelectedGroup();
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await GetAllEvents();
+
+        }
+        catch (Newtonsoft.Json.JsonException) // Invalid JSON
+        {
+            Console.WriteLine("Invalid JSON.");
+        }
+    }
+    private async Task GetAllEvents()
+    {
+        var eventsJson = await Http.GetStringAsync("api/CalendarEvents/GetAllEvents");
+        dataSource = System.Text.Json.JsonSerializer.Deserialize<List<EventsDataModel>>(eventsJson);
+    }
+    public void OnEventRendered(EventRenderedArgs<EventsDataModel> args)
+    {
+        Dictionary<string, object> attributes = new Dictionary<string, object>();
+        string backGround = "background: " + args.Data.backgroundColor;
+        attributes.Add("style", backGround);
+        args.Attributes = attributes;
+    }
+    private void GetEmailsForSelectedGroup()
+    {
+        List<Email> lst = new List<Email>();
+        //declar it globally grouplist
+        groupsList = usersOrGroups.Groups.Where(x => x.GroupName != string.Empty).ToList();
+        foreach (var item in groupsList)
+        {
+            Email mail = new Email();
+            mail.emailaddress = item.GroupName;
+            lst.Add(mail);
+        };
+        var emaillist = usersOrGroups.Groups.Where(x => x.GroupName == string.Empty).FirstOrDefault().Emails;
+        var emails = lst.ToList().Union(emaillist.ToList());
+
+        foreach (var item in emails)
+        {
+            GroupEmails.Add(item.emailaddress);
+        };
+    }
+    private async Task OnSave()
+    {
+        //string startTimeString = selectedData.startDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+        // string endTimeString = selectedData.endDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+        try
+        {
+            EventsDataModel data = new EventsDataModel()
+                {
+                    startDate = selectedData.startDate,
+                    endDate = selectedData.endDate,
+                    startTimeZone = starttimeZoneDefaultVal,
+                    endTimeZone = endtimeZoneDefaultVal,
+                    eventName = selectedData.eventName,
+                    eventAddress = selectedData.eventAddress,
+                    zoomUrl = selectedData.zoomUrl,
+                    notes = selectedData.notes,
+                    email = getEmailsList(selectedEmail),
+                    backgroundColor = selectedData.backgroundColor
+                };
+            if (string.IsNullOrEmpty(selectedData.calendarId))
+            {
+                if (string.IsNullOrEmpty(selectedData.eventName))
+                {
+                    selectedData.eventName = "";
+                }
+                if (selectedData.startDate > selectedData.endDate)
+                {
+                    await JSRuntime.InvokeAsync<object>("Alert", "Start date should be less than or equal to end date");
+                }
+                else
+                {
+                    data.calendarId = Guid.NewGuid().ToString();
+                    data.userId = "A6D3028D-A025-493F-A75A-8EE5E88FF52B";// Guid.NewGuid().ToString();
+                                                                         //await scheduleRef.AddEventAsync(data);
+                    var response = await PostEventDataAsync(data);
+                    await SendEmail(data);
+                    CloseSidebar();
+                    ToasterManger.UpdateSuccessContent(ToasterManger.insertContent);
+                    await this.toastObj.ShowAsync(ToasterManger.Success);
+                    await GetAllEvents();
+
+
+                }
+            }
+            else
+            {
+                data.calendarId = selectedData.calendarId;
+                data.userId = selectedData.userId;
+                data.backgroundColor = selectedData.backgroundColor;
+                data.isAllDay = selectedData.isAllDay;
+                data.organizer = selectedData.organizer;
+                await scheduleRef.SaveEventAsync(data);
+                var response = await UpdateEventDataAsync(data);
+                await SendEmail(data);
+                CloseSidebar();
+                ToasterManger.UpdateSuccessContent(ToasterManger.updateContent);
+                await this.toastObj.ShowAsync(ToasterManger.Success);
+                await GetAllEvents();
+
+
+
+            }
+        }
+        catch (Exception ex)
+        {
+            ToasterManger.UpdateErrorContent(ex.Message);
+            await this.toastObj.ShowAsync(ToasterManger.Error);
+
+
+        }
+    }
+    private async Task SendEmail(EventsDataModel eventsDataModel)
+    {
+        if (!string.IsNullOrEmpty(eventsDataModel.email))
+        {
+            EmailModel emailModel = new EmailModel();
+            List<string> emails = eventsDataModel.email.Split(',').ToList();// eventsDataModel.email.Split(',').Distinct().ToList();
+            emailModel.To = emails;
+            emailModel.Subject = eventsDataModel.eventName;
+            emailModel.Body = eventsDataModel.notes;
+            await EmailService.SendEmailAsync(emailModel, groupsList);
+        }
+
+
+
+    }
+    public async Task<EventsDataModel> PostEventDataAsync(EventsDataModel events)
+    {
+        var json = JsonConvert.SerializeObject(events);
+        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+        var response = await Http.PostAsync("api/CalendarEvents/AddNewEvent", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<EventsDataModel>(responseContent);
+        }
+        else
+        {
+            throw new Exception($"Failed to post event. Status code: {response.StatusCode}");
+        }
+    }
+    public async Task<EventsDataModel> UpdateEventDataAsync(EventsDataModel events)
+    {
+        var json = JsonConvert.SerializeObject(events);
+        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+        var response = await Http.PostAsync("api/CalendarEvents/UpdateEvent", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseContent = await response.Content.ReadAsStringAsync();
+            try
+            {
+                return new EventsDataModel { notes = responseContent };
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                throw new Exception($"Failed to deserialize response content: {ex.Message}", ex);
+            }
+        }
+        else
+        {
+            throw new Exception($"Failed to update event. Status code: {response.StatusCode}");
+        }
+    }
+    public async Task<EventsDataModel> DeleteEventDataAsync(EventsDataModel events)
+    {
+        var json = JsonConvert.SerializeObject(events);
+        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+        var response = await Http.PostAsync("api/CalendarEvents/DeleteEvent", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseContent = await response.Content.ReadAsStringAsync();
+            try
+            {
+                return new EventsDataModel { notes = responseContent };
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                throw new Exception($"Failed to deserialize response content: {ex.Message}", ex);
+            }
+        }
+        else
+        {
+            throw new Exception($"Failed to delete event. Status code: {response.StatusCode}");
+        }
+    }
+    public string getEmailsList(List<string> multivalues)
+    {
+        return string.Join(",", multivalues);
+    }
+    private async Task CopyTextToClipboard()
+    {
+        await JSRuntime.InvokeVoidAsync("copyClipboard");
+    }
+    #endregion
+
+    #region Click events
+    private void OnCancel()
+    {
+        this.Show = true;
+    }
+    private async Task CancelEvent()
+    {
+        if (!string.IsNullOrEmpty(selectedData.calendarId))
+        {
+            var response = await DeleteEventDataAsync(selectedData);
+            await scheduleRef.DeleteEventAsync(selectedData);
+            this.Show = false;
+            if (!Show)
+            {
+                CloseSidebar();
+
+                selectedData = new EventsDataModel() { startDate = new DateTime(DateTime.Today.Year, 1, 10, 9, 0, 0), endDate = new DateTime(DateTime.Today.Year, 1, 10, 10, 0, 0), eventName = "" };
+            }
+        }
+        else
+        {
+            this.Show = false;
+            if (!Show)
+            {
+                CloseSidebar();
+
+                selectedData = new EventsDataModel() { startDate = new DateTime(DateTime.Today.Year, 1, 10, 9, 0, 0), endDate = new DateTime(DateTime.Today.Year, 1, 10, 10, 0, 0), eventName = "" };
+            }
+        }
+    }
+    private void OnEventClick(EventClickArgs<EventsDataModel> args)
+    {
+        args.Cancel = true;
+        selectedData = args.Event;
+        selectedEmail = selectedData.email != string.Empty ? selectedData.email.Split(',').ToList<string>() : new List<string>();
+        showSidebar = false;
+        divClass = "scheduler-container";
+        viewEvent = true;
+    }
+
+    private void OnEditClick()
+    {
+        viewEvent = false;
+        showSidebar = true;
+
+
+    }
+
+    //private void OnEventDoubleClick(EventClickArgs<EventsDataModel> args)
+    //{
+    //    showSidebar = true;
+    //    args.Cancel = true;
+    //}
+
+    private void OnCellClick(CellClickEventArgs args)
+    {
+        showSidebar = true;
+        divClass = "scheduler-container";
+        viewEvent = false;
+        args.Cancel = true;
+        selectedData = new EventsDataModel();
+        selectedData.startDate = args.StartTime;
+        selectedData.endDate = args.EndTime;
+        selectedData.eventName = "";
+        selectedData.eventAddress = null;
+        selectedEmail = new List<string>();
+        selectedData.notes = string.Empty;
+
+    }
+
+    //private void OnCellDoubleClick(CellClickEventArgs args)
+    //{
+    //    args.Cancel = true;
+    //}
+
+    private void CloseSidebar()
+    {
+        showSidebar = false;
+        divClass = "scheduler-container container-width";
+    }
+
+    #endregion
 }

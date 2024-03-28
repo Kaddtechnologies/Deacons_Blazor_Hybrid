@@ -1,0 +1,56 @@
+{
+  "Groups": [
+    {
+      "GroupName": "davidGroup",
+      "Emails": [
+        {
+         "emailaddress": "davidml3@yahoo.com"
+      },
+      {
+         "emailaddress": "davidrjones3@gmail.com"
+      },
+      {
+         "emailaddress": "davidrjonesmusic03@gmail.com"
+      },
+      {
+         "emailaddress": "Davidml020581@gmail.com"
+      },
+      {
+         "emailaddress": "davidml02051981@gmail.com"
+      }
+      ]
+    },
+    {
+      "GroupName": "JonesGroup",
+      "Emails": [
+       {
+         "emailaddress": "davidml3@yahoo.com"
+      },
+      {
+         "emailaddress": "davidrjones3@gmail.com"
+      },   
+      ]
+    },
+
+    {
+      "GroupName": "",
+      "Emails": [
+       {
+         "emailaddress": "davidml3@yahoo.com"
+      },
+      {
+         "emailaddress": "davidrjones3@gmail.com"
+      },
+      {
+         "emailaddress": "davidrjonesmusic03@gmail.com"
+      },
+      {
+         "emailaddress": "Davidml020581@gmail.com"
+      },
+      {
+         "emailaddress": "davidml02051981@gmail.com"
+      }
+      ]
+    }
+  ]
+}

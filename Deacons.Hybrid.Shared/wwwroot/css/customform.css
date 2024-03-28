@@ -1,0 +1,235 @@
+.horizontalform-custom .tab-content,
+.horizontalform-custom .nav-tabs{
+    -webkit-box-shadow: 0px 0px 70px 0px rgba(36,128,151,0.28);
+    -moz-box-shadow: 0px 0px 70px 0px rgba(36,128,151,0.28);
+    box-shadow: 0px 0px 70px 0px rgba(36,128,151,0.28);
+    font-family: "Roboto", sans-serif;
+}
+.horizontalform-custom .nav-tabs{
+    margin-bottom: 40px;
+    padding: 40px 20px;
+    border:0;
+    align-items: center;
+    justify-content: center;
+    gap:30px;
+}
+.horizontalform-custom .nav-tabs .nav-link{
+    background-color: #f1f3f5;
+    border-radius: 30px;
+    color: #6d7d90;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 700;
+    border:0;
+    padding: 10px 30px;
+}
+.horizontalform-custom h1 {
+    font-size: 28px;
+    line-height: 30px;
+    text-align: center;
+    color: #248097;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 40px;
+}
+.horizontalform-custom .nav-tabs .nav-item.show .nav-link, 
+.horizontalform-custom .nav-tabs .nav-link.active{
+    background-color: #248097;
+    color: #fff;
+}
+.horizontalform-custom .tab-content{
+    padding-top: 10px;
+    margin-bottom: 70px;
+    position: relative;
+}
+.horizontalform-custom .controls {
+    margin-left: 0;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.horizontalform-custom .control-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+.horizontalform-custom .controls .form-control{
+    background-color: #f0f2f4;
+    height: 45px;
+    border-radius: 5px;
+    border:0;
+    box-shadow: none;
+    padding: 0 20px;
+    font-size: 15px;
+    color: #a1abb8;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    width: 100%;
+    margin-bottom: 0;
+}
+.horizontalform-custom .controls .form-control::placeholder{
+    color: #a1abb8;
+}
+.horizontalform-custom .controls textarea.form-control{
+    height: 235px;
+    padding: 20px;
+}
+.horizontalform-custom .controls select.form-control{
+    background: #f0f2f4 url('../images/select-arrow.png') 94% 19px no-repeat;
+}
+.horizontalform-custom .controls .form-control.birth-date-input{
+    background: #f0f2f4 url('../images/calener-icon.png') 95% 13px no-repeat;
+    background-size: 20px;
+}
+.horizontalform-custom .control-group h4{
+    font-size: 18px;
+    color: #248097;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+.form-row{
+    flex-wrap: nowrap !important;
+    gap:50px;
+    width: calc(100% - 50px);
+    margin: 0;
+    border-top: 1px #f1f3f5 solid;
+    padding-top: 40px;
+}
+.horizontalform-custom .alert-warning{
+background-color: #95cad8;
+border-color: #95cad8;
+font-weight: 300;
+font-size: 14px;
+color: #fff;
+}
+/* The container */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-weight: 400;
+    color: #a1abb8;
+    line-height: 20px;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    background-color: #f0f2f4;
+    border-radius: 5px;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .checkbox-container input:checked ~ .checkmark {
+    background-color: #248097;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .checkbox-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .state label{
+    font-weight: 400;
+    color: #a1abb8;
+    font-size: 15px;
+  }
+  .color-cornerstone-blue{
+    font-size: 15px;
+    color: #248097;
+    font-weight: 400;
+    line-height: 22px;
+    background: url('../images/note-icon.png') left 4px no-repeat;
+    padding-left: 30px;
+  }
+  .horizontalform-custom .btn{
+    background-color: #248097!important;
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: 0;
+    padding: 10px 30px;
+    border-radius: 30px;
+  }
+  .horizontalform-custom .btn:hover{
+    background-color: #7dc1d4!important;
+    border-color: #7dc1d4!important;
+    color: #fff;
+  }
+  .horizontalform-custom .disable-cl:after{
+    content: "";
+    position: absolute;
+    background-color: rgba(255,255,255,0.7);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: not-allowed;
+  }
+  @media screen and (max-width: 994px) {
+    .form-row{
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .form-row{
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+    }
+    .horizontalform-custom .control-group {
+        gap: 0;
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+  }

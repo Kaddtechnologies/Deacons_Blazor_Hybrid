@@ -117,5 +117,8 @@
   <ItemGroup Condition=" '$(Configuration)' == 'GooglePlay' ">
     <PackageReference Include="Microsoft.AppCenter.DistributePlay" Version="3.3.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Deacons.Hybrid.Shared\Deacons.Hybrid.Shared.csproj" />
+  </ItemGroup>
   
 </Project>

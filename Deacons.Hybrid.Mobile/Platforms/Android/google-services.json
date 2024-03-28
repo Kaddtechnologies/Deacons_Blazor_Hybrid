@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "333755654067",
+    "project_id": "deaconsapp-f9b32",
+    "storage_bucket": "deaconsapp-f9b32.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333755654067:android:f29f5af8c98d2a3f1975c6",
+        "android_client_info": {
+          "package_name": "com.deacons.admin.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333755654067-vf5ca539imrfv4je9jltjotflcefsj3b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.deacons.admin.mobile",
+            "certificate_hash": "755955107e5365011dcd4f01e9096d40ac3fe9cd"
+          }
+        },
+        {
+          "client_id": "333755654067-s1vjcjtefhf9ggblr7b81gfhemhebobm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQko34MiEHUrscfiZ2poCItiOi4iA7J3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "333755654067-nhd8opmf4t9biig3ro4id2trfbf9u9s3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "333755654067-0jbai8f55gap8ofqag29b18hqt818io0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "DeaconsAppIOS"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333755654067:android:76142bcd72f1f5a11975c6",
+        "android_client_info": {
+          "package_name": "com.deacons.training.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333755654067-s1vjcjtefhf9ggblr7b81gfhemhebobm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQko34MiEHUrscfiZ2poCItiOi4iA7J3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "333755654067-nhd8opmf4t9biig3ro4id2trfbf9u9s3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "333755654067-0jbai8f55gap8ofqag29b18hqt818io0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "DeaconsAppIOS"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
