@@ -1,0 +1,151 @@
+
+.container-width {
+    width: 100% !important;
+}
+
+.max-width {
+    width: initial !important;
+}
+
+.top-margin {
+    /*margin-top: 11% !important;*/
+    height: 57% !important;
+}
+
+.row-top-margin {
+    margin-top: 0% !important;
+}
+
+.edit-margin {
+    /*margin-top: 2.7% !important;*/
+    height: 57% !important;
+}
+
+.m-top {
+    margin-top: 1.3em !important;
+}
+
+.e-top {
+    margin-top: -3px !important;
+}
+
+.lbl-top {
+    margin-top: 10% !important;
+}
+
+.scheduler-container {
+    float: left;
+    width: 74%; /* Adjust based on your layout */
+}
+
+.right-sidebar {
+    float: right;
+    width: 25%; /* Adjust based on your layout */
+    height: 100vh; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+}
+
+.row-margin {
+    margin-left: 15px !important;
+}
+
+/* Media query for mobile devices */
+@media only screen and (max-width: 1940px) {
+    .scheduler-container, scheduler-container container-width, .right-sidebar {
+        width: 100% !important;
+        float: none !important;
+        margin-top: 2% !important;
+    }
+
+    .max-width, .row-margin {
+        width: 97% !important;
+    }
+}
+@media only screen and (min-width: 961px) and (max-width: 1940px)  {
+    .max-width {
+        width: 100% !important;
+    }
+
+    .col-md-11 {
+        width: 97% !important;
+    }
+    .col-md-5 {
+        width: 47% !important;
+    }
+    .col-time
+    {
+        width: 20% !important
+    }
+}
+@media only screen and (min-width: 769px) and (max-width: 960px) {
+    .max-width {
+        width: 100% !important;
+    }
+
+    .col-md-11 {
+        width: 96% !important;
+    }
+    .col-md-5 {
+        width: 46% !important;
+    }
+    .col-time {
+        width: 20% !important
+    }
+}
+@media only screen and (max-width: 400px)
+{
+    .max-width {
+        width: 96% !important;
+    }
+    .row-margin{
+        width:97% !important;
+    }
+}
+#toast_types button {
+    margin: 5px;
+    min-width: 160px;
+    max-width: 160px;
+}
+
+.toast-icons {
+    font-family: 'Toast_icons' !important;
+    speak: none;
+    font-size: 55px;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#toast_type .e-toast-icon.e-icons {
+    height: auto;
+    font-size: 30px;
+}
+
+.bootstrap5 #toast_type .e-toast-icon.e-icons,
+.bootstrap5-dark #toast_type .e-toast-icon.e-icons {
+    height: 25px;
+}
+
+.toast-icons.e-success::before {
+    content: "\e701";
+}
+
+.toast-icons.e-error::before {
+    content: "\e700";
+}
+
+.toast-icons.e-info::before {
+    content: "\e704";
+}
+
+.toast-icons.e-warning::before {
+    content: "\e703";
+}
+
+#toast_types {
+    text-align: center;
+}

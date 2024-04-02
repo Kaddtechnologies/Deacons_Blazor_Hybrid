@@ -3,7 +3,7 @@ using Deacons.Hybrid.Shared.Models;
 using Deacons.Hybrid.Shared.Services;
 using Deacons.Hybrid.Web.Components;
 using MudBlazor.Services;
-using Syncfusion.Blazor;
+
 
 namespace Deacons.Hybrid.Web
 {
@@ -11,10 +11,10 @@ namespace Deacons.Hybrid.Web
     {
         public static void Main(string[] args)
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzE3ODM2NUAzMjM1MmUzMDJlMzBVL05EeWJFaTdaS2ROQWVYdmJLQXpiMzNpUVVtazZKZ0tibVRTbko0c3JFPQ==");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzE5MTg5MUAzMjM1MmUzMDJlMzBuNDhHY2hldVRUbzU3Q0lGY1ZWN1gwb01XN2d4bmYzTFI5YkJ3c0NoWU9vPQ==");
 
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddSyncfusionBlazor();
+            
             builder.Services.AddSingleton(builder.Configuration.GetSection("MailSettings").Get<MailSetting>());
             builder.Services.AddScoped<IEmailService, EmailService>();
             // Add services to the container.

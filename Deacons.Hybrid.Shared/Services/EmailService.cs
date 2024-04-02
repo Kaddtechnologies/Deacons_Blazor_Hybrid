@@ -1,10 +1,10 @@
-﻿using Deacons.Hybrid.Shared.Data;
-using Deacons.Hybrid.Shared.Models;
+﻿using Deacons.Hybrid.Shared.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using Deacons.Hybrid.Shared.Interface;
 
 namespace Deacons.Hybrid.Shared.Services
 {

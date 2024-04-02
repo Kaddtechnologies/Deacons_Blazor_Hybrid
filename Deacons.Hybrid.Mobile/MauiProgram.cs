@@ -1,7 +1,14 @@
-﻿using Deacons.Hybrid.Shared.Models;
+using Syncfusion.Maui.Core.Hosting;
+using Deacons.Hybrid.Shared.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Blazor;
+using System.Reflection;
+using Deacons.Hybrid.Shared.Interface;
+using Deacons.Hybrid.Shared.Services.Interface;
+using Deacons.Hybrid.Shared.Services;
+using Azure.Storage.Blobs;
+using Microsoft.Maui.Controls;
 
 namespace Deacons.Hybrid.Mobile
 {
@@ -9,19 +16,39 @@ namespace Deacons.Hybrid.Mobile
     {
         public static MauiApp CreateMauiApp()
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzE3ODM2NUAzMjM1MmUzMDJlMzBVL05EeWJFaTdaS2ROQWVYdmJLQXpiMzNpUVVtazZKZ0tibVRTbko0c3JFPQ==");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzE5MTg5MUAzMjM1MmUzMDJlMzBuNDhHY2hldVRUbzU3Q0lGY1ZWN1gwb01XN2d4bmYzTFI5YkJ3c0NoWU9vPQ==");
 
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+            .ConfigureSyncfusionCore()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
-            builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddMauiBlazorWebView(); 
+            
             builder.Services.AddSyncfusionBlazor();
+            var assembly = Assembly.GetExecutingAssembly();
+            using var stream = assembly.GetManifestResourceStream("Deacons.Hybrid.Mobile.appsettings.json");
+
+            var config = new ConfigurationBuilder()
+                     .AddJsonStream(stream)
+                     .Build();
+
+            builder.Configuration.AddConfiguration(config);
+
+
+            builder.Configuration.AddConfiguration(config);
             builder.Services.AddSingleton(builder.Configuration.GetSection("MailSettings").Get<MailSetting>());
+            builder.Services.AddSingleton<IEmailService, EmailService>();
+            builder.Services.AddSingleton<IUsersService, UsersService>();
+            builder.Services.AddSingleton<IDapperContrib, DapperContrib>();
+            builder.Services.AddSingleton<ICalendarEventsService, CalendarEventsService>();
+            builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetValue<string>("AzureBlobStorageConnectionString")));
+
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://deaconapidev.myworkatcornerstone.com/") });
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
