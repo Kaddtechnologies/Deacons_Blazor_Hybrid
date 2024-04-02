@@ -6,6 +6,11 @@
     <Application.Resources>
         <ResourceDictionary>
 
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Theme resource dictionary -->
+                <syncTheme:SyncfusionThemeResourceDictionary VisualTheme="MaterialDark"/>
+                
+            </ResourceDictionary.MergedDictionaries>
             <Color x:Key="PageBackgroundColor">#512bdf</Color>
             <Color x:Key="PrimaryTextColor">White</Color>
 

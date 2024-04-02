@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+using Syncfusion.Maui.Core.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Deacons_Blazor_Hybrid
 {
@@ -9,6 +10,7 @@ namespace Deacons_Blazor_Hybrid
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+            .ConfigureSyncfusionCore()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

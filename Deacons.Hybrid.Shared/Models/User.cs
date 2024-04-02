@@ -22,7 +22,7 @@ namespace Deacons.Hybrid.Shared.Models
         public string? DeaconTitle { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? Initials {  get; set; }
+        public string? Initials { get; set; }
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
@@ -30,13 +30,18 @@ namespace Deacons.Hybrid.Shared.Models
         public string? State { get; set; }
         public string? Zip { get; set; }
         public string? AvatarUrl { get; set; }
-        public string? IsActive { get; set; }
+        public string? IsActive { get; set; } = "True";
         public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
-        public string DeaconPosition { get;  set; } = string.Empty;
+        public string DeaconPosition { get; set; } = string.Empty;
         public string TeamName { get; set; } = string.Empty;
         public string PostLocation { get; set; } = string.Empty;
         public string AboutMe { get; set; } = string.Empty;
         public DateTime? PostLocationDate { get; set; }
+        public bool? BiometricsEnabled { get; set; } = false;
+        public bool? NotificationsEnabled { get; set; } = false;
+        public bool? LocationEnabled { get; set; } = false;
+        public string? TopicCategory { get; set; } = string.Empty;
     }
 }

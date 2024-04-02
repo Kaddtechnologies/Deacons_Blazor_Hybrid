@@ -1,4 +1,6 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Deacons.Hybrid.Mobile.Components.Pages
+@inject Deacons.Hybrid.Shared.Interface.IUsersService users
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Deacons.Hybrid.Mobile</a>
     </div>
@@ -19,14 +21,30 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link"  @onclick="@GoTo">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span>User Details Mobile Form
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
+            <NavLink class="nav-link" href="userdetails">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> User Details
+            </NavLink>
+        </div>
+         <div class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="@GoToGrid">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> User Grid
             </NavLink>
         </div>
     </nav>
 </div>
+
+@code {
+    private void GoTo()
+    {
+        App.Current.MainPage.Navigation.PushModalAsync(new UserDetailsForm());
+    }
+    private void GoToGrid()
+    {
+        App.Current.MainPage.Navigation.PushModalAsync(new UsersGrid(users));
+    }
+}

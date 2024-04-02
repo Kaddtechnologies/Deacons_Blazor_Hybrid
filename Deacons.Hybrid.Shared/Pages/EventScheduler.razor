@@ -11,7 +11,7 @@
 @using Syncfusion.Blazor.Notifications
 @inject IConfiguration configuration
 @inject HttpClient Http;
-@inject IEmailService EmailService;
+@* @inject IEmailService EmailService; *@
 @inject IJSRuntime JSRuntime
 
 @if (Show)
@@ -269,9 +269,10 @@
         //read path from config and users/groups data
         string rootpath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "wwwroot");
         string filepath = configuration.GetSection("UserGroups").GetSection("FilePath").Value;
-        string jsondata = File.ReadAllText(rootpath + "//" + filepath);
-        usersOrGroups = JsonConvert.DeserializeObject<UsersOrGroups>(jsondata);
-        GetEmailsForSelectedGroup();
+        
+        // string jsondata = File.ReadAllText(rootpath + "//" + filepath);
+        // usersOrGroups = JsonConvert.DeserializeObject<UsersOrGroups>(jsondata);
+        // GetEmailsForSelectedGroup();
     }
     protected override async Task OnInitializedAsync()
     {
@@ -396,7 +397,7 @@
             emailModel.To = emails;
             emailModel.Subject = eventsDataModel.eventName;
             emailModel.Body = eventsDataModel.notes;
-            await EmailService.SendEmailAsync(emailModel, groupsList);
+            //await EmailService.SendEmailAsync(emailModel, groupsList);
         }
 
 
