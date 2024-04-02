@@ -1,4 +1,5 @@
 # Starter pipeline
+
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -22,3 +23,16 @@ steps:
   displayName: 'Install Maui Workload'
   inputs:
     script: 'dotnet workload install maui'
+    
+- task: InstallAppleCertificate@2
+  displayName: 'Install Apple P12 Cert'
+  inputs:
+    certSecureFile: 'CAS-Dist.p12'
+    certPwd: '$(p12CertPWD)'
+    keychain: 'temp'
+- task: InstallAppleProvisioningProfile@1
+  displayName: 'Install Apple Provisioning Profile'
+  inputs:
+    provisioningProfileLocation: 'secureFiles'
+    provProfileSecureFile: 'DeaconsAdminProvision.mobileprovision'
+    
