@@ -8,7 +8,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macos-latest'
+  vmImage: 'macOS-latest'
   demands: xcode
 
 steps:
