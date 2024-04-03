@@ -1,4 +1,18 @@
-﻿<localCore:SampleView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Deacons.Hybrid.Mobile.Components.EventRegistration.EventRegistration"
+             xmlns:b="clr-namespace:Microsoft.AspNetCore.Components.WebView.Maui;assembly=Microsoft.AspNetCore.Components.WebView.Maui"
+             xmlns:xc="clr-namespace:Deacons.Hybrid.Shared.Pages;assembly=Deacons.Hybrid.Shared"
+             Title="EventRegistration">
+    <VerticalStackLayout>       
+    </VerticalStackLayout>
+</ContentPage>
+
+
+<!--<localCore:SampleView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
 xmlns:picker="clr-namespace:Syncfusion.Maui.Picker;assembly=Syncfusion.Maui.Picker"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -89,4 +103,4 @@ xmlns:picker="clr-namespace:Syncfusion.Maui.Picker;assembly=Syncfusion.Maui.Pick
     <localCore:SampleView.Behaviors>
         <local:EventRegistrationBehavior/>
     </localCore:SampleView.Behaviors>
-</localCore:SampleView>
+</localCore:SampleView>-->

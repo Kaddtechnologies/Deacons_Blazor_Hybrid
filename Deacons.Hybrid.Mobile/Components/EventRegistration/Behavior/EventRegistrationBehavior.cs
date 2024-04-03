@@ -9,9 +9,6 @@ namespace Deacons.Hybrid.Mobile.SfDataForm
 {
     using ColorHelper;
     using Microsoft.Maui;
-    using Deacons.Hybrid.Mobile.DataForm;
-    using Deacons.Hybrid.Mobile.DataForm.Common;
-    using Deacons.Hybrid.Mobile.DataForm.EventRegistration.Model;
     using Syncfusion.Maui.Core;
     using Syncfusion.Maui.Core.Internals;
     using Syncfusion.Maui.DataForm;
@@ -22,7 +19,7 @@ namespace Deacons.Hybrid.Mobile.SfDataForm
     /// <summary>
     /// Represents a behavior class for event registration sample.
     /// </summary>
-    public class EventRegistrationBehavior : Behavior<SampleView>
+    public class EventRegistrationBehavior
     {
         /// <summary>
         /// Holds the data form object.
@@ -43,16 +40,16 @@ namespace Deacons.Hybrid.Mobile.SfDataForm
         private SfAutocomplete? autoComplete; 
 
         /// <inheritdoc/>
-        protected override void OnAttachedTo(SampleView bindable)
+        protected  void OnAttachedTo()
         {
             try
             {
 
-                base.OnAttachedTo(bindable);
+             //   base.OnAttachedTo(bindable);
                 DataFormCustomItem customItem = new DataFormCustomItem();
                 autoComplete = new SfAutocomplete();
                 autoComplete.TextSearchMode = AutocompleteTextSearchMode.Contains;
-                autoComplete.FilterBehavior = new CustomFiltering();
+           //     autoComplete.FilterBehavior = new CustomFiltering();
                 autoComplete.HeightRequest = 50;
                 autoComplete.WidthRequest =
                 autoComplete.MaxDropDownHeight = 250;
@@ -74,43 +71,43 @@ namespace Deacons.Hybrid.Mobile.SfDataForm
                 customAvatarItem.EditorView = avatarView;
 
 
-                this.dataForm = bindable.Content.FindByName<SfDataForm>("eventForm");
-                dataForm.ItemsSourceProvider = new ItemsSourceProvider();
+              //  this.dataForm = .Content.FindByName<SfDataForm>("eventForm");
+              ////  dataForm.ItemsSourceProvider = new ItemsSourceProvider();
 
-                if (this.dataForm != null)
-                {
-                    this.dataForm.Items.Add(customAvatarItem);
-                    this.dataForm.RegisterEditor("State", DataFormEditorType.AutoComplete);
-                    //this.dataForm.RegisterEditor(nameof(EventRegistrationModel.Address), autoComplete);
-                    this.dataForm.RegisterEditor(nameof(EventRegistrationModel.Mobile), DataFormEditorType.MaskedText);
-                    this.dataForm.RegisterEditor(nameof(EventRegistrationModel.StartTime), DataFormEditorType.Time);
-                    this.dataForm.RegisterEditor(nameof(EventRegistrationModel.EndTime), DataFormEditorType.Time);
-                    this.dataForm.RegisterEditor(nameof(EventRegistrationModel.State), DataFormEditorType.ComboBox);                    
-                    this.dataForm.RegisterEditor(nameof(EventRegistrationModel.Zip), DataFormEditorType.MaskedText);
-                    this.dataForm.RegisterEditor(nameof(EventRegistrationModel.Address), DataFormEditorType.AutoComplete);
-                    this.dataForm.ItemManager = new DataFormItemManagerEditorExt();
-                    this.dataForm.GenerateDataFormItem += OnGenerateDataFormItem;
-                }
+              //  if (this.dataForm != null)
+              //  {
+              //      this.dataForm.Items.Add(customAvatarItem);
+              //      this.dataForm.RegisterEditor("State", DataFormEditorType.AutoComplete);
+              //      //this.dataForm.RegisterEditor(nameof(EventRegistrationModel.Address), autoComplete);
+              //      this.dataForm.RegisterEditor(nameof(EventRegistrationModel.Mobile), DataFormEditorType.MaskedText);
+              //      this.dataForm.RegisterEditor(nameof(EventRegistrationModel.StartTime), DataFormEditorType.Time);
+              //      this.dataForm.RegisterEditor(nameof(EventRegistrationModel.EndTime), DataFormEditorType.Time);
+              //      this.dataForm.RegisterEditor(nameof(EventRegistrationModel.State), DataFormEditorType.ComboBox);                    
+              //      this.dataForm.RegisterEditor(nameof(EventRegistrationModel.Zip), DataFormEditorType.MaskedText);
+              //      this.dataForm.RegisterEditor(nameof(EventRegistrationModel.Address), DataFormEditorType.AutoComplete);
+              //      this.dataForm.ItemManager = new DataFormItemManagerEditorExt();
+              //      this.dataForm.GenerateDataFormItem += OnGenerateDataFormItem;
+              //  }
 
-                this.clearButton = bindable.Content.FindByName<Button>("clearButton");
-                this.submitButton = bindable.Content.FindByName<Button>("submitButton");
-                this.busyIndicator = bindable.Content.FindByName<SfBusyIndicator>("busyIndicator");
+              //  this.clearButton = bindable.Content.FindByName<Button>("clearButton");
+              //  this.submitButton = bindable.Content.FindByName<Button>("submitButton");
+              //  this.busyIndicator = bindable.Content.FindByName<SfBusyIndicator>("busyIndicator");
                 
 
-                if (this.clearButton != null)
-                {
-                    this.clearButton.Clicked += OnClearButtonClicked;
-                }
+              //  if (this.clearButton != null)
+              //  {
+              //      this.clearButton.Clicked += OnClearButtonClicked;
+              //  }
 
-                if (this.submitButton != null)
-                {
-                    this.submitButton.Clicked += OnSubmitButtonClicked;
-                }
+              //  if (this.submitButton != null)
+              //  {
+              //      this.submitButton.Clicked += OnSubmitButtonClicked;
+              //  }
 
-                if(this.autoComplete != null)
-                {
-                    //this.autoComplete.AddKeyboardListener()
-                }
+              //  if(this.autoComplete != null)
+              //  {
+              //      //this.autoComplete.AddKeyboardListener()
+              //  }
               
             }
             catch (Exception ex)
@@ -144,7 +141,7 @@ namespace Deacons.Hybrid.Mobile.SfDataForm
 
                 {
 
-                    autoComplete.FilterBehavior = new CustomFiltering();
+                   // autoComplete.FilterBehavior = new CustomFiltering();
 
                 }
 
@@ -165,7 +162,7 @@ namespace Deacons.Hybrid.Mobile.SfDataForm
                 {
                     EventRegistrationModel eventRegistration = (EventRegistrationModel)this.dataForm.DataObject;
                     CalendarEventsModel model = ParseEventRegistration(eventRegistration);
-                    string  returnn = await _calendarEventsService.CreateNewEvent(model);
+                    string returnn = string.Empty;// await _calendarEventsService.CreateNewEvent(model);
                     if (returnn.Contains(model.EventName!))
                     {
                         this.busyIndicator!.IsRunning = false;
@@ -279,11 +276,11 @@ namespace Deacons.Hybrid.Mobile.SfDataForm
         /// 
 
    
-        protected override void OnDetachingFrom(SampleView grid)
+        protected  void OnDetachingFrom()
         {
             try
             {
-                base.OnDetachingFrom(grid);
+               // base.OnDetachingFrom(grid);
                 if (this.dataForm != null)
                 {
                     this.dataForm.GenerateDataFormItem -= OnGenerateDataFormItem;
