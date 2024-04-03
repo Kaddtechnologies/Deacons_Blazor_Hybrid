@@ -36,6 +36,10 @@ namespace Deacons.Hybrid.Mobile.Components.UserForm
         [Display(Prompt = "Last name")]
         public string LastName { get; set; }
 
+        [Display(Prompt = "Email")]
+        [DataFormDisplayOptions(ColumnSpan = 2)]
+        public string Email { get; set; }
+
         [Display(Prompt = "Mobile")]
         [Required]
         [StringLength(50, MinimumLength = 3)]
@@ -59,7 +63,5 @@ namespace Deacons.Hybrid.Mobile.Components.UserForm
         [DataFormDisplayOptions(ShowLabel = false)]
         public double? ZipCode { get; set; }
 
-        [Display(Prompt = "Email")]
-        public string Email { get; set; }
     }
 }

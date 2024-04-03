@@ -107,6 +107,7 @@
 
     <ItemGroup>
       <Content Remove="appsettings.json" />
+      <Content Remove="Platforms\Android\google-services.json" />
     </ItemGroup>
 
     <ItemGroup>
