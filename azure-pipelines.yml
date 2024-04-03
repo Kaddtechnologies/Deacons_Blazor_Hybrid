@@ -8,10 +8,17 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macOS-latest'
+  vmImage: 'macOS-13'
   demands: xcode
 
+
 steps:
+- task: PowerShell@2
+  displayName: 'Select Xcode Version'
+  inputs:
+    targetType: 'inline'
+    script: 'sudo xcode-select -s /Applications/Xcode_15.0.1.app'
+
 - task: UseDotNet@2
   displayName: 'Install .NET sdk'
   inputs:
