@@ -13,6 +13,11 @@ namespace Deacons.Hybrid.Mobile.SfDataForm{
 			InitializeComponent();
 		}
 
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
+        }
+
         private void OnTimePickerPopUpClosing(object? sender, EventArgs e)
         {
 

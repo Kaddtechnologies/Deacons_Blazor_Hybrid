@@ -57,6 +57,7 @@
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
       <ApplicationId>com.deacons.admin.mobile</ApplicationId>
       <ApplicationTitle>Deacons.Hybrid.Mobile</ApplicationTitle>
+      <BuildIpa>True</BuildIpa>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
@@ -72,6 +73,7 @@
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
       <ApplicationId>com.deacons.admin.mobile</ApplicationId>
       <ApplicationTitle>Deacons.Hybrid.Mobile</ApplicationTitle>
+      <BuildIpa>True</BuildIpa>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
@@ -111,6 +113,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="ColorHelper" Version="1.8.1" />
         <PackageReference Include="Microsoft.AppCenter" Version="5.0.3" />
         <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.3" />
         <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.3" />
