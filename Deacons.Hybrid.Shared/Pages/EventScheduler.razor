@@ -265,6 +265,7 @@
 
     protected override void OnInitialized()
     {
+
         timeZones = TimeZoneInfo.GetSystemTimeZones();
         //read path from config and users/groups data
         string rootpath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "wwwroot");

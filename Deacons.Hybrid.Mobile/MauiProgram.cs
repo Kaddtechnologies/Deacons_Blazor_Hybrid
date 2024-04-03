@@ -16,7 +16,7 @@ namespace Deacons.Hybrid.Mobile
     {
         public static MauiApp CreateMauiApp()
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzE5MTg5MUAzMjM1MmUzMDJlMzBuNDhHY2hldVRUbzU3Q0lGY1ZWN1gwb01XN2d4bmYzTFI5YkJ3c0NoWU9vPQ==");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtec3RVQ2dfUUN1XUc=");
 
             var builder = MauiApp.CreateBuilder();
             builder
@@ -25,6 +25,7 @@ namespace Deacons.Hybrid.Mobile
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("InputLayoutIcons.ttf", "InputLayoutIcons");
                 });
 
             builder.Services.AddMauiBlazorWebView(); 

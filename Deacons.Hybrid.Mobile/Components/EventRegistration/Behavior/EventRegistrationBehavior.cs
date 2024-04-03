@@ -5,7 +5,7 @@
 // licensing@syncfusion.com. Any infringement will be prosecuted under
 // applicable laws. 
 #endregion
-namespace Deacons.Hybrid.Mobile.SfDataForm
+namespace Deacons.Hybrid.Mobile
 {
     using ColorHelper;
     using Microsoft.Maui;

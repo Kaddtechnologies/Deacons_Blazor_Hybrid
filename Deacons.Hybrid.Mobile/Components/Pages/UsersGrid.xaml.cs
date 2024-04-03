@@ -6,7 +6,7 @@ namespace Deacons.Hybrid.Mobile.Components.Pages;
 
 public partial class UsersGrid : ContentPage
 {
-	List<User> users;	
+	public List<TeamUserModel> users { get; set; }	
     private IUsersService user;
 	public UsersGrid(IUsersService options)
 	{
@@ -15,10 +15,10 @@ public partial class UsersGrid : ContentPage
 		GetUsers();
 	}
 
-	public async Task<List<User>> GetUsers()
+	public async Task<List<TeamUserModel>> GetUsers()
 	{
 		var userModel = await user.GetAll();
-		users = (List<User>)userModel;
-		return (List<User>)userModel;
+		this.users = (List<TeamUserModel>)userModel;
+		return (List<TeamUserModel>)userModel;
 	}
 }

@@ -37,6 +37,7 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+        <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
@@ -88,10 +89,10 @@
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#4e0191" />
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#4e0191" BaseSize="128,128" />
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*" />
@@ -106,6 +107,12 @@
 
     <ItemGroup>
       <Content Remove="appsettings.json" />
+      <Content Remove="Platforms\Android\google-services.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Remove="Resources\Styles\Colors.xaml" />
+      <MauiXaml Remove="Resources\Styles\Styles.xaml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -121,11 +128,11 @@
         <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.14" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-        <PackageReference Include="Syncfusion.Maui.Buttons" Version="25.1.37" />
-        <PackageReference Include="Syncfusion.Maui.Core" Version="25.1.37" />
-        <PackageReference Include="Syncfusion.Maui.DataForm" Version="25.1.37" />
-        <PackageReference Include="Syncfusion.Maui.DataGrid" Version="25.1.37" />
-        <PackageReference Include="Syncfusion.Maui.Picker" Version="25.1.37" />
+        <PackageReference Include="Syncfusion.Maui.Buttons" Version="25.1.38" />
+        <PackageReference Include="Syncfusion.Maui.Core" Version="25.1.38" />
+        <PackageReference Include="Syncfusion.Maui.DataForm" Version="25.1.38" />
+        <PackageReference Include="Syncfusion.Maui.DataGrid" Version="25.1.38" />
+        <PackageReference Include="Syncfusion.Maui.Picker" Version="25.1.38" />
        
     </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' != 'GooglePlay' ">
@@ -147,6 +154,21 @@
     <MauiXaml Update="Components\Pages\UsersGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Components\UserForm\UserForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>   
   </ItemGroup>
-  
+  <ItemGroup>
+    <MauiXaml Update="Resources\Styles\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
+  <ItemGroup>
+    <MauiXaml Update="Resources\Styles\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Styles\" />
+  </ItemGroup>
 </Project>
