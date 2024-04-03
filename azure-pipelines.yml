@@ -22,7 +22,7 @@ steps:
 - task: CmdLine@2
   displayName: 'Install Maui Workload'
   inputs:
-    script: 'dotnet workload install maui-ios'
+    script: 'dotnet workload install maui'
     
 - task: InstallAppleCertificate@2
   displayName: 'Install Apple P12 Cert'
