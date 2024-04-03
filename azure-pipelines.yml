@@ -22,7 +22,7 @@ steps:
 - task: CmdLine@2
   displayName: 'Install Maui Workload'
   inputs:
-    script: 'dotnet workload install maui'
+    script: 'dotnet workload install maui-ios'
     
 - task: InstallAppleCertificate@2
   displayName: 'Install Apple P12 Cert'
@@ -41,7 +41,7 @@ steps:
   inputs:
         command: 'publish'
         publishWebProjects: false
-        projects: '**/*.sln'
+        projects: '**/Deacons.Hybrid.Mobile.csproj'
         arguments: '-f:net8.0-ios -c:Release /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false'
         zipAfterPublish: false
         
