@@ -1,4 +1,6 @@
-namespace Deacons.Hybrid.Mobile.SfDataForm{
+namespace Deacons.Hybrid.Mobile
+
+{
 
     /// <summary>
     /// Interaction logic for EventRegistration.xaml

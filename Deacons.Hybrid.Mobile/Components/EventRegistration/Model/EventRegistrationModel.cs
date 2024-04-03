@@ -1,4 +1,4 @@
-namespace Deacons.Hybrid.Mobile.SfDataForm
+namespace Deacons.Hybrid.Mobile
 {
     using Syncfusion.Maui.DataForm;
     using System.ComponentModel.DataAnnotations;

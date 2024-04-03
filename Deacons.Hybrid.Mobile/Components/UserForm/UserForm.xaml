@@ -1,0 +1,96 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Deacons.Hybrid.Mobile.Components.UserForm;assembly=Deacons.Hybrid.Mobile"
+             xmlns:thickness ="clr-namespace:Microsoft.Maui;assembly=Microsoft.Maui"
+             xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+             x:Class="Deacons.Hybrid.Mobile.Components.UserForm.UserForm">
+
+    <Frame BorderColor="{OnIdiom Default=Transparent, Desktop=#C2C2C2}" MaximumHeightRequest="{OnPlatform MacCatalyst=800}"
+                VerticalOptions="{OnPlatform MacCatalyst=Center}"
+                HasShadow="False" Grid.ColumnSpan="{OnIdiom Default=2, Desktop=1}"
+                CornerRadius="10" Grid.Column="0" WidthRequest="{OnPlatform WinUI=400, MacCatalyst=600, Default=-1}"
+                HorizontalOptions="{OnIdiom Desktop=Center, Default=Fill}" Padding="0">
+        <Frame.Margin>
+            <OnPlatform x:TypeArguments="thickness:Thickness">
+                <On Platform="MacCatalyst" Value="20"/>
+                <On Platform="UWP" Value="20"/>
+            </OnPlatform>
+        </Frame.Margin>
+        <Grid RowDefinitions="0.9*, 1, 0.1*">
+            <Grid.BindingContext>
+                <local:UserFormViewModel/>
+            </Grid.BindingContext>
+            <dataForm:SfDataForm x:Name="userForm"
+                                         DataObject="{Binding UserFormModel}" ColumnCount="1" AutoGenerateItems="False" ValidationMode="PropertyChanged">
+                <dataForm:SfDataForm.DefaultLayoutSettings>
+                    <dataForm:DataFormDefaultLayoutSettings LabelWidth="{OnIdiom Desktop=0.1*, Phone=0.15*}" EditorWidth="{OnIdiom Desktop=0.9*, Phone=0.85*}"/>
+                </dataForm:SfDataForm.DefaultLayoutSettings>
+                <dataForm:SfDataForm.Items>
+                    <dataForm:DataFormCustomItem FieldName="ProfileImage">
+                        <dataForm:DataFormCustomItem.EditorView>
+                            <Image Source="https://pottershousedeacons.blob.core.windows.net/imagescontainer/avatars/1000006725.jpg"
+                                   HeightRequest="80"/>
+                        </dataForm:DataFormCustomItem.EditorView>
+                    </dataForm:DataFormCustomItem>
+
+                    <dataForm:DataFormGroupItem Name="Name">
+                        <dataForm:DataFormGroupItem.Items>
+                            <dataForm:DataFormTextItem FieldName="Name" Padding="0, 10, 10, 10" >
+                                <dataForm:DataFormTextItem.LeadingView>
+                                    <Label Text="F" TextColor="#79747E" FontFamily="InputLayoutIcons" FontSize="18" />
+                                </dataForm:DataFormTextItem.LeadingView>
+                            </dataForm:DataFormTextItem>
+                            <dataForm:DataFormTextItem FieldName="LastName"  Padding="0, 10, 10, 10"/>
+                        </dataForm:DataFormGroupItem.Items>
+                    </dataForm:DataFormGroupItem>
+
+                    <dataForm:DataFormGroupItem Name="Mobile">
+                        <dataForm:DataFormGroupItem.Items>
+                            <dataForm:DataFormCustomItem FieldName="Mobile" Padding="0, 10, 10, 10" >
+                                <dataForm:DataFormCustomItem.LeadingView>
+                                    <Label Text="E" TextColor="#79747E" FontFamily="InputLayoutIcons" FontSize="18" />
+                                </dataForm:DataFormCustomItem.LeadingView>
+                            </dataForm:DataFormCustomItem>
+                            <dataForm:DataFormCustomItem FieldName="Landline"  Padding="0, 10, 10, 10"/>
+                        </dataForm:DataFormGroupItem.Items>
+                    </dataForm:DataFormGroupItem>
+
+                    <dataForm:DataFormGroupItem Name="Address" ColumnCount="2">
+                        <dataForm:DataFormGroupItem.Items>
+                            <dataForm:DataFormMultilineItem FieldName="Address" RowSpan="2" Padding="0, 10, 10, 10">
+                                <dataForm:DataFormMultilineItem.LeadingView>
+                                    <Label Text="C" TextColor="#79747E" FontFamily="InputLayoutIcons" FontSize="20" />
+                                </dataForm:DataFormMultilineItem.LeadingView>
+                            </dataForm:DataFormMultilineItem>
+                            <dataForm:DataFormTextItem FieldName="City"  Padding="0, 10, 10, 10"/>
+                            <dataForm:DataFormTextItem FieldName="State" Padding="0, 10, 10, 10">
+                                <dataForm:DataFormTextItem.DefaultLayoutSettings>
+                                    <dataForm:DataFormDefaultLayoutSettings LabelWidth="{OnIdiom Desktop=0.2*, Phone=0.3*}" EditorWidth="{OnIdiom Desktop=0.8*, Phone=0.7*}"/>
+                                </dataForm:DataFormTextItem.DefaultLayoutSettings>
+                            </dataForm:DataFormTextItem>
+                            <dataForm:DataFormCustomItem FieldName="ZipCode" Padding="0, 10, 10, 10" />
+                        </dataForm:DataFormGroupItem.Items>
+                    </dataForm:DataFormGroupItem>
+
+                    <dataForm:DataFormTextItem FieldName="Email" Padding="0, 10, 10, 10" Keyboard="Email">
+                        <dataForm:DataFormTextItem.LeadingView>
+                            <Label Text="G" TextColor="#79747E" FontFamily="InputLayoutIcons" FontSize="20" />
+                        </dataForm:DataFormTextItem.LeadingView>
+                    </dataForm:DataFormTextItem>
+                </dataForm:SfDataForm.Items>
+            </dataForm:SfDataForm>
+            <Line Grid.Row="1" Background="#F5F5F5"/>
+            <Button Text="Save" Grid.Row="2" x:Name="saveButton" Background="{StaticResource PrimaryBrush}" TextColor="White"
+                        HeightRequest="40"
+                        VerticalOptions="Center"
+                        FontSize="16"
+                        CornerRadius="5"
+                        WidthRequest="200"
+                        HorizontalOptions="Center" />
+
+        </Grid>
+    </Frame>
+    <ContentPage.Behaviors>
+        <local:UserFormBehavior/>
+    </ContentPage.Behaviors>
+</ContentPage>
