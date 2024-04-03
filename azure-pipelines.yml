@@ -42,7 +42,7 @@ steps:
         command: 'publish'
         publishWebProjects: false
         projects: '**/Deacons.Hybrid.Mobile.csproj'
-        arguments: '-f:net8.0-ios -c:Release /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false'
+        arguments: '-f:net8.0-ios -c:Release /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false /p:RuntimeIdentifier=ios-arm64 /p:BuildIpa=true /p:Codesignkey="$(APPLE_CERTIFICATE_SIGNING_IDENTITY)" /p:CodesignProvision="$(APPLE_PROV_PROFILE_UUID)"'
         zipAfterPublish: false
         
 - task: CopyFiles@2
