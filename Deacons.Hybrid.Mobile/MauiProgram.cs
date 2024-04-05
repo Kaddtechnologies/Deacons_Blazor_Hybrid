@@ -9,6 +9,9 @@ using Deacons.Hybrid.Shared.Services.Interface;
 using Deacons.Hybrid.Shared.Services;
 using Azure.Storage.Blobs;
 using Microsoft.Maui.Controls;
+using MudBlazor.Services;
+using DevExpress.Maui;
+using CommunityToolkit.Maui;
 
 namespace Deacons.Hybrid.Mobile
 {
@@ -19,9 +22,12 @@ namespace Deacons.Hybrid.Mobile
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtec3RVQ2dfUUN1XUc=");
 
             var builder = MauiApp.CreateBuilder();
+            
             builder
                 .UseMauiApp<App>()
             .ConfigureSyncfusionCore()
+             .UseDevExpress(useLocalization: true)
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -39,8 +45,6 @@ namespace Deacons.Hybrid.Mobile
                      .Build();
 
             builder.Configuration.AddConfiguration(config);
-
-
             builder.Configuration.AddConfiguration(config);
             builder.Services.AddSingleton(builder.Configuration.GetSection("MailSettings").Get<MailSetting>());
             builder.Services.AddSingleton<IEmailService, EmailService>();
@@ -48,14 +52,14 @@ namespace Deacons.Hybrid.Mobile
             builder.Services.AddSingleton<IDapperContrib, DapperContrib>();
             builder.Services.AddSingleton<ICalendarEventsService, CalendarEventsService>();
             builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetValue<string>("AzureBlobStorageConnectionString")));
-
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://deaconapidev.myworkatcornerstone.com/") });
+            builder.Services.AddMudServices();
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif
-
+         
             return builder.Build();
         }
     }

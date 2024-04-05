@@ -24,15 +24,17 @@ namespace Deacons.Hybrid.Shared.Services
             _containerClient = _blobClient.GetBlobContainerClient("imagescontainer/avatars");
 
             _dapperContrib = dapperContrib;
-            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if (env == EnvironmentName.Development)
-            {
-                _connectionString = configuration.GetConnectionString("DevStaffConnString");
-            }
-            else
-            {
-                _connectionString = configuration.GetConnectionString("StaffConnString");
-            }
+            _connectionString = "Data Source=67.211.213.157,1433;Database=Deacons;Integrated Security=false;TrustServerCertificate=true;Persist Security Info=True;User ID=sa;Password=Logvc123!";
+
+            //var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            //if (env == EnvironmentName.Development)
+            //{
+            //    _connectionString = configuration.GetConnectionString("DevStaffConnString");
+            //}
+            //else
+            //{
+            //    _connectionString = configuration.GetConnectionString("StaffConnString");
+            //}
         }
 
         public async Task Create(User user)
@@ -49,9 +51,9 @@ namespace Deacons.Hybrid.Shared.Services
             }
         }
 
-        public async Task<User> Get(Guid id)
+        public async Task<object?> GetAllUsers()
         {
-            return await _dapperContrib.Get<User>(id);
+            return await _dapperContrib.GetAll<User>();
         }
 
         public async Task<IEnumerable<TeamUserModel>> GetAll()
@@ -290,6 +292,16 @@ namespace Deacons.Hybrid.Shared.Services
                 await connection.OpenAsync();
                 var retVal = await connection.ExecuteScalarAsync<object?>(sql, paramDetails);
             }
+        }
+
+        public async Task<User> DisableUser(User user)
+        {
+            user.ModifiedDate = DateTime.Now;
+            user.IsActive = "False";
+            var imageRet = DeleteProfileImage(user.AvatarUrl);
+
+            await UpdateUserProfile(user);
+            return user;
         }
     }
 }

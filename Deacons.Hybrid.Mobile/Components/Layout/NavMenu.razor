@@ -1,52 +1,26 @@
 ﻿@using Deacons.Hybrid.Mobile.Components.Pages
 @using Deacons.Hybrid.Mobile.Components.UserForm
+@using MudBlazor
 
 @inject Deacons.Hybrid.Shared.Interface.IUsersService users
-<div class="top-row ps-3 navbar navbar-dark">
+<div class="top-row ps-3 navbar navbar-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Deacons.Hybrid.Mobile</a>
+        <a class="navbar-brand" href="" Style="color:white">Deacons Administration</a>
     </div>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+<input type="checkbox" title="Navigation menu" Style="color:white" class="navbar-toggler" />
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="scheduler">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Event Scheduler
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link"  @onclick="@GoTo">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span>Edit User Form
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="userdetails">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> User Details
-            </NavLink>
-        </div>
-         <div class="nav-item px-3">
-            <NavLink class="nav-link" @onclick="@GoToGrid">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> User Grid
-            </NavLink>
-        </div>
-    </nav>
+    <MudNavMenu>
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home" Style="color:white">Home</MudNavLink>
+        <MudNavLink Href="usermamagement" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.People" Style="color:white">Manage Deacon Roster</MudNavLink>
+        <MudNavLink Href="scheduler" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.CalendarMonth" Style="color:white">Event Scheduler</MudNavLink>
+        <MudNavLink Href="settings" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Settings" Style="color:white">Settings</MudNavLink>
+</MudNavMenu>
+
 </div>
 
 @code {
-    private void GoTo()
-    {
-        App.Current.MainPage.Navigation.PushModalAsync(new UserForm());
-    }
-    private void GoToGrid()
-    {
-        App.Current.MainPage.Navigation.PushModalAsync(new UsersGrid(users));
-    }
+
 }

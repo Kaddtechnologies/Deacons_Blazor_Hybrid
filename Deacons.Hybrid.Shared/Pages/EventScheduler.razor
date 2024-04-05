@@ -1,5 +1,7 @@
 ﻿@page "/events"
+@using Deacons.Hybrid.Shared.Services.Interface
 @using Deacons.Hybrid.Shared.Utility
+@using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.Extensions.Configuration
 @using Microsoft.JSInterop
 @using Newtonsoft.Json;
@@ -9,9 +11,9 @@
 @using System.IO
 @using System.Collections;
 @using Syncfusion.Blazor.Notifications
+
 @inject IConfiguration configuration
-@inject HttpClient Http;
-@* @inject IEmailService EmailService; *@
+@inject ICalendarEventsService calendarService;
 @inject IJSRuntime JSRuntime
 
 @if (Show)
@@ -38,8 +40,8 @@
 <div class="@divClass">
 
     <div class="col-lg-12 control-section">
-        <SfSchedule TValue="EventsDataModel" @ref="scheduleRef" Height="550px" AllowDragAndDrop="false" @bind-SelectedDate="@CurrentDate">
-            <ScheduleEvents TValue="EventsDataModel" OnEventClick="OnEventClick" OnCellClick="OnCellClick" EventRendered="OnEventRendered"></ScheduleEvents>
+        <SfSchedule TValue="CalendarEventsModel" @ref="scheduleRef" Height="550px" CurrentView="@CurrentView" AllowDragAndDrop="false" @bind-SelectedDate="@CurrentDate">
+            <ScheduleEvents TValue="CalendarEventsModel" OnEventClick="OnEventClick" OnCellClick="OnCellClick" EventRendered="OnEventRendered"></ScheduleEvents>
             <ScheduleEventSettings DataSource="@dataSource">
                 <ScheduleField Id="calendarId">
                     <FieldSubject Name="eventName"></FieldSubject>
@@ -76,15 +78,15 @@
                         <DataAnnotationsValidator />
                         <ValidationSummary />
                         <div class="form-group col-md-12">
-                            <SfTextBox @bind-Value="@(selectedData.eventName)" Placeholder="Event Title" FloatLabelType="FloatLabelType.Always" Width="100%" CssClass="lbl-top"></SfTextBox>
-                            <ValidationMessage For="@(() => selectedData.eventName)"></ValidationMessage>
+                            <SfTextBox @bind-Value="@(selectedData.EventName)" Placeholder="Event Title" FloatLabelType="FloatLabelType.Always" Width="100%" CssClass="lbl-top"></SfTextBox>
+                            <ValidationMessage For="@(() => selectedData.EventName)"></ValidationMessage>
                         </div>
                         <div class="form-group col-md-12 mt-3">
-                            <SfTextBox Multiline=false @bind-Value="@(selectedData.zoomUrl)" Placeholder="Zoom or meeting details" FloatLabelType="FloatLabelType.Always" Width="100%"></SfTextBox>
+                            <SfTextBox Multiline=false @bind-Value="@(selectedData.ZoomUrl )" Placeholder="Zoom or meeting details" FloatLabelType="FloatLabelType.Always" Width="100%"></SfTextBox>
                         </div>
                         <div class="row mt-4">
                             <div class="form-group col-md-5">
-                                <SfDateTimePicker @bind-Value="@(selectedData.startDate)" Placeholder="Event Date" FloatLabelType="FloatLabelType.Always" Width="100%"></SfDateTimePicker>
+                                <SfDateTimePicker @bind-Value="@(selectedData.StartDate )" Placeholder="Event Date" FloatLabelType="FloatLabelType.Always" Width="100%"></SfDateTimePicker>
                             </div>
                             <div class="form-group col-md-6">
 
@@ -97,7 +99,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-5">
-                                <SfDateTimePicker @bind-Value="@(selectedData.endDate)" Placeholder="End date" FloatLabelType="FloatLabelType.Always" Width="100%"></SfDateTimePicker>
+                                <SfDateTimePicker @bind-Value="@(selectedData.EndDate)" Placeholder="End date" FloatLabelType="FloatLabelType.Always" Width="100%"></SfDateTimePicker>
                             </div>
                             <div class="form-group col-md-6">
 
@@ -109,12 +111,12 @@
                         </div>
                         <div class="form-group col-md-12">
 
-                            <SfSwitch @bind-Checked="@(selectedData.isAllDay)"></SfSwitch>
+                            <SfSwitch @bind-Checked="@(selectedData.IsAllDay)"></SfSwitch>
                             <label for="checked" style="padding: 10px 10px 0px 0">All Day</label>
                         </div>
                         <div class="form-group col-md-12">
-                            <SfTextBox @bind-Value="@(selectedData.eventAddress)" Placeholder="Event Address" FloatLabelType="FloatLabelType.Always" Width="100%" CssClass="lbl-top"></SfTextBox>
-                            <ValidationMessage For="@(() => selectedData.eventAddress)"></ValidationMessage>
+                            <SfTextBox @bind-Value="@(selectedData.EventAddress )" Placeholder="Event Address" FloatLabelType="FloatLabelType.Always" Width="100%" CssClass="lbl-top"></SfTextBox>
+                            <ValidationMessage For="@(() => selectedData.EventAddress )"></ValidationMessage>
                         </div>
                         <div class="form-group col-md-12 mt-3">
                             <SfMultiSelect Placeholder="Add Users or Groups" @bind-Value="@selectedEmail" DataSource="@GroupEmails">
@@ -122,7 +124,7 @@
 
                         </div>
                         <div class="form-group col-md-12 mt-3">
-                            <SfTextBox Multiline=true @bind-Value="@(selectedData.notes)" Placeholder="Meeting Details (aka Notes)" FloatLabelType="FloatLabelType.Always" Width="100%"></SfTextBox>
+                            <SfTextBox Multiline=true @bind-Value="@(selectedData.Notes )" Placeholder="Meeting Details (aka Notes)" FloatLabelType="FloatLabelType.Always" Width="100%"></SfTextBox>
                         </div>
 
                         <div class="pull-right mt-2" style="min-height: 45px">
@@ -150,7 +152,7 @@
             <div class="col-lg-12 bd-example">
                 <div class="form-row row-margin">
                     <div class="form-group col-md-12">
-                        <label id="event-name" class="lbl-top" style="font-size:x-large;">@(selectedData.eventName)</label>
+                        <label id="event-name" class="lbl-top" style="font-size:x-large;">@(selectedData.EventName)</label>
 
                     </div>
                     <div class="row max-width">
@@ -158,7 +160,7 @@
                             <label><i class="fa fa-video-camera" aria-hidden="true"></i></label>
                         </div>
                         <div class="form-group  col-md-9">
-                            <SfTextBox Readonly="true" id="form-control" @bind-Value="@selectedData.zoomUrl" Placeholder="" FloatLabelType="FloatLabelType.Always" Width="100%" CssClass="row-top-margin"></SfTextBox>
+                            <SfTextBox Readonly="true" id="form-control" @bind-Value="@selectedData.ZoomUrl" Placeholder="" FloatLabelType="FloatLabelType.Always" Width="100%" CssClass="row-top-margin"></SfTextBox>
                         </div>
                         <div class="form-group col-md-2">
 
@@ -167,18 +169,18 @@
                     </div>
                     <div class="row max-width">
                         <div class="form-group col-md-5 col-time">
-                            <label style="font-size:x-large;">@(selectedData.startDate.ToString("hh:mm tt"))</label>
+                            <label style="font-size:x-large;">@(selectedData.StartDate.Value.ToString("hh:mm tt"))</label>
                         </div>
                         <div class="form-group col-md-2">
                             <label style="font-size:x-large;"><i class="fa fa-arrow-right"></i> </label>
                         </div>
                         <div class="form-group col-md-5 col-time">
-                            <label style="font-size:x-large;">@(selectedData.endDate.ToString("hh:mm tt"))</label>
+                            <label style="font-size:x-large;">@(selectedData.EndDate.Value.ToString("hh:mm tt"))</label>
                         </div>
                     </div>
                     <div class="row max-width">
                         <div class="form-group col-md-6">
-                            <label>@(selectedData.startDate.ToString("dddd, dd MMMM, yyyy"))</label>
+                            <label>@(selectedData.StartDate.Value.ToString("dddd, dd MMMM, yyyy"))</label>
                         </div>
 
                         <div class="form-group col-md-6" style="margin-top:0px !important">
@@ -192,7 +194,7 @@
                     </div>
                     <div class="row max-width">
                         <div class="form-group col-md-6">
-                            <label>@(selectedData.endDate.ToString("dddd, dd MMMM, yyyy"))</label>
+                            <label>@(selectedData.EndDate.Value.ToString("dddd, dd MMMM, yyyy"))</label>
                         </div>
                         <div class="form-group col-md-6" style="margin-top:0px !important">
                             <SfDropDownList Readonly="true" TValue="string" TItem="TimeZoneInfo" DataSource="@timeZones" Placeholder=""
@@ -208,7 +210,7 @@
                         </SfMultiSelect>
                     </div>
                     <div class="form-group col-md-12">
-                        <SfTextBox Readonly="true" Multiline=true @bind-Value="@(selectedData.notes)" Placeholder="Meeting Details (aka Notes)" FloatLabelType="FloatLabelType.Always" Width="100%"></SfTextBox>
+                        <SfTextBox Readonly="true" Multiline=true @bind-Value="@(selectedData.Notes)" Placeholder="Meeting Details (aka Notes)" FloatLabelType="FloatLabelType.Always" Width="100%"></SfTextBox>
                     </div>
                     </div>
                 </div>
@@ -234,10 +236,10 @@
     public bool isChecked = false;
     private bool showSidebar = false;
     private bool viewEvent = false;
-    private EventsDataModel selectedData;
-    SfSchedule<EventsDataModel> scheduleRef;
+    private CalendarEventsModel selectedData;
+    SfSchedule<CalendarEventsModel> scheduleRef;
     DateTime CurrentDate = DateTime.Now.Date;
-    List<EventsDataModel> dataSource = new List<EventsDataModel>();
+    List<CalendarEventsModel> dataSource = new List<CalendarEventsModel>();
     public string starttimeZoneDefaultVal = "Central Standard Time";
     public string endtimeZoneDefaultVal = "Central Standard Time";
     public bool Show { get; set; } = false;
@@ -270,7 +272,7 @@
         //read path from config and users/groups data
         string rootpath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "wwwroot");
         string filepath = configuration.GetSection("UserGroups").GetSection("FilePath").Value;
-        
+
         // string jsondata = File.ReadAllText(rootpath + "//" + filepath);
         // usersOrGroups = JsonConvert.DeserializeObject<UsersOrGroups>(jsondata);
         // GetEmailsForSelectedGroup();
@@ -289,13 +291,13 @@
     }
     private async Task GetAllEvents()
     {
-        var eventsJson = await Http.GetStringAsync("api/CalendarEvents/GetAllEvents");
-        dataSource = System.Text.Json.JsonSerializer.Deserialize<List<EventsDataModel>>(eventsJson);
+        var eventsJson = await calendarService.GetAll();
+        dataSource = (List<CalendarEventsModel>)eventsJson;
     }
-    public void OnEventRendered(EventRenderedArgs<EventsDataModel> args)
+    public void OnEventRendered(EventRenderedArgs<CalendarEventsModel> args)
     {
         Dictionary<string, object> attributes = new Dictionary<string, object>();
-        string backGround = "background: " + args.Data.backgroundColor;
+        string backGround = "background: " + args.Data.BackgroundColor ;
         attributes.Add("style", backGround);
         args.Attributes = attributes;
     }
@@ -315,7 +317,7 @@
 
         foreach (var item in emails)
         {
-            GroupEmails.Add(item.emailaddress);
+            GroupEmails.Add(item.emailaddress );
         };
     }
     private async Task OnSave()
@@ -324,34 +326,34 @@
         // string endTimeString = selectedData.endDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
         try
         {
-            EventsDataModel data = new EventsDataModel()
+            CalendarEventsModel data = new CalendarEventsModel()
                 {
-                    startDate = selectedData.startDate,
-                    endDate = selectedData.endDate,
-                    startTimeZone = starttimeZoneDefaultVal,
-                    endTimeZone = endtimeZoneDefaultVal,
-                    eventName = selectedData.eventName,
-                    eventAddress = selectedData.eventAddress,
-                    zoomUrl = selectedData.zoomUrl,
-                    notes = selectedData.notes,
-                    email = getEmailsList(selectedEmail),
-                    backgroundColor = selectedData.backgroundColor
+                    StartDate = selectedData.StartDate ,
+                    EndDate = selectedData.EndDate ,
+                    StartTimeZone = starttimeZoneDefaultVal,
+                    EndTimeZone = endtimeZoneDefaultVal,
+                    EventName = selectedData.EventName ,
+                    EventAddress = selectedData.EventAddress ,
+                    ZoomUrl = selectedData.ZoomUrl ,
+                    Notes = selectedData.Notes,
+                    Email = getEmailsList(selectedEmail),
+                    BackgroundColor = selectedData.BackgroundColor 
                 };
-            if (string.IsNullOrEmpty(selectedData.calendarId))
+            if (string.IsNullOrEmpty(selectedData?.CalendarId.ToString()))
             {
-                if (string.IsNullOrEmpty(selectedData.eventName))
+                if (string.IsNullOrEmpty(selectedData.EventName))
                 {
-                    selectedData.eventName = "";
+                    selectedData.EventName = "";
                 }
-                if (selectedData.startDate > selectedData.endDate)
+                if (selectedData.StartDate > selectedData.EndDate)
                 {
                     await JSRuntime.InvokeAsync<object>("Alert", "Start date should be less than or equal to end date");
                 }
                 else
                 {
-                    data.calendarId = Guid.NewGuid().ToString();
-                    data.userId = "A6D3028D-A025-493F-A75A-8EE5E88FF52B";// Guid.NewGuid().ToString();
-                                                                         //await scheduleRef.AddEventAsync(data);
+                    data.CalendarId = Guid.NewGuid();
+                    data.UserId =  Guid.Parse("A6D3028D-A025-493F-A75A-8EE5E88FF52B");// Guid.NewGuid().ToString();
+                                                                                     //await scheduleRef.AddEventAsync(data);
                     var response = await PostEventDataAsync(data);
                     await SendEmail(data);
                     CloseSidebar();
@@ -364,11 +366,11 @@
             }
             else
             {
-                data.calendarId = selectedData.calendarId;
-                data.userId = selectedData.userId;
-                data.backgroundColor = selectedData.backgroundColor;
-                data.isAllDay = selectedData.isAllDay;
-                data.organizer = selectedData.organizer;
+                data.CalendarId = selectedData.CalendarId;
+                data.UserId = selectedData.UserId;
+                data.BackgroundColor = selectedData.BackgroundColor;
+                data.IsAllDay = selectedData.IsAllDay;
+                data.Organizer = selectedData.Organizer;
                 await scheduleRef.SaveEventAsync(data);
                 var response = await UpdateEventDataAsync(data);
                 await SendEmail(data);
@@ -389,88 +391,56 @@
 
         }
     }
-    private async Task SendEmail(EventsDataModel eventsDataModel)
+    private async Task SendEmail(CalendarEventsModel eventsDataModel)
     {
-        if (!string.IsNullOrEmpty(eventsDataModel.email))
+        if (!string.IsNullOrEmpty(eventsDataModel.Email ))
         {
             EmailModel emailModel = new EmailModel();
-            List<string> emails = eventsDataModel.email.Split(',').ToList();// eventsDataModel.email.Split(',').Distinct().ToList();
+            List<string> emails = eventsDataModel.Email.Split(',').ToList();// eventsDataModel.email.Split(',').Distinct().ToList();
             emailModel.To = emails;
-            emailModel.Subject = eventsDataModel.eventName;
-            emailModel.Body = eventsDataModel.notes;
+            emailModel.Subject = eventsDataModel.EventName;
+            emailModel.Body = eventsDataModel.Notes;
             //await EmailService.SendEmailAsync(emailModel, groupsList);
         }
 
 
 
     }
-    public async Task<EventsDataModel> PostEventDataAsync(EventsDataModel events)
+    public async Task<CalendarEventsModel> PostEventDataAsync(CalendarEventsModel events)
     {
-        var json = JsonConvert.SerializeObject(events);
-        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+        // var json = JsonConvert.SerializeObject(events);
+        // var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
-        var response = await Http.PostAsync("api/CalendarEvents/AddNewEvent", content);
-
-        if (response.IsSuccessStatusCode)
-        {
-            var responseContent = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<EventsDataModel>(responseContent);
-        }
-        else
-        {
-            throw new Exception($"Failed to post event. Status code: {response.StatusCode}");
-        }
+        var response = await calendarService.Add(events);
+        return (CalendarEventsModel)response;
     }
-    public async Task<EventsDataModel> UpdateEventDataAsync(EventsDataModel events)
+    public async Task<CalendarEventsModel> UpdateEventDataAsync(CalendarEventsModel events)
     {
-        var json = JsonConvert.SerializeObject(events);
-        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
-        var response = await Http.PostAsync("api/CalendarEvents/UpdateEvent", content);
-
-        if (response.IsSuccessStatusCode)
-        {
-            var responseContent = await response.Content.ReadAsStringAsync();
-            try
-            {
-                return new EventsDataModel { notes = responseContent };
-            }
-            catch (Exception ex)
-            {
-                // Log the exception or handle it as needed
-                throw new Exception($"Failed to deserialize response content: {ex.Message}", ex);
-            }
-        }
-        else
-        {
-            throw new Exception($"Failed to update event. Status code: {response.StatusCode}");
-        }
+        var response = await calendarService.Update(events);
+        return (CalendarEventsModel)response;
+        // if (response.IsSuccessStatusCode)
+        // {
+        //     var responseContent = await response.Content.ReadAsStringAsync();
+        //     try
+        //     {
+        //         return new CalendarEventsModel { notes = responseContent };
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Log the exception or handle it as needed
+        //         throw new Exception($"Failed to deserialize response content: {ex.Message}", ex);
+        //     }
+        // }
+        // else
+        // {
+        //     throw new Exception($"Failed to update event. Status code: {response.StatusCode}");
+        // }
     }
-    public async Task<EventsDataModel> DeleteEventDataAsync(EventsDataModel events)
+    public async Task<CalendarEventsModel> DeleteEventDataAsync(CalendarEventsModel events)
     {
-        var json = JsonConvert.SerializeObject(events);
-        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-
-        var response = await Http.PostAsync("api/CalendarEvents/DeleteEvent", content);
-
-        if (response.IsSuccessStatusCode)
-        {
-            var responseContent = await response.Content.ReadAsStringAsync();
-            try
-            {
-                return new EventsDataModel { notes = responseContent };
-
-            }
-            catch (Exception ex)
-            {
-                // Log the exception or handle it as needed
-                throw new Exception($"Failed to deserialize response content: {ex.Message}", ex);
-            }
-        }
-        else
-        {
-            throw new Exception($"Failed to delete event. Status code: {response.StatusCode}");
-        }
+        var response = await calendarService.Delete(events);
+        return (CalendarEventsModel)response;
     }
     public string getEmailsList(List<string> multivalues)
     {
@@ -489,7 +459,7 @@
     }
     private async Task CancelEvent()
     {
-        if (!string.IsNullOrEmpty(selectedData.calendarId))
+        if (!string.IsNullOrEmpty(selectedData.CalendarId.ToString()))
         {
             var response = await DeleteEventDataAsync(selectedData);
             await scheduleRef.DeleteEventAsync(selectedData);
@@ -498,7 +468,7 @@
             {
                 CloseSidebar();
 
-                selectedData = new EventsDataModel() { startDate = new DateTime(DateTime.Today.Year, 1, 10, 9, 0, 0), endDate = new DateTime(DateTime.Today.Year, 1, 10, 10, 0, 0), eventName = "" };
+                selectedData = new CalendarEventsModel() { StartDate = new DateTime(DateTime.Today.Year, 1, 10, 9, 0, 0), EndDate = new DateTime(DateTime.Today.Year, 1, 10, 10, 0, 0), EventName = "" };
             }
         }
         else
@@ -508,15 +478,15 @@
             {
                 CloseSidebar();
 
-                selectedData = new EventsDataModel() { startDate = new DateTime(DateTime.Today.Year, 1, 10, 9, 0, 0), endDate = new DateTime(DateTime.Today.Year, 1, 10, 10, 0, 0), eventName = "" };
+                selectedData = new CalendarEventsModel() { StartDate = new DateTime(DateTime.Today.Year, 1, 10, 9, 0, 0), EndDate = new DateTime(DateTime.Today.Year, 1, 10, 10, 0, 0), EventName = "" };
             }
         }
     }
-    private void OnEventClick(EventClickArgs<EventsDataModel> args)
+    private void OnEventClick(EventClickArgs<CalendarEventsModel> args)
     {
         args.Cancel = true;
         selectedData = args.Event;
-        selectedEmail = selectedData.email != string.Empty ? selectedData.email.Split(',').ToList<string>() : new List<string>();
+        selectedEmail = selectedData.Email != string.Empty ? selectedData.Email.Split(',').ToList<string>() : new List<string>();
         showSidebar = false;
         divClass = "scheduler-container";
         viewEvent = true;
@@ -530,7 +500,7 @@
 
     }
 
-    //private void OnEventDoubleClick(EventClickArgs<EventsDataModel> args)
+    //private void OnEventDoubleClick(EventClickArgs<CalendarEventsModel> args)
     //{
     //    showSidebar = true;
     //    args.Cancel = true;
@@ -542,13 +512,13 @@
         divClass = "scheduler-container";
         viewEvent = false;
         args.Cancel = true;
-        selectedData = new EventsDataModel();
-        selectedData.startDate = args.StartTime;
-        selectedData.endDate = args.EndTime;
-        selectedData.eventName = "";
-        selectedData.eventAddress = null;
+        selectedData = new CalendarEventsModel();
+        selectedData.StartDate = args.StartTime;
+        selectedData.EndDate = args.EndTime;
+        selectedData.EventName = "";
+        selectedData.EventAddress = null;
         selectedEmail = new List<string>();
-        selectedData.notes = string.Empty;
+        selectedData.Notes = string.Empty;
 
     }
 

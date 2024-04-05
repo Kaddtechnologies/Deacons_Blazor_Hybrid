@@ -5,7 +5,11 @@
               xmlns:thickness ="clr-namespace:Microsoft.Maui;assembly=Microsoft.Maui"
              x:Class="Deacons.Hybrid.Mobile.Components.Pages.UsersGrid;assembly=Deacons.Hybrid.Mobile"
              Title="UsersGrid">
-
+    <Application
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             android:Application.WindowSoftInputModeAdjust="Resize">
+        
+    </Application>
     <Frame BorderColor="{OnIdiom Default=Transparent, Desktop=#C2C2C2}" MaximumHeightRequest="{OnPlatform MacCatalyst=800}"
              VerticalOptions="{OnPlatform MacCatalyst=Center}"
              HasShadow="False" Grid.ColumnSpan="{OnIdiom Default=2, Desktop=1}"

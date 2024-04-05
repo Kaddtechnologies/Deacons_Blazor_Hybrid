@@ -1,8 +1,13 @@
+using Azure.Storage.Blobs;
 using Deacons.Hybrid.Shared.Interface;
 using Deacons.Hybrid.Shared.Models;
 using Deacons.Hybrid.Shared.Services;
+using Deacons.Hybrid.Shared.Services.Interface;
 using Deacons.Hybrid.Web.Components;
+using Google.Api;
+using Microsoft.Extensions.Configuration;
 using MudBlazor.Services;
+using Syncfusion.Blazor;
 
 
 namespace Deacons.Hybrid.Web
@@ -16,12 +21,20 @@ namespace Deacons.Hybrid.Web
             var builder = WebApplication.CreateBuilder(args);
             
             builder.Services.AddSingleton(builder.Configuration.GetSection("MailSettings").Get<MailSetting>());
-            builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddSingleton<IEmailService, EmailService>();
+            builder.Services.AddSingleton<IUsersService, UsersService>();
+            builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetValue<string>("AzureBlobStorageConnectionString")));
+
+            builder.Services.AddSingleton<IDapperContrib, DapperContrib>();
+            builder.Services.AddSingleton<ICalendarEventsService, CalendarEventsService>();
+            builder.Services.AddSingleton<IEmailService, EmailService>();
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
             builder.Services.AddMudServices();
+            builder.Services.AddSyncfusionBlazor();
 
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://deaconapidev.myworkatcornerstone.com/") });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

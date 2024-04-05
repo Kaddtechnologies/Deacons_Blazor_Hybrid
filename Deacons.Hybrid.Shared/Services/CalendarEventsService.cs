@@ -12,16 +12,18 @@ namespace Deacons.Hybrid.Shared.Services
         public CalendarEventsService(IDapperContrib dapperContrib, IConfiguration configuration)
         {
             _contrib = dapperContrib;
-            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if (env == Microsoft.AspNetCore.Hosting.EnvironmentName.Development)
-            {
-                _connectionString = configuration.GetConnectionString("DevStaffConnString");
-            }
-            else
-            {
-                _connectionString = configuration.GetConnectionString("StaffConnString");
-            }
-        }       
+            _connectionString = "Data Source=67.211.213.157,1433;Database=Deacons;Integrated Security=false;TrustServerCertificate=true;Persist Security Info=True;User ID=sa;Password=Logvc123!";
+
+            //var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            //if (env == Microsoft.AspNetCore.Hosting.EnvironmentName.Development)
+            //{
+            //    _connectionString = configuration.GetConnectionString("DevStaffConnString");
+            //}
+            //else
+            //{
+            //    _connectionString = configuration.GetConnectionString("StaffConnString");
+            //}
+        }
 
         public async Task<CalendarEventsModel> Get(Guid id)
         {
