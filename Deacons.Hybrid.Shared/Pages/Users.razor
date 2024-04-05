@@ -8,7 +8,7 @@
 @inject ISnackbar _snackbar
 
 <MudItem xs="12" Class="page-wrapper">
-    <MudItem xs="12" Class="header-wrapper"></MudItem>
+    <MudItem xs="12" Class="header-wrapper">Deacon Roster</MudItem>
     <MudItem xs="12" Class="header mx-5 d-flex flex-column flex-md-row">
         <MudItem Class="d-flex justify-center" Style="width: fit-content">
             <MudAvatar Elevation="0" Class="avatar">
@@ -34,7 +34,7 @@
                 <MudItem Class="edit-profile">
                     @if (string.IsNullOrEmpty(ProfileUser.UserId.ToString()))
                     {
-                        <MudButton IconClass="edit-icon" OnClick=@(() => _navigator.NavigateTo($"edit/{UsersList.FirstOrDefault().UserId.ToString()}") ) DisableElevation StartIcon="@Icons.Material.Filled.Edit" Variant="Variant.Filled"><MudText>Edit Profile</MudText></MudButton>
+                        <MudButton IconClass="edit-icon" @onclick=@(() => OpenEditScreen(ProfileUser.UserId.ToString())) DisableElevation StartIcon="@Icons.Material.Filled.Edit" Variant="Variant.Filled"><MudText>Edit Profile</MudText></MudButton>
                     }
                 </MudItem>
             </MudItem>
@@ -143,6 +143,7 @@
             </PagerContent>
         </MudTable>
     </MudItem>
+    <MudFab Style="position:fixed; bottom:0;right:0" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick=@(() => AddNewUserClick()) />
 </MudItem>
 
 
@@ -342,10 +343,10 @@
 
 
 @code{
-    User ProfileUser { get; set; } = new();
-    List<User> UsersList { get; set; } = new();
-    List<User> SelectedUsers { get; set; } = new();
-    List<string> DeaconTitles { get; set; } = new();
+        User ProfileUser { get; set; } = new();
+        List<User> UsersList { get; set; } = new();
+        List<User> SelectedUsers { get; set; } = new();
+        List<string> DeaconTitles { get; set; } = new();
     public string imgSrc = "https://pottershousedeacons.blob.core.windows.net/imagescontainer/avatars/default_avatar.jpg";
 
     protected override async Task OnInitializedAsync(){
@@ -369,6 +370,17 @@
         {
             SelectedUsers = UsersList.Where(x => x.DeaconTitle == title).ToList();
         }
+    }
+
+
+    void AddNewUserClick()
+    {
+
+    }
+
+    void OpenEditScreen(string userId)
+    {
+        _navigator.NavigateTo($"edit/{userId}");
     }
 
     private async Task DeleteUser(User user)
