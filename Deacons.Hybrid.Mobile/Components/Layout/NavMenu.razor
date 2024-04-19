@@ -1,4 +1,5 @@
 ﻿@using Deacons.Hybrid.Mobile.Components.Pages
+@using Deacons.Hybrid.Mobile.Components.Pages.Messages.View
 @using Deacons.Hybrid.Mobile.Components.UserForm
 
 @inject Deacons.Hybrid.Shared.Interface.IUsersService users
@@ -28,8 +29,8 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="userdetails">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> User Details
+            <NavLink class="nav-link" @onclick="@GoToMessages">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Messages
             </NavLink>
         </div>
          <div class="nav-item px-3">
@@ -48,5 +49,9 @@
     private void GoToGrid()
     {
         App.Current.MainPage.Navigation.PushModalAsync(new UsersGrid(users));
+    }
+    private void GoToMessages()
+    {
+        App.Current.MainPage.Navigation.PushModalAsync(new GettingStartedMobile());
     }
 }

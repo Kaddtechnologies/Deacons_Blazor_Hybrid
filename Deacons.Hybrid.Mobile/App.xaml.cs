@@ -2,6 +2,7 @@
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
+using System.Reflection;
 
 namespace Deacons.Hybrid.Mobile
 {
@@ -15,7 +16,9 @@ namespace Deacons.Hybrid.Mobile
 
             AppCenter.Start("05b775fb-3acc-4b71-94a0-7dcc78cb68ca",
                   typeof(Analytics), typeof(Crashes));
-            MainPage = new MainPage();
+            Assembly assembly = typeof(App).GetTypeInfo().Assembly;
+            SampleBrowser.Maui.Base.BaseConfig.IsIndividualSB = true;
+            MainPage = SampleBrowser.Maui.Base.BaseConfig.MainPageInit(assembly);
         }
 
         bool OnReleaseAvailable(ReleaseDetails releaseDetails)
