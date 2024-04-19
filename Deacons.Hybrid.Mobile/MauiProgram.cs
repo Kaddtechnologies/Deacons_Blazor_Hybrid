@@ -12,6 +12,11 @@ using Microsoft.Maui.Controls;
 using MudBlazor.Services;
 using DevExpress.Maui;
 using CommunityToolkit.Maui;
+using Deacons.Hybrid.Shared;
+using Deacons.Hybrid.Shared.Utility;
+using DevExpress.Maui.Core;
+using DevExpress.Blazor;
+using Theme = DevExpress.Maui.Core.Theme;
 
 namespace Deacons.Hybrid.Mobile
 {
@@ -20,7 +25,8 @@ namespace Deacons.Hybrid.Mobile
         public static MauiApp CreateMauiApp()
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtec3RVQ2dfUUN1XUc=");
-
+            ThemeManager.UseAndroidSystemColor = false;
+            ThemeManager.Theme = new Theme(ThemeSeedColor.DarkGreen);
             var builder = MauiApp.CreateBuilder();
             
             builder
@@ -31,11 +37,14 @@ namespace Deacons.Hybrid.Mobile
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("InputLayoutIcons.ttf", "InputLayoutIcons");
+                    fonts.AddFont("univia-pro-regular.ttf", "Univia-Pro");
+                    fonts.AddFont("roboto-bold.ttf", "Roboto-Bold");
+                    fonts.AddFont("roboto-regular.ttf", "Roboto");
                 });
 
-            builder.Services.AddMauiBlazorWebView(); 
-            
+            builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddDevExpressBlazor(configure => configure.BootstrapVersion = BootstrapVersion.v5);
+
             builder.Services.AddSyncfusionBlazor();
             var assembly = Assembly.GetExecutingAssembly();
             using var stream = assembly.GetManifestResourceStream("Deacons.Hybrid.Mobile.appsettings.json");
@@ -55,12 +64,16 @@ namespace Deacons.Hybrid.Mobile
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://deaconapidev.myworkatcornerstone.com/") });
             builder.Services.AddMudServices();
 
+
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif
-         
-            return builder.Build();
+             var app = builder.Build();
+
+            UtilityService.Initialize(app.Services);
+
+            return app;
         }
     }
 }

@@ -1,8 +1,8 @@
 namespace Deacons.Hybrid.Mobile.Components.Pages;
 
-public partial class UserDetailsForm : ContentPage
+public partial class Settings : ContentPage
 {
-	public UserDetailsForm()
+	public Settings()
 	{
 		InitializeComponent();
 	}

@@ -10,7 +10,15 @@
                 <!--<ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
-            <Color x:Key="PageBackgroundColor">#512bdf</Color>
+            <LinearGradientBrush EndPoint="1,0" x:Key="PageBackgroundColor">
+                <GradientStop Color="#641f83"
+           Offset="0.1" />
+                <GradientStop Color="#28036d"
+           Offset="1.0" />
+            </LinearGradientBrush>
+            <!--<Color x:Key="PageBackgroundColor">
+               
+                #512bdf</Color>-->
             <Color x:Key="PrimaryTextColor">White</Color>
 
             <Style TargetType="Label">

@@ -1,10 +1,17 @@
-﻿using System.Globalization;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Deacons.Hybrid.Shared.Utility
 {
     public static class UtilityService
     {
+        public static IServiceProvider Services { get; private set; }
+
+        public static void Initialize(IServiceProvider serviceProvider) =>
+            Services = serviceProvider;
+
+        public static T GetService<T>() => Services.GetService<T>();
         public static string GetInitials(string names, string separator)
         {
             // Extract the first character out of each block of non-whitespace

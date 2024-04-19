@@ -20,23 +20,3 @@ public class AssignmentModel
     public DateTime? UploadDateTime { get; set; }
     public DateTime? ModifiedDateTime { get; set; }
 }
-    
-[Table("Posts")]
-public class PostModel
-{
-    [Key, Required]
-    [Dapper.Contrib.Extensions.ExplicitKey]
-    public Guid PostId { get; set; }
-    [ForeignKey("PostLocations.PostLocationId")]
-    public Guid PostLocationId { get; set; }
-    public string PostName { get; set; }
-}
-    
-[Table("PostLocations")]
-public class PostLocationsModel
-{
-    [Key, Required]
-    [Dapper.Contrib.Extensions.ExplicitKey]
-    public Guid PostLocationId { get; set; }
-    public string PostLocationName { get; set; }
-}

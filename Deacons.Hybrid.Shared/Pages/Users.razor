@@ -1,8 +1,9 @@
 ﻿@page "/users"
+@rendermode InteractiveRenderSettings.InteractiveRenderMode
 @using Deacons.Hybrid.Shared.Utility
+@using Microsoft.AspNetCore.Components.Web
 @using MudBlazor
 @inject HttpClient _httpClient
-@inject IUsersService userService
 @inject IDialogService _dialogService
 @inject NavigationManager _navigator
 @inject ISnackbar _snackbar
@@ -11,144 +12,303 @@
     <MudItem xs="12" Class="header-wrapper">Deacon Roster</MudItem>
     <MudItem xs="12" Class="header mx-5 d-flex flex-column flex-md-row">
         <MudItem Class="d-flex justify-center" Style="width: fit-content">
-            <MudAvatar Elevation="0" Class="avatar">
-                @if (!string.IsNullOrEmpty(ProfileUser.AvatarUrl))
+            @if (Loading)
+            {
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Circle" Width="100px" Height="100px" Style="margin: auto 20px;border: white 5px solid;"></MudSkeleton>
+            }
+            else
+            {
+                <MudAvatar Elevation="0" Class="avatar">
+                    @if (!string.IsNullOrEmpty(ProfileUser.AvatarUrl))
+                    {
+
+                        <MudImage Src="@(ProfileUser.AvatarUrl?? imgSrc)" Class="avatar-image"></MudImage>
+                    }
+                    else
+                    {
+                        <MudText>@GetAltName(ProfileUser)</MudText>
+                    }
+                </MudAvatar>
+            }
+            <MudItem Class="profile-info d-flex justify-center flex-column" Style="width: fit-content">
+                @if (Loading)
                 {
-                    <MudImage Src="@(ProfileUser.AvatarUrl?? imgSrc)" Class="avatar-image"></MudImage>
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="180px" Height="20px" Class="name mb-2"></MudSkeleton>
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="180px" Height="20px" Class="name mb-2"></MudSkeleton>
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="120px" Height="30px" Class="edit-profile" Style="border-radius: 20px"></MudSkeleton>
                 }
                 else
                 {
-                    <MudImage Src = "@(imgSrc)" Class = "avatar-image" ></MudImage >
+                    <MudItem Class="name">
+                        @{
+                            var name = ProfileUser.FirstName + " " + ProfileUser.LastName;
+                            <MudText>@(name ?? "")</MudText>
+                        }
+                    </MudItem>
+                    <MudItem Class="title">
+                        <MudText>@(ProfileUser.DeaconTitle ?? "")</MudText>
+                    </MudItem>
+                    <MudItem Class="edit-profile">
+                        @if (string.IsNullOrEmpty(ProfileUser.UserId.ToString()))
+                        {
+                            <MudButton IconClass="edit-icon" @onclick=@(() => OpenEditScreen(ProfileUser.UserId.ToString())) DisableElevation StartIcon="@Icons.Material.Filled.Edit" Variant="Variant.Filled"><MudText>Edit Profile</MudText></MudButton>
+                        }
+                    </MudItem>
                 }
-            </MudAvatar>
-            <MudItem Class="profile-info d-flex justify-center flex-column" Style="width: fit-content">
-                <MudItem Class="name">
-                    @{
-                        var name = ProfileUser.FirstName  + " " + ProfileUser.LastName;
-                        <MudText>@(name ?? "")</MudText> 
-                    }
-                </MudItem>
-                <MudItem Class="title">
-                    <MudText>@(ProfileUser.DeaconTitle ?? "")</MudText>
-                </MudItem>
-                <MudItem Class="edit-profile">
-                    @if (string.IsNullOrEmpty(ProfileUser.UserId.ToString()))
-                    {
-                        <MudButton IconClass="edit-icon" @onclick=@(() => OpenEditScreen(ProfileUser.UserId.ToString())) DisableElevation StartIcon="@Icons.Material.Filled.Edit" Variant="Variant.Filled"><MudText>Edit Profile</MudText></MudButton>
-                    }
-                </MudItem>
             </MudItem>
         </MudItem>
         <MudItem Class="d-md-flex d-none justify-center flex-column ml-6" Style="width: fit-content">
             <MudDivider Vertical Style="height: 62%;color: darkgray;"></MudDivider>
         </MudItem>
         <MudItem Class="profile-contact d-flex flex-column flex-sm-row align-self-start gap-4 gap-sm-6 pt-6 pt-sm-5 pb-2 pb-sm-1 pt-md-0 pb-md-0 my-auto">
-            @if (!string.IsNullOrEmpty(ProfileUser.City) || !string.IsNullOrEmpty(ProfileUser.State))
+            @if (Loading)
             {
                 <MudItem Class="d-flex my-auto location">
-                    <MudIcon Icon="@Icons.Material.Filled.LocationOn"></MudIcon>
-                    <MudText>@ProfileUser.City@((!string.IsNullOrEmpty(ProfileUser.City) && !string.IsNullOrEmpty(ProfileUser.State)) ? ", " : "") @ProfileUser.State</MudText>
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="160px" Height="20px"></MudSkeleton>
+                </MudItem>
+                <MudItem Class="d-flex my-auto location">
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="160px" Height="20px"></MudSkeleton>
+                </MudItem>
+                <MudItem Class="d-flex my-auto location">
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="160px" Height="20px"></MudSkeleton>
                 </MudItem>
             }
-            @if (!string.IsNullOrEmpty(ProfileUser.PhoneNumber))
+            else
             {
-                <MudItem Class="d-flex my-auto phone">
-                    <MudIcon Icon="@Icons.Material.Filled.Call"></MudIcon>
-                    <MudText>@ProfileUser.PhoneNumber</MudText>
-                </MudItem>
-            }
-            @if (!string.IsNullOrEmpty(ProfileUser.Email))
-            {
-                <MudItem Class="d-flex my-auto email">
-                    <MudIcon Icon="@Icons.Material.Filled.Email"></MudIcon>
-                    <MudText>@ProfileUser.Email</MudText>
-                </MudItem>  
+                @if (!string.IsNullOrEmpty(ProfileUser.City) || !string.IsNullOrEmpty(ProfileUser.State))
+                {
+                    <MudItem Class="d-flex my-auto location">
+                        <MudIcon Icon="@Icons.Material.Filled.LocationOn"></MudIcon>
+                        <MudText>@ProfileUser.City@((!string.IsNullOrEmpty(ProfileUser.City) && !string.IsNullOrEmpty(ProfileUser.State)) ? ", " : "") @ProfileUser.State</MudText>
+
+
+
+
+
+
+
+                    </MudItem>
+
+
+
+
+
+
+
+
+                }
+                @if (!string.IsNullOrEmpty(ProfileUser.PhoneNumber))
+                {
+                    <MudItem Class="d-flex my-auto phone">
+                        <MudIcon Icon="@Icons.Material.Filled.Call"></MudIcon>
+                        <MudText>@ProfileUser.PhoneNumber</MudText>
+                    </MudItem>
+                }
+                @if (!string.IsNullOrEmpty(ProfileUser.Email))
+                {
+                    <MudItem Class="d-flex my-auto email">
+                        <MudIcon Icon="@Icons.Material.Filled.Email"></MudIcon>
+                        <MudText>@ProfileUser.Email</MudText>
+                    </MudItem>
+                }
             }
         </MudItem>
     </MudItem>
     <MudItem Class="tabs pt-sm-5 d-flex" xs="12">
-        @foreach(var item in DeaconTitles)
+        @if (Loading)
         {
-            <MudItem Class="tab d-flex" Style="background: white;cursor: pointer" @onclick=@(() => Filter(item))>
-                <MudItem Class="tab-icon">
-                    @if (item == "Administrator")
-                    {
-                        <MudImage Src="images/protection.png"></MudImage>
-                    }
-                    else if (item == "Deacon")
-                    {
-                        <MudImage Src="images/team.png"></MudImage>
-                    }
-                    else if (item == "D.I.T")
-                    {
-                        <MudImage Src="images/group.png"></MudImage>
-                    }
-                  
-                    else if (item == "Yokefellow")
-                    {
-                    <MudImage Src="images/human-resources.png"></MudImage>
-                    }
-                    else if(item == "All")
-                    {
-                        <MudImage Src="images/all.png"></MudImage>
-                    }
+            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="260px" Height="92px" Class="tab d-flex"></MudSkeleton>
+            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="260px" Height="92px" Class="tab d-flex"></MudSkeleton>
+            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="260px" Height="92px" Class="tab d-flex"></MudSkeleton>
+        }
+        else
+        {
+            @foreach (var item in DeaconTitles)
+            {
+                <MudItem Class="tab d-flex" Style="background: white;cursor: pointer" @onclick=@(() => Filter(item))>
+                    <MudItem Class="tab-icon">
+                        @if (item == "Administrator")
+                        {
+                            <MudImage Src="images/protection.png"></MudImage>
+                        }
+                        else if (item == "Deacon")
+                        {
+                            <MudImage Src="images/team.png"></MudImage>
+                        }
+                        else if (item == "D.I.T")
+                        {
+                            <MudImage Src="images/group.png"></MudImage>
+                        }
+
+                        else if (item == "Yokefellow")
+                        {
+                            <MudImage Src="images/human-resources.png"></MudImage>
+                        }
+                        else if (item == "All")
+                        {
+                            <MudImage Src="images/all.png"></MudImage>
+
+
+
+
+
+
+
+
+
+
+
+                        }
+
+                    </MudItem>
+                    <MudItem Class="tab-details d-flex flex-column justify-center">
+                        <MudText>@item</MudText>
+                        @if (item == "All")
+                        {
+                            <MudText>@UsersList.Count()</MudText>
+                        }
+                        else
+                        {
+                            <MudText>Count: @(UsersList.Where(x => x.DeaconTitle == item).Count())</MudText>
+                        }
+                    </MudItem>
                 </MudItem>
-                <MudItem Class="tab-details d-flex flex-column justify-center">
-                    <MudText>@item</MudText>
-                    @if(item == "All")
-                    {
-                        <MudText>@UsersList.Count()</MudText>
-                    }
-                    else
-                    {
-                        <MudText>Count: @(UsersList.Where(x => x.DeaconTitle == item).Count())</MudText>
-                    }
-                </MudItem>
-            </MudItem>
+            }
         }
     </MudItem>
-    <MudItem Class="headline">
-        <MudText>Roster</MudText>
-    </MudItem>
+    @if (Loading)
+    {
+        <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Height="80px" Style="margin: 16px 20px;border-radius: 8px;border: 2px solid #f0f0f0"></MudSkeleton>
+    }
+    else
+    {
+        <MudItem Class="headline">
+            <MudText>Roster</MudText>
+        </MudItem>
+    }
     <MudItem Class="users-table mx-5 pb-8">
-        <MudTable @bind-SelectedItem="ProfileUser" Elevation="0" RowsPerPage="10" Dense=true Items="@SelectedUsers" HeaderClass="table-header" Breakpoint="Breakpoint.Sm" Striped="true"
+        <MudTable @bind-SelectedItem="ProfileUser" Elevation="0" RowsPerPage="10" Dense=true Items="@(Loading ? DummySkeletonUsers : SelectedUsers)" HeaderClass="table-header" Breakpoint="Breakpoint.Sm" Striped="true"
                   CustomHeader="true" CustomFooter="true">
             <HeaderContent>
-                <MudTHeadRow>
-                    <MudTh>First Name</MudTh>
-                    <MudTh>Last Name</MudTh>
-                    <MudTh>Email</MudTh>
-                    <MudTh>Phone Number</MudTh>
-                    <MudTh>Last Login date</MudTh>
-                    <MudTh Style="text-align:center">Action</MudTh>
-                </MudTHeadRow>
+                @if (Loading)
+                {
+                    <MudTHeadRow>
+                        <MudTh></MudTh>
+                        @foreach (var item in Enumerable.Range(0, 5))
+                        {
+                            <MudTh>
+                                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="90px" Height="18px"></MudSkeleton>
+                            </MudTh>
+                        }
+                        <MudTh Class="d-flex justify-center">
+                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="90px" Height="18px"></MudSkeleton>
+                        </MudTh>
+                    </MudTHeadRow>
+                }
+                else
+                {
+                    <MudTHeadRow>
+                        <MudTh Style="width: 88px;"></MudTh>
+                        <MudTh>First Name</MudTh>
+                        <MudTh>Last Name</MudTh>
+                        <MudTh>Email</MudTh>
+                        <MudTh>Phone Number</MudTh>
+                        <MudTh>Last Login date</MudTh>
+                        <MudTh Style="text-align:center">Action</MudTh>
+                    </MudTHeadRow>
+                }
             </HeaderContent>
+
             <RowTemplate>
-                <MudTd Class="pt-md-2 pt-4" DataLabel="First Name">@(context.FirstName ?? "")</MudTd>
-                <MudTd DataLabel="Last Name">@(context.LastName ?? "")</MudTd>
-                <MudTd DataLabel="Email">@(context.Email ?? "")</MudTd>
-                <MudTd DataLabel="Phone Number">@(context.PhoneNumber ?? "")</MudTd>
-                <MudTd DataLabel="Last Login Date">
-                    @(context.LastLoginDate is not null ? context.LastLoginDate.Value.ToString("dd MMMM, yyyy") : "-")
-                </MudTd>
-                <MudTd Class="action-button-class pb-3 pb-md-2">
-                    <MudItem Class="action-buttons" Style="width: fit-content;margin: auto;">
-                        <MudButton OnClick="@(() => _navigator.NavigateTo($"/edit/{UsersList.FirstOrDefault().UserId.ToString()}"))" DisableElevation Variant=Variant.Outlined><MudText>Edit</MudText></MudButton>
-                        <MudButton DisableElevation OnClick=@(async () => await DeleteUser(context)) Variant="Variant.Outlined"><MudText>Delete</MudText></MudButton>
-                    </MudItem>
-                </MudTd>
+                @if (Loading)
+                {
+                    <MudTd DataLabel=" " Class="justify-center py-md-1 pr-md-0 pl-md-5 px-4">
+                        <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Circle" Width="53px" Height="53px"></MudSkeleton>
+                    </MudTd>
+                    @foreach (var item in Enumerable.Range(0, 5))
+                    {
+                        <MudTd Class="@(item == 0 ? "mt-3" : "")">
+                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Height="25px" Class="px-lg-16 d-flex" Style="width: 100%;"></MudSkeleton>
+                        </MudTd>
+                    }
+                    <MudTd>
+                        <MudItem Style="width: 100%;margin: auto;display: flex;justify-content: center;gap: 10px;">
+                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="90px" Height="40px" Class="edit-profile mb-3" Style="border-radius: 20px"></MudSkeleton>
+                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle" Width="90px" Height="40px" Class="edit-profile mb-3" Style="border-radius: 20px"></MudSkeleton>
+                        </MudItem>
+                    </MudTd>
+                }
+                else
+                {
+                    <MudTd DataLabel=" " Class="justify-center py-md-1 pr-md-0 pl-md-5 px-4">
+                        <MudAvatar Elevation="0" Class="grid-avatar">
+                            @if (!string.IsNullOrEmpty(context.AvatarUrl))
+                            {
+
+                                <MudImage Alt="@GetAltName(context)" Src="@(context.AvatarUrl??string.Empty)" Class="avatar-image"></MudImage>
+                            }
+                            else
+                            {
+                                <MudText>@GetAltName(context)</MudText>
+                            }
+                        </MudAvatar>
+                    </MudTd>
+                    <MudTd Class="pt-md-2 pt-4" DataLabel="First Name">@(context.FirstName ?? "")</MudTd>
+                    <MudTd DataLabel="Last Name">@(context.LastName ?? "")</MudTd>
+                    <MudTd DataLabel="Email">@(context.Email ?? "")</MudTd>
+                    <MudTd DataLabel="Phone Number">@(context.PhoneNumber ?? "")</MudTd>
+                    <MudTd DataLabel="Last Login Date">
+                        @(context.LastLoginDate is not null ? context.LastLoginDate.Value.ToString("dd MMMM, yyyy") : "-")
+                    </MudTd>
+                    <MudTd Class="action-button-class pb-3 pb-md-2">
+                        <MudItem Class="action-buttons" Style="width: fit-content;margin: auto;">
+                            <MudButton @onclick=@(() => OpenEditScreen(UsersList?.FirstOrDefault()?.UserId.ToString())) DisableElevation Variant=Variant.Outlined><MudText>Edit</MudText></MudButton>
+                            <MudButton DisableElevation OnClick=@(async () => await DeleteUser(context)) Variant="Variant.Outlined"><MudText>Delete</MudText></MudButton>
+                        </MudItem>
+                    </MudTd>
+                }
             </RowTemplate>
             <PagerContent>
-                <MudTablePager HorizontalAlignment=HorizontalAlignment.Right HideRowsPerPage=true />
+                @if (!Loading)
+                {
+                    <MudTablePager HorizontalAlignment=HorizontalAlignment.Right HideRowsPerPage=true />
+                }
             </PagerContent>
         </MudTable>
+        <SfFab Position="FabPosition.BottomRight" style="background-image: linear-gradient(to top, #1b014a, #612d78);" IconCss="fab-icons fab-icon-people" @onclick="AddNewUserClick">Add User</SfFab>
+
     </MudItem>
-    <MudFab Style="position:fixed; bottom:0;right:0" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick=@(() => AddNewUserClick()) />
 </MudItem>
 
 
 <style>
-    .page-wrapper{
+
+    @@font-face {
+        font-family: 'fab-icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    [class^="fab-icon-"],
+    [class*=" fab-icon-"] {
+        font-family: 'fab-icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: inherit;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .fab-icon-people:before {
+        content: "\e70a";
+    }
+
+    .page-wrapper {
         background: #e7f5fd;
         min-height: 100vh;
     }
@@ -169,46 +329,54 @@
         position: relative;
     }
 
-    .avatar{
+    .avatar {
         border-radius: 5rem;
         width: 100px !important;
         height: 100px !important;
         margin: auto 20px;
         border: white 5px solid;
-        background-color: hsl(44.7, 98.4%, 50%);
+        background-color: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
     }
 
-    .avatar-image{
-        object-fit: contain !important;
+    .grid-avatar {
+        border-radius: 5rem;
+        width: 110px !important;
+        height: 110px !important;
+        border: white 5px solid;
+        background-color: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
     }
 
-    .name p{
+    .avatar-image {
+        object-fit: cover !important;
+    }
+
+    .name p {
         font-size: 18px;
         font-weight: 600;
     }
 
-    .title p{
+    .title p {
         font-size: 16px;
         color: darkgray;
-    } 
+    }
 
-    .edit-profile button, .action-buttons button:hover{
+    .edit-profile button, .action-buttons button:hover {
         border-radius: 20px;
         padding: 7px 20px;
         background: #01afd6 !important;
     }
 
-    .action-buttons button{
+    .action-buttons button {
         border-radius: 20px;
         padding: 7px 20px;
         background: white !important;
     }
-    
-    .edit-profile button{
+
+    .edit-profile button {
         margin-top: 8px;
     }
 
-    .edit-profile p, .action-buttons button:hover p{
+    .edit-profile p, .action-buttons button:hover p {
         font-size: 14px;
         color: white;
     }
@@ -219,25 +387,25 @@
     }
 
 
-    .edit-icon{
+    .edit-icon {
         color: white;
     }
 
-    .edit-icon .mud-icon-root.mud-svg-icon {
-        fill:white;
-    }
+        .edit-icon .mud-icon-root.mud-svg-icon {
+            fill: white;
+        }
 
-    .profile-contact{
+    .profile-contact {
         margin-left: 24px;
     }
 
-    .profile-contact p{
-        padding: 0 8px;
-    }
+        .profile-contact p {
+            padding: 0 8px;
+        }
 
-    .profile-contact .mud-icon-root.mud-svg-icon {
-        fill: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
-    }
+        .profile-contact .mud-icon-root.mud-svg-icon {
+            fill: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+        }
 
     .tabs {
         overflow-x: scroll;
@@ -247,11 +415,11 @@
         padding-top: 18px;
     }
 
-    .tabs::-webkit-scrollbar {
-        display: none;
-    }
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
 
-    .tab{
+    .tab {
         border-radius: 10px;
         margin: 10px 0px 10px 20px;
         padding: 14px 0px;
@@ -260,46 +428,46 @@
         width: 30vw;
     }
 
-    .tab p{
-        font-weight: 600;
-    }
+        .tab p {
+            font-weight: 600;
+        }
 
-    .tab-details{
+    .tab-details {
         margin: 10px 0px 10px 16px;
     }
 
-    .tab-icon{
+    .tab-icon {
         margin: auto 0px auto 20px;
         border-radius: 8px;
         padding: 8px 0px 8px 8px;
         color: white;
     }
 
-    .tab-icon img {
-        width: 36px;
-        margin-top: 3px;
-    }
+        .tab-icon img {
+            width: 36px;
+            margin-top: 3px;
+        }
 
-    .headline{
+    .headline {
         background: white;
         margin: 16px 20px;
         border-radius: 8px;
-        border: 2px solid #f0f0f0 ;
+        border: 2px solid #f0f0f0;
     }
 
-    .headline p{
-        padding: 16px 12px;
-        font-size: 24px;
-    }
+        .headline p {
+            padding: 16px 12px;
+            font-size: 24px;
+        }
 
-    .action-button-class{
+    .action-button-class {
         width: auto;
     }
 
     .users-table tbody .mud-table-row:nth-of-type(2n) {
         background-color: #f2fdff;
     }
-    
+
     .users-table tbody .mud-table-row:nth-of-type(2n+1) {
         background-color: white !important;
     }
@@ -308,11 +476,11 @@
         border: 2px solid #01afd6;
     }
 
-    .table-header tr{
+    .table-header tr {
         background-color: #f2fdff !important;
     }
 
-    th{
+    th {
         padding: 18px !important
     }
 
@@ -320,8 +488,9 @@
         padding: 8px 24px 8px 16px;
     }
 
-    .mud-table-cell{
+    .mud-table-cell {
         border-bottom: 2px solid #edf1f4;
+        font-size: 1.0rem !important
     }
 
     .mud-table-container {
@@ -330,7 +499,7 @@
         border-bottom: 0;
     }
 
-    .mud-table{
+    .mud-table {
         border-radius: 8px;
     }
 
@@ -342,27 +511,47 @@
 </style>
 
 
-@code{
-        User ProfileUser { get; set; } = new();
-        List<User> UsersList { get; set; } = new();
-        List<User> SelectedUsers { get; set; } = new();
-        List<string> DeaconTitles { get; set; } = new();
-    public string imgSrc = "https://pottershousedeacons.blob.core.windows.net/imagescontainer/avatars/default_avatar.jpg";
+@code {
 
-    protected override async Task OnInitializedAsync(){
+    [Parameter]
+    public RenderFragment? renderFragment { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> AddNewUserClick { get; set; }
+
+    [Parameter]
+    public EventCallback<string> EditUserClick { get; set; }
+
+
+    User ProfileUser { get; set; } = new();
+    List<User> UsersList { get; set; } = new();
+    List<User> SelectedUsers { get; set; } = new();
+    List<User> DummySkeletonUsers = new List<User>(new User[3]);
+    List<string> DeaconTitles { get; set; } = new();
+    public string imgSrc = "https://pottershousedeacons.blob.core.windows.net/imagescontainer/avatars/default_avatar.jpg";
+    bool Loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
         var response = await _httpClient.GetAsync("api/Users/GetAllUsers");
         if (response.IsSuccessStatusCode)
         {
-            UsersList = (List<User>)await userService.GetAllUsers();
+            UsersList = await response.Content.ReadFromJsonAsync<List<User>>();
             ProfileUser = UsersList.FirstOrDefault();
             SelectedUsers = UsersList.ToList();
-            DeaconTitles.AddRange(new []{ "Yokefellow", "Deacon", "D.I.T", "Administrator", "All"});
+            DeaconTitles.AddRange(new[] { "Yokefellow", "Deacon", "D.I.T", "Administrator", "All" });
         }
+        Loading = false;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Loading = false;
     }
 
     private void Filter(string title)
     {
-        if(title == "All")
+        if (title == "All")
         {
             SelectedUsers = UsersList.ToList();
         }
@@ -370,18 +559,14 @@
         {
             SelectedUsers = UsersList.Where(x => x.DeaconTitle == title).ToList();
         }
-    }
-
-
-    void AddNewUserClick()
-    {
-
+        StateHasChanged();
     }
 
     void OpenEditScreen(string userId)
     {
-        _navigator.NavigateTo($"edit/{userId}");
+        EditUserClick.InvokeAsync(userId);
     }
+
 
     private async Task DeleteUser(User user)
     {
@@ -398,14 +583,36 @@
         if (!result.Canceled)
         {
             user.IsActive = "False";
-            var response = await userService.DisableUser(user);
-            UsersList.Remove(user);
-            SelectedUsers.Remove(user);
-            if (ProfileUser.UserId == user.UserId)
+            var response = await _httpClient.PostAsJsonAsync<User>("api/Users/DisableUser", user);
+            if (response.IsSuccessStatusCode)
             {
-                ProfileUser = SelectedUsers.FirstOrDefault();
+                UsersList.Remove(user);
+                SelectedUsers.Remove(user);
+                if (ProfileUser.UserId == user.UserId)
+                {
+                    ProfileUser = SelectedUsers.FirstOrDefault();
+                }
+                _snackbar.Add($"User is deleted successfully", Severity.Success);
             }
-            _snackbar.Add($"User is deleted successfully", Severity.Success);
+            else
+            {
+                _snackbar.Add($"Something went wrong.", Severity.Error);
+            }
         }
+    }
+
+    private string GetAltName(User user)
+    {
+        string altText = string.Empty;
+        if (user.FirstName is not null)
+        {
+            altText += user.FirstName.FirstOrDefault();
+        }
+        if (user.LastName is not null)
+        {
+            altText += user.LastName.FirstOrDefault();
+        }
+
+        return altText;
     }
 }

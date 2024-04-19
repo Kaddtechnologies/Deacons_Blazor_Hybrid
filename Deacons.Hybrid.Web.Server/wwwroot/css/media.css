@@ -1,0 +1,365 @@
+/*breakpoints
+sm: 576px,
+md: 768px,
+lg: 992px,
+xl: 1200px,
+xxl: 1400px
+*/
+
+@media screen and (max-width: 1400px){
+  /*login page css start*/
+  .login {
+    padding: 6rem 3rem 12rem;
+  }
+
+  .login .login-form,
+  .login .signup-form {
+    padding:  0 4rem;
+  }
+  /*login page css end*/
+
+  /*Home page css*/
+
+  /*Home page css end*/
+}
+
+@media screen and (max-width: 1200px){
+
+  html{
+    font-size: 85%;
+  }
+/*login page css start*/ 
+  .login {
+    padding: 6rem 3rem 12rem;
+  }
+
+  .login .login-form,
+  .login .signup-form {
+    padding:  0 3rem;
+  }
+
+  .forgetpassword a {
+      font-size: 0.88rem;
+  }
+  .form-label {
+    font-size: 1rem;
+  }
+  /*login page css start end*/
+
+  .btn-signup, .btn-discard, .btn-save{
+    line-height: 3rem;
+  }
+
+}
+
+@media screen and (max-width: 992px){
+  .btn-signup, .btn-discard, .btn-save{
+    font-size: 1.2rem;
+    line-height: 3.2rem;
+  }
+  html{
+      font-size: 75%;
+    }
+    .eye-icon {
+    right: 5%;
+    top: 31px;
+}
+.calendar-bl {
+    padding-top: 40px;
+}
+.flex-column-mb{
+  flex-direction: column;
+}
+.navbar-bl{
+  margin-left: -56px;
+}
+.hide-navbar{
+  margin-left: 0;
+}
+a.click-nav-btn {
+    left: 102px;
+    top: 50%;
+}
+.hide-navbar a.click-nav-btn {
+    left: 88px;
+}
+/* .main-wrapper,
+.main-wrapper.pad-min {
+    padding: 130px 15px 35px 15px;
+} */
+.searchbar,
+.hidden-title-md{
+  display: none;
+}
+.search-btn-mb{
+  display: inline-block!important;
+}
+.show-search {
+    display: inline-block;
+    position: absolute;
+    top: 80px;
+    width: 100%;
+    left: 0;
+    margin-right: 0;
+    padding: 10px 20px;
+    height: auto;
+    border-radius: 0;
+    outline: none;
+}
+
+.search-control {
+    font-size: 1.1rem;
+}
+.search-btn {
+    left: 30px;
+    top: 8px;
+    font-size: 1.3rem;
+}
+.home-title-mb,
+.logo-mb{
+  display: inline-block;
+}
+.notification-bl li {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    margin-left: 2px;
+}
+.notification-bl li a i {
+    font-size: 16px;
+}
+.user-dropdown {
+    margin-left: 10px;
+}
+.user-dropdown span i {
+    font-size: 22px;
+}
+.user-dropdown span {
+    width: 48px;
+    height: 48px;
+    line-height: 50px;
+}
+.logo-top a img:first-child{
+  display: none!important;
+}
+.logo-mb{
+  width: 90px;
+}
+
+
+/*setting page css*/
+.company-columnright {
+    width: 70%;
+}
+#progressbar li strong {
+    line-height: 31px;
+}
+/*setting page css end*/
+
+}
+
+.mb-slider{
+    display: none;
+}
+.calender-hide-dk{
+    display: none;
+}
+
+@media screen and (max-width: 768px){
+.calender-hide-mb{
+    display: none;
+}
+.calendar-table th {
+    height: 40px;
+}
+.appointment-info {
+    width: 50%;
+    height: 40px;
+    padding-top: 10px;
+}
+.calendar-table td{
+    position: relative;
+}
+.table-cleint {
+    height: 82px!important;
+    width: 100%!important;
+    left: 0;
+    margin-left: 0!important;
+    z-index: 1;
+}
+.calender-hide-dk{
+    display: inline-block!important;
+}
+.calendar-bl {
+    padding-top: 0;
+}
+.notification-article {
+    margin-bottom: 30px;
+}
+.mb-slider-bl{
+    text-align: center;
+    scroll-snap-type: x mandatory;
+    display: flex;
+    overflow-x: scroll;
+    transition: .25s left ease;
+}
+.mb-slider-bl div{
+    width: 100%;
+    display: inline-block;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+}
+  /*login page css start*/
+  .login {
+    padding: 2rem 2rem 2rem;
+  }
+  .floating-bl {
+    display: none;
+  }
+  .login .login-form,
+  .login .signup-form {
+    padding:  0;
+  }
+  .login-logo{
+    width: 110px;
+    margin-bottom: 0;
+  }
+  .login h1 {
+    margin-bottom: 2rem;
+  }
+  .circle-green{
+  width: 200px;
+    height: 200px;
+}
+.circle-green img {
+    width: 113px;
+}
+.event-save-modal .modal-body {
+    padding: 20px 20px 30px;
+}
+.event-save-modal h4 {
+    margin-bottom: 32px;
+}
+.signup-form h2 {
+    padding: 2rem 0 2rem;
+}
+
+/*login page css end*/
+/*popup css*/
+.modal-body {
+    padding: 20px;
+}
+.add-event-modal .width50 {
+    width: 100%;
+}
+.add-event-modal .width50:first-child,
+.add-client-modal .width50:first-child{
+  margin-bottom: 1.5rem!important;
+}
+.form-time .width50 {
+    width: 100%!important;;
+}
+.form-date {
+    width: 100%;
+    margin-bottom: 1.5rem!important;
+}
+.form-time {
+    width: 100%;
+}
+/*popup css*/
+/*client Referrals page css*/
+.scrollbar-div{
+  overflow-x: scroll;
+}
+.scrollbar-div table{
+  width: 900px;
+}
+.client-referrals h2 {
+    font-size: 1.6rem;
+  }
+.referrals-search-icon li {
+    padding: 0 8px;
+}
+/*client Referrals page css end*/
+
+/*setting page css*/
+.company-column {
+    width: 70px;
+    margin-right: 10px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.company-tab {
+    position: relative;
+}
+.company-columnright {
+    padding-left: 84px;
+    width: 100%;
+}
+.company-columnright .form-time .width50 {
+    margin-bottom: 1.5rem!important;
+}
+.upload-btn span {
+    padding: 2px 0px 2px 15px;
+    background-position: left 2px;
+}
+.setting-wrapper h2{
+  margin-bottom: 24px;
+}
+.setting-tab  li.nav-item {
+    margin-bottom: 19px;
+}
+.setting-tab .tab-content {
+    padding-top: 15px;
+}
+.form-card .form-time .width50{
+  margin-bottom: 1.5rem!important;
+}
+/*setting page css end*/
+#progressbar {
+    position: relative;
+    width: 100%;
+    margin-bottom: 32px!important;
+}
+li.active-navbar a span {
+    line-height: 40px;
+}
+
+.nav-dots-bl{
+    display: inline-block!important;
+}
+}
+
+@media screen and (max-width: 479px){
+  .btn-signup, .btn-discard, .btn-save {
+      font-size: 1.1rem;
+      line-height: 3.5rem;
+  }
+  .setting-btn a {
+    margin-left: 7px;
+  }
+}
+
+@media screen and (min-width: 0px) and (max-width: 575px) {
+   .smallLogo{
+    display: block;
+  }  
+  .largeLogo{
+    display: none !important;
+  }
+   .smallButton{
+    display: grid;
+   }
+}
+@media screen and (min-width: 576px) {
+  .smallLogo{
+    display: none;
+  }  
+  .largeLogo{
+    display: block;
+  }
+  .smallButton{
+    display: inline;
+   }
+}

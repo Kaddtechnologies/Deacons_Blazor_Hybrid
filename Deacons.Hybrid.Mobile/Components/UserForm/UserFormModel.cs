@@ -1,4 +1,5 @@
-﻿using Syncfusion.Maui.DataForm;
+﻿using Deacons.Hybrid.Shared.Models;
+using Syncfusion.Maui.DataForm;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,9 +19,11 @@ namespace Deacons.Hybrid.Mobile.Components.UserForm
         string city;
         string state;
         string email;
-        int zipcode;
+        string zipcode;
         string phone;
         string photoPath  = "https://pottershousedeacons.blob.core.windows.net/imagescontainer/avatars/1000006725.jpg";
+        Guid? titleId;
+
         public int? ID
         {
             get
@@ -30,6 +33,20 @@ namespace Deacons.Hybrid.Mobile.Components.UserForm
             set
             {
                 id = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        [Required(ErrorMessage = "Deacon Title cannot be empty")]
+        public Guid? TitleId
+        {
+            get
+            {
+                return titleId;
+            }
+            set
+            {
+                titleId = value;
                 RaisePropertyChanged();
             }
         }
@@ -108,7 +125,7 @@ namespace Deacons.Hybrid.Mobile.Components.UserForm
                 RaisePropertyChanged();
             }
         }
-        public int ZipCode
+        public string ZipCode
         {
             get
             {

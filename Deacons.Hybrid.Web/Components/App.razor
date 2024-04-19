@@ -14,11 +14,12 @@
     <link href="_content/Syncfusion.Blazor.Themes/bootstrap5.css" rel="stylesheet" />
     <link href="_content/Deacons.Hybrid.Shared/syncfusion-schedular.css" rel="stylesheet" />
     <HeadOutlet @rendermode="InteractiveServer" />
+
 </head>
 
 <body>
-    <Routes @rendermode="@InteractiveServer" />
-    <script src="_framework/blazor.web.js"></script>
+    <Routes @rendermode="@RenderMode.InteractiveServer" />
+    <script src="/_framework/blazor.server.js" autostart="false"></script>
     <script>
         function copyClipboard() {
             /* Get the text field */
@@ -31,13 +32,13 @@
             document.querySelector('#btn-copy').innerHTML = 'Copied';
             var x = document.getElementById("btn-copy");
             setTimeout(() => { x.innerHTML = "Copy" }, 6000);
-
         }
 
         window.Alert = function (message) {
             alert(message);
         }
     </script>
+
 </body>
 
 </html>

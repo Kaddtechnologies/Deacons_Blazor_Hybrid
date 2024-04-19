@@ -1,0 +1,21 @@
+﻿@page "/usermanagement"
+@inject NavigationManager Navigation
+
+<Users AddNewUserClick="@AddNewUserClick" EditUserClick="@EditUserClick" />
+
+@code {
+
+    private void AddNewUserClick(MouseEventArgs e)
+    {
+        Navigation.NavigateTo("createuser");
+    }
+
+
+    private void EditUserClick(string userId)
+    {
+        Navigation.NavigateTo("/createuser", new NavigationOptions
+            {
+                HistoryEntryState = userId
+    });
+    }
+}

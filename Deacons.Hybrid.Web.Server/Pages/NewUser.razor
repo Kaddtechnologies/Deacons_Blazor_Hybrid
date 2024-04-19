@@ -1,0 +1,482 @@
+﻿@page "/createuser"
+<h3>Create New User</h3>
+
+
+<div id="sidelistwrapper">
+
+    <div class="listmaincontent e-sidebar-context">
+        <div class="e-content-animation" style="transform: translateX(0px); margin-left: 0px;">
+            <div id="listContent" class="listcontent">
+                <app-client _nghost-ng-c2137605247="" class="ng-star-inserted">
+                    <section class="main-wrapper horizontalform-custom">
+                        <div class="container" style="padding-top: 2rem !important; max-width: 80vw;">
+                            <div class="row">
+                                <div class="col-md-12 tab-style">
+
+                                    <div id="myTabContent" class="tab-content">
+                                        <div id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0" class="tab-pane fade show active ng-touched ng-valid ng-dirty">
+                                            <div id="common">
+                                                <div class="row-fluid">
+                                                    <div class="span6">
+                                                        <h1 class="title">
+                                                            <img src="images/edit-icon.png" alt="Edit" class="mb-4"><br>
+                                                            Edit Details for Fredrick Gislason
+                                                        </h1>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="position: relative;">
+                                                <fieldset>
+                                                    <div class="form-horizontal">
+                                                        <div class="container-fluid p-5 pb-0">
+                                                            <div class="row form-row">
+                                                                <div class="col-lg-6 col-md-12 p-0">
+                                                                    <fieldset>
+                                                                        <div class="control-group">
+                                                                            <h4 class="title" style="display: inline-block;">Deacon Information</h4>
+                                                                            <span id="warningDuplicatedClient" class="badge" style="display: none;"></span>
+                                                                        </div>
+                                                                        <div class="control-group">
+                                                                            <div class="controls">
+                                                                                <nz-form-item class="ant-form-item ant-row">
+                                                                                    <nz-form-control nzerrortip="Please input Title!"
+                                                                                                     class="ant-form-item-control ng-tns-c630436078-13 ant-col ng-star-inserted">
+                                                                                        <div class="ant-form-item-control-input ng-tns-c630436078-13">
+                                                                                            <div class="ant-form-item-control-input-content ng-tns-c630436078-13">
+                                                                                                <nz-input-group class="ng-tns-c630436078-13 ant-input-group">
+                                                                                                    <select name="DeaconPosition"
+                                                                                                            tabindex="1"
+                                                                                                            formcontrolname="DeaconPosition"
+                                                                                                            nz-select=""
+                                                                                                            placeholder="Deacon Position"
+                                                                                                            class="span6 form-control">
+                                                                                                        <option value="5ECBD763-893D-400B-AFC8-12D6C8E6CF17" class="ng-star-inserted"> Administration </option>
+                                                                                                        <option value="4ABB13A3-E3B1-462E-9551-177202E32024" class="ng-star-inserted"> Captain </option>
+                                                                                                        <option value="EA618708-BB62-4F49-A17C-D23D3492D5AA" class="ng-star-inserted"> Choir </option>
+                                                                                                        <option value="7AF85F53-668E-47D2-969D-09B88F5C3F39" class="ng-star-inserted"> Deacon </option>
+                                                                                                        <option value="F42EAE45-0299-4155-8BB8-DF6CD896CAD9" class="ng-star-inserted"> Host </option>
+                                                                                                        <option value="5EBBBEF2-E07E-4959-A885-E9D261E51ACC" class="ng-star-inserted"> Parking Lot </option>
+                                                                                                        <option value="1CD6725B-0F32-451A-B6FE-5873968A1007" class="ng-star-inserted"> Team Lead D.I.T </option>
+                                                                                                        <option value="99156EB1-1B6C-4092-9ECC-C8DF4B01D1AB" class="ng-star-inserted"> Team Lead Yoke </option>
+                                                                                                        <option value="94BF612D-6B92-465D-88FC-DE997E29CA91" class="ng-star-inserted"> Team Lead </option>
+                                                                                                        <option value="F80D3500-DC89-4E92-9ED0-974471B03947" class="ng-star-inserted"> Sgt of Arms </option>
+                                                                                                        <option value="99EEA380-DA26-40CC-AB19-7EEF79432BE8" class="ng-star-inserted"> Security </option>
+                                                                                                        <!---->
+                                                                                                    </select>
+                                                                                                    <!----><!----><!----><!----><!----><!---->
+                                                                                                </nz-input-group>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!----><!---->
+                                                                                    </nz-form-control>
+                                                                                </nz-form-item>
+                                                                            </div>
+                                                                            <div class="controls">
+                                                                                <nz-form-item class="ant-form-item ant-row">
+                                                                                    <nz-form-control nzerrortip="Please input state!"
+                                                                                                     class="ant-form-item-control ng-tns-c630436078-13 ant-col ng-star-inserted">
+                                                                                        <div class="ant-form-item-control-input ng-tns-c630436078-13">
+                                                                                            <div class="ant-form-item-control-input-content ng-tns-c630436078-13">
+                                                                                                <nz-input-group class="ng-tns-c630436078-13 ant-input-group">
+                                                                                                    <select name="DeaconTitle"
+                                                                                                            tabindex="2"
+                                                                                                            formcontrolname="DeaconTitle"
+                                                                                                            nz-select=""
+                                                                                                            placeholder="Deacon Title"
+                                                                                                            class="span6 form-control">
+                                                                                                        <option value="7AF85F53-668E-47D2-969D-09B88F5C3F39" class="ng-star-inserted"> Deacon </option>
+                                                                                                        <option value="AE7E8799-A674-4D64-8BD8-2563CAFB60D9" class="ng-star-inserted"> Yokefellow </option>
+                                                                                                        <option value="E90A3F91-E5DD-4F5F-915B-7EDFA1B0DF1E" class="ng-star-inserted"> D.I.T </option>
+                                                                                                        <option value="be9dc678-f136-4673-954e-c6598f6b7dfe" class="ng-star-inserted"> Deacon Spouse </option>
+                                                                                                        <!---->
+                                                                                                    </select>
+                                                                                                    <!----><!----><!----><!----><!----><!---->
+                                                                                                </nz-input-group>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!----><!---->
+                                                                                    </nz-form-control>
+                                                                                </nz-form-item>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="control-group">
+                                                                            <div class="controls">
+                                                                                <input type="text" formcontrolname="FirstName" autocomplete="off" role="presentation" class="form-control" placeholder="First Name" />
+                                                                            </div>
+                                                                            <div class="controls">
+                                                                                <nz-form-item class="ant-form-item ant-row">
+                                                                                    <nz-form-control nzerrortip="Please input last name!"
+                                                                                                     class="ant-form-item-control ng-tns-c630436078-2 ant-col ng-star-inserted">
+                                                                                        <div class="ant-form-item-control-input ng-tns-c630436078-2">
+                                                                                            <div class="ant-form-item-control-input-content ng-tns-c630436078-2">
+                                                                                                <nz-input-group class="ng-tns-c630436078-2 ant-input-group">
+                                                                                                    <input placeholder="Last Name"
+                                                                                                           tabindex="4"
+                                                                                                           type="text"
+                                                                                                           formcontrolname="clientLastName"
+                                                                                                           autocomplete="off"
+                                                                                                           role="presentation"
+                                                                                                           nz-input=""
+                                                                                                           class="ant-input span6 form-control" />
+                                                                                                </nz-input-group>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </nz-form-control>
+                                                                                </nz-form-item>
+                                                                            </div>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                    <div class="col-md-12">
+                                                                        <fieldset>
+                                                                            <div class="control-group">
+                                                                                <h4 class="title">Address</h4>
+                                                                            </div>
+                                                                            <div class="control-group">
+
+                                                                                <div class="controls">
+                                                                                    <nz-form-item class="ant-form-item ant-row">
+                                                                                        <nz-form-control nzerrortip="Please input street address!"
+                                                                                                         class="ant-form-item-control ng-tns-c630436078-10 ant-col ng-star-inserted">
+                                                                                            <div class="ant-form-item-control-input ng-tns-c630436078-10">
+                                                                                                <div class="ant-form-item-control-input-content ng-tns-c630436078-10">
+                                                                                                    <nz-input-group class="ng-tns-c630436078-10 ant-input-group">
+                                                                                                        <input ngx-gp-autocomplete=""
+                                                                                                               tabindex="9"
+                                                                                                               type="text"
+                                                                                                               formcontrolname="streetAddress"
+                                                                                                               autocomplete="off"
+                                                                                                               role="presentation"
+                                                                                                               nz-input=""
+                                                                                                               class="ant-input span6 form-control"
+                                                                                                               placeholder="Address" />
+                                                                                                    </nz-input-group>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!----><!---->
+                                                                                        </nz-form-control>
+                                                                                    </nz-form-item>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="control-group">
+
+                                                                                <div class="controls">
+                                                                                    <nz-form-item class="ant-form-item ant-row">
+                                                                                        <nz-form-control class="ant-form-item-control ng-tns-c630436078-11 ant-col ng-star-inserted">
+                                                                                            <div class="ant-form-item-control-input ng-tns-c630436078-11">
+                                                                                                <div class="ant-form-item-control-input-content ng-tns-c630436078-11">
+                                                                                                    <nz-input-group class="ng-tns-c630436078-11 ant-input-group">
+                                                                                                        <input placeholder="Address2 (Optional)"
+                                                                                                               tabindex="10"
+                                                                                                               type="text"
+                                                                                                               formcontrolname="streetAddress2"
+                                                                                                               autocomplete="off"
+                                                                                                               role="presentation"
+                                                                                                               nz-input=""
+                                                                                                               class="ant-input span6 form-control" />
+                                                                                                    </nz-input-group>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!----><!---->
+                                                                                        </nz-form-control>
+                                                                                    </nz-form-item>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="control-group">
+
+                                                                                <div class="controls">
+                                                                                    <nz-form-item class="ant-form-item ant-row">
+                                                                                        <nz-form-control nzerrortip="Please input city!"
+                                                                                                         class="ant-form-item-control ng-tns-c630436078-12 ant-col ng-star-inserted">
+                                                                                            <div class="ant-form-item-control-input ng-tns-c630436078-12">
+                                                                                                <div class="ant-form-item-control-input-content ng-tns-c630436078-12">
+                                                                                                    <nz-input-group class="ng-tns-c630436078-12 ant-input-group">
+                                                                                                        <input placeholder="City"
+                                                                                                               tabindex="11"
+                                                                                                               type="text"
+                                                                                                               formcontrolname="city"
+                                                                                                               autocomplete="off"
+                                                                                                               role="presentation"
+                                                                                                               nz-input=""
+                                                                                                               class="ant-input span6 form-control" />
+                                                                                                    </nz-input-group>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </nz-form-control>
+                                                                                    </nz-form-item>
+                                                                                </div>
+
+                                                                                <div class="controls">
+                                                                                    <nz-form-item class="ant-form-item ant-row">
+                                                                                        <nz-form-control nzerrortip="Please input state!"
+                                                                                                         class="ant-form-item-control ng-tns-c630436078-13 ant-col ng-star-inserted">
+                                                                                            <div class="ant-form-item-control-input ng-tns-c630436078-13">
+                                                                                                <div class="ant-form-item-control-input-content ng-tns-c630436078-13">
+                                                                                                    <nz-input-group class="ng-tns-c630436078-13 ant-input-group">
+                                                                                                        <select name="AddressState"
+                                                                                                                tabindex="12"
+                                                                                                                formcontrolname="state"
+                                                                                                                nz-select=""
+                                                                                                                placeholder="State/Province"
+                                                                                                                class="span6 form-control">
+                                                                                                            <option value="AK" class="ng-star-inserted"> Alaska </option>
+                                                                                                            <option value="AL" class="ng-star-inserted"> Alabama </option>
+                                                                                                            <option value="AR" class="ng-star-inserted"> Arkansas </option>
+                                                                                                            <option value="AZ" class="ng-star-inserted"> Arizona </option>
+                                                                                                            <option value="CA" class="ng-star-inserted"> California </option>
+                                                                                                            <option value="CO" class="ng-star-inserted"> Colorado </option>
+                                                                                                            <option value="CT" class="ng-star-inserted"> Connecticut </option>
+                                                                                                            <option value="DE" class="ng-star-inserted"> Delaware </option>
+                                                                                                            <option value="FL" class="ng-star-inserted"> Florida </option>
+                                                                                                            <option value="GA" class="ng-star-inserted"> Georgia </option>
+                                                                                                            <option value="HI" class="ng-star-inserted"> Hawaii </option>
+                                                                                                            <option value="IA" class="ng-star-inserted"> Iowa </option>
+                                                                                                            <option value="ID" class="ng-star-inserted"> Idaho </option>
+                                                                                                            <option value="IL" class="ng-star-inserted"> Illinois </option>
+                                                                                                            <option value="IN" class="ng-star-inserted"> Indiana </option>
+                                                                                                            <option value="KS" class="ng-star-inserted"> Kansas </option>
+                                                                                                            <option value="KY" class="ng-star-inserted"> Kentucky </option>
+                                                                                                            <option value="LA" class="ng-star-inserted"> Louisiana </option>
+                                                                                                            <option value="MA" class="ng-star-inserted"> Massachusetts </option>
+                                                                                                            <option value="MD" class="ng-star-inserted"> Maryland </option>
+                                                                                                            <option value="ME" class="ng-star-inserted"> Maine </option>
+                                                                                                            <option value="MI" class="ng-star-inserted"> Michigan </option>
+                                                                                                            <option value="MN" class="ng-star-inserted"> Minnesota </option>
+                                                                                                            <option value="MO" class="ng-star-inserted"> Missouri </option>
+                                                                                                            <option value="MS" class="ng-star-inserted"> Mississippi </option>
+                                                                                                            <option value="MT" class="ng-star-inserted"> Montana </option>
+                                                                                                            <option value="NC" class="ng-star-inserted"> North Carolina </option>
+                                                                                                            <option value="ND" class="ng-star-inserted"> North Dakota </option>
+                                                                                                            <option value="NE" class="ng-star-inserted"> Nebraska </option>
+                                                                                                            <option value="NH" class="ng-star-inserted"> New Hampshire </option>
+                                                                                                            <option value="NJ" class="ng-star-inserted"> New Jersey </option>
+                                                                                                            <option value="NM" class="ng-star-inserted"> New Mexico </option>
+                                                                                                            <option value="NV" class="ng-star-inserted"> Nevada </option>
+                                                                                                            <option value="NY" class="ng-star-inserted"> New York </option>
+                                                                                                            <option value="OH" class="ng-star-inserted"> Ohio </option>
+                                                                                                            <option value="OK" class="ng-star-inserted"> Oklahoma </option>
+                                                                                                            <option value="OR" class="ng-star-inserted"> Oregon </option>
+                                                                                                            <option value="PA" class="ng-star-inserted"> Pennsylvania </option>
+                                                                                                            <option value="RI" class="ng-star-inserted"> Rhode Island </option>
+                                                                                                            <option value="SC" class="ng-star-inserted"> South Carolina </option>
+                                                                                                            <option value="SD" class="ng-star-inserted"> South Dakota </option>
+                                                                                                            <option value="TN" class="ng-star-inserted"> Tennessee </option>
+                                                                                                            <option value="TX" class="ng-star-inserted"> Texas </option>
+                                                                                                            <option value="UT" class="ng-star-inserted"> Utah </option>
+                                                                                                            <option value="VA" class="ng-star-inserted"> Virginia </option>
+                                                                                                            <option value="VT" class="ng-star-inserted"> Vermont </option>
+                                                                                                            <option value="WA" class="ng-star-inserted"> Washington </option>
+                                                                                                            <option value="WI" class="ng-star-inserted"> Wisconsin </option>
+                                                                                                            <option value="WV" class="ng-star-inserted"> West Virginia </option>
+                                                                                                            <option value="WY" class="ng-star-inserted"> Wyoming </option>
+                                                                                                            <!---->
+                                                                                                        </select>
+                                                                                                        <!----><!----><!----><!----><!----><!---->
+                                                                                                    </nz-input-group>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!----><!---->
+                                                                                        </nz-form-control>
+                                                                                    </nz-form-item>
+                                                                                </div>
+                                                                            </div>
+
+
+
+                                                                        </fieldset>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6 col-md-12 p-0">
+                                                                    <fieldset>
+                                                                        <div class="control-group">
+                                                                            <h4 class="title">Deacon Contact Information</h4>
+                                                                        </div>
+                                                                        <div class="control-group">
+                                                                            <div class="controls">
+                                                                                <nz-form-item class="ant-form-item ant-row">
+                                                                                    <nz-form-control nzerrortip="Please input home phone!"
+                                                                                                     class="ant-form-item-control ng-tns-c630436078-15 ant-col ng-star-inserted">
+                                                                                        <div class="ant-form-item-control-input ng-tns-c630436078-15">
+                                                                                            <div class="ant-form-item-control-input-content ng-tns-c630436078-15">
+                                                                                                <nz-input-group class="ng-tns-c630436078-15 ant-input-group">
+                                                                                                    <input place
+                                                                                                           tabindex="16"
+                                                                                                           type="text"
+                                                                                                           mask="(000) 000-0000"
+                                                                                                           maxlength="14"
+                                                                                                           minlength="10"
+                                                                                                           placeholder="Home Phone"
+                                                                                                           formcontrolname="homePhone"
+                                                                                                           autocomplete="off"
+                                                                                                           role="presentation"
+                                                                                                           nz-input=""
+                                                                                                           class="ant-input span6 form-control" />
+                                                                                                    <!----><!----><!----><!----><!----><!----><!---->
+                                                                                                </nz-input-group>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!----><!---->
+                                                                                    </nz-form-control>
+                                                                                </nz-form-item>
+                                                                            </div>
+                                                                            <div class="controls">
+                                                                                <nz-form-item class="ant-form-item ant-row">
+                                                                                    <nz-form-control nzerrortip="Please input mobile phone!"
+                                                                                                     class="ant-form-item-control ng-tns-c630436078-16 ant-col ng-star-inserted">
+                                                                                        <div class="ant-form-item-control-input ng-tns-c630436078-16">
+                                                                                            <div class="ant-form-item-control-input-content ng-tns-c630436078-16">
+                                                                                                <nz-input-group class="ng-tns-c630436078-16 ant-input-group">
+                                                                                                    <input tabindex="17"
+                                                                                                           mask="(000) 000-0000"
+                                                                                                           maxlength="14"
+                                                                                                           minlength="10"
+                                                                                                           placeholder="Mobile Phone"
+                                                                                                           type="text"
+                                                                                                           formcontrolname="mobilePhone"
+                                                                                                           autocomplete="off"
+                                                                                                           role="presentation"
+                                                                                                           nz-input=""
+                                                                                                           class="ant-input span6 form-control" />
+                                                                                                    <!----><!----><!----><!----><!----><!----><!---->
+                                                                                                </nz-input-group>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!----><!---->
+                                                                                    </nz-form-control>
+                                                                                </nz-form-item>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="control-group">
+                                                                            <div class="controls">
+                                                                                <nz-form-item class="ant-form-item ant-row">
+                                                                                    <nz-form-control nzerrortip="Please input email!"
+                                                                                                     class="ant-form-item-control ng-tns-c630436078-17 ant-col ng-star-inserted">
+                                                                                        <div class="ant-form-item-control-input ng-tns-c630436078-17">
+                                                                                            <div class="ant-form-item-control-input-content ng-tns-c630436078-17">
+                                                                                                <nz-input-group class="ng-tns-c630436078-17 ant-input-group">
+                                                                                                    <input tabindex="19"
+                                                                                                           type="text"
+                                                                                                           placeholder="Email"
+                                                                                                           formcontrolname="email"
+                                                                                                           autocomplete="off"
+                                                                                                           role="presentation"
+                                                                                                           nz-input=""
+                                                                                                           class="ant-input span6 form-control" />
+                                                                                                    <!----><!----><!----><!----><!----><!----><!---->
+                                                                                                </nz-input-group>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!----><!---->
+                                                                                    </nz-form-control>
+                                                                                </nz-form-item>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </fieldset>
+                                                                    <div class="col-md-12 mt-1">
+                                                                        <fieldset>
+                                                                            <div class="control-group">
+                                                                                <h4 class="title">Emergency Contact</h4>
+                                                                            </div>
+                                                                            <div class="control-group">
+
+                                                                                <div class="controls">
+                                                                                    <nz-input-group class="ant-input-group">
+                                                                                        <input placeholder="Full Name"
+                                                                                               tabindex="24"
+                                                                                               type="text"
+                                                                                               name="EmergencyContactFullName"
+                                                                                               formcontrolname="clientEmergencyContactFullName"
+                                                                                               autocomplete="off"
+                                                                                               role="presentation"
+                                                                                               nz-input=""
+                                                                                               class="ant-input span6 form-control" />
+                                                                                        <!----><!----><!----><!----><!----><!----><!---->
+                                                                                    </nz-input-group>
+                                                                                </div>
+
+                                                                                <div class="controls">
+                                                                                    <nz-input-group class="ant-input-group">
+                                                                                        <input tabindex="25"
+                                                                                               type="text"
+                                                                                               mask="(000) 000-0000"
+                                                                                               maxlength="14"
+                                                                                               minlength="10"
+                                                                                               placeholder="Phone"
+                                                                                               name="EmergencyContactPhoneNumber"
+                                                                                               formcontrolname="clientEmergencyContactPhoneNumber"
+                                                                                               autocomplete="off"
+                                                                                               role="presentation"
+                                                                                               nz-input=""
+                                                                                               class="ant-input span6 form-control" />
+                                                                                    </nz-input-group>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="control-group">
+                                                                                <div class="controls">
+                                                                                    <nz-input-group class="ant-input-group">
+                                                                                        <input placeholder="Relationship"
+                                                                                               tabindex="26"
+                                                                                               type="text"
+                                                                                               name="EmergencyContactRelationship"
+                                                                                               formcontrolname="clientEmergencyContactRelationship"
+                                                                                               autocomplete="off"
+                                                                                               role="presentation"
+                                                                                               nz-input=""
+                                                                                               class="ant-input span6 form-control" />
+                                                                                    </nz-input-group>
+                                                                                </div>
+                                                                                <div class="controls">&nbsp;</div>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <fieldset>
+                                                                            <div class="control-group">
+                                                                                <h4 class="title">Additional Notes</h4>
+                                                                            </div>
+                                                                            <div class="control-group">
+                                                                                <div class="controls">
+                                                                                    <nz-input-group class="ant-input-group">
+                                                                                        <nz-textarea-count class="ant-input-textarea-show-count ng-star-inserted" data-count="0/3000">
+                                                                                            <textarea tabindex="27"
+                                                                                                      rows="10"
+                                                                                                      name="Notes"
+                                                                                                      formcontrolname="clientNotes"
+                                                                                                      nz-input=""
+                                                                                                      class="ant-input span6 form-control"></textarea>
+
+                                                                                        </nz-textarea-count>
+
+                                                                                    </nz-input-group>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+
+                                            <!---->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!---->
+                </app-client>
+                <!---->
+            </div>
+        </div>
+    </div>
+    <!----><!---->
+</div>
+
+@code {
+    [SupplyParameterFromQuery(Name = "{userId}")]
+    public string? userId { get; set; }
+}

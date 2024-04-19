@@ -32,27 +32,43 @@
         <ApplicationVersion>1</ApplicationVersion>
 
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
+        <!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>-->
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">33.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+        <!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>-->
         <PlatformTarget>AnyCPU</PlatformTarget>
+        <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+        <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+        <PackageCertificateThumbprint>5851B9AA5CBE81452DC33A8617140A245F3FFBAB</PackageCertificateThumbprint>
+        <AppxPackageSigningTimestampDigestAlgorithm>SHA512</AppxPackageSigningTimestampDigestAlgorithm>
+        <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+        <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+        <GenerateTestArtifacts>True</GenerateTestArtifacts>
+        <AppInstallerUri>https://focused-austin.67-211-213-157.plesk.page/</AppInstallerUri>
+        <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+        <AndroidSigningKeyStore>deaconadmin.keystore</AndroidSigningKeyStore>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
       <RunAOTCompilation>False</RunAOTCompilation>
       <PublishTrimmed>False</PublishTrimmed>
-      <AndroidKeyStore>False</AndroidKeyStore>
+      <AndroidKeyStore>True</AndroidKeyStore>
       <ApplicationId>com.deacons.admin.app</ApplicationId>
       <ApplicationTitle>Deacons.Hybrid.Mobile</ApplicationTitle>
       <AndroidPackageFormat>apk</AndroidPackageFormat>
+      <AndroidSigningStorePass>t3b3l8a1</AndroidSigningStorePass>
+      <AndroidSigningKeyAlias>deaconadmin</AndroidSigningKeyAlias>
+      <AndroidSigningKeyPass>t3b3l8a1</AndroidSigningKeyPass>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-      <AndroidKeyStore>False</AndroidKeyStore>
+      <AndroidKeyStore>True</AndroidKeyStore>
       <ApplicationId>com.deacons.admin.app</ApplicationId>
       <ApplicationTitle>Deacons.Hybrid.Mobile</ApplicationTitle>
+      <AndroidSigningStorePass>t3b3l8a1</AndroidSigningStorePass>
+      <AndroidSigningKeyAlias>deaconadmin</AndroidSigningKeyAlias>
+      <AndroidSigningKeyPass>t3b3l8a1</AndroidSigningKeyPass>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
@@ -61,10 +77,10 @@
       <BuildIpa>True</BuildIpa>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
+    <!--<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
       <ApplicationId>com.deacons.admin.app</ApplicationId>
       <ApplicationTitle>Deacons.Hybrid.Mobile</ApplicationTitle>
-    </PropertyGroup>
+    </PropertyGroup>-->
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
       <ApplicationId>com.deacons.admin.app</ApplicationId>
@@ -77,19 +93,26 @@
       <BuildIpa>True</BuildIpa>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
+    <!--<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
       <ApplicationId>com.deacons.admin.app</ApplicationId>
       <ApplicationTitle>Deacons.Hybrid.Mobile</ApplicationTitle>
-    </PropertyGroup>
+    </PropertyGroup>-->
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
       <ApplicationId>com.deacons.admin.app</ApplicationId>
       <ApplicationTitle>Deacons.Hybrid.Mobile</ApplicationTitle>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+      <CodesignKey>Apple Distribution: KaddaTechnologies Inc (58883TTUY8)</CodesignKey>
+    </PropertyGroup>
+
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#4e0191" />
+        <MauiSplashScreen Include="Resources\AppIcon\appicon.svg">
+          <Color>#0F0575</Color>
+          <BaseSize>128,128</BaseSize>
+        </MauiSplashScreen>
 
         <!-- Splash Screen -->
         <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#4e0191" BaseSize="128,128" />
@@ -116,12 +139,20 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Resources\AppIcon\appicon.svg" />
+      <None Remove="Resources\Fonts\roboto-bold.ttf" />
+      <None Remove="Resources\Fonts\roboto-regular.ttf" />
+      <None Remove="Resources\Fonts\univia-pro-regular.ttf" />
+    </ItemGroup>
+
+    <ItemGroup>
       <EmbeddedResource Include="appsettings.json" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="ColorHelper" Version="1.8.1" />
         <PackageReference Include="CommunityToolkit.Maui" Version="8.0.1" />
+        <PackageReference Include="DevExpress.Blazor" Version="23.2.5" />
         <PackageReference Include="DevExpress.Maui.Editors" Version="23.2.5" />
         <PackageReference Include="Microsoft.AppCenter" Version="5.0.3" />
         <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.3" />
@@ -144,16 +175,10 @@
     <PackageReference Include="Microsoft.AppCenter.DistributePlay" Version="3.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Deacons.Hybrid.Shared\Deacons.Hybrid.Shared.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <MauiXaml Update="Components\EventRegistration\View\EventRegistration.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Components\Pages\UserDetailsForm.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Components\Pages\UsersGrid.xaml">
+    <MauiXaml Update="Components\Pages\Settings.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Components\UserForm\ImageEditView.xaml">
@@ -175,6 +200,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Styles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Deacons.Hybrid.Shared\Deacons.Hybrid.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Update="wwwroot\images\all.png">
@@ -213,5 +248,11 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

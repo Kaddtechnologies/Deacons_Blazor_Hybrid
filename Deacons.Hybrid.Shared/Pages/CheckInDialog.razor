@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using Blazored.FluentValidation
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@model">
+        <FluentValidationValidator />
+        <ValidationSummary />
+        <MudTextField class="my-4" Label="AttendanceId" ReadOnly="true" @bind-Value="model.AttendanceId" For="() => model.AttendanceId" />
+           
+            <MudSelect class="my-4" @bind-Value="@(model.PostLocationIdString)" @bind-Value:after="OnValueChanged" Label="Post Location">
+             @foreach (var item in postLocationModels)
+                {
+                    <MudSelectItem Value="@item.PostLocationIdString">@item.PostLocationName</MudSelectItem>
+                }
+           </MudSelect>
+            <MudSelect class="my-4" @bind-Value="model.PostIdString" Label="Post Name">
+            @foreach (var item in selectedPostModels)
+                 {
+                     <MudSelectItem Value="@item.PostIdString">@item.PostName</MudSelectItem>
+                 }
+           </MudSelect>
+            
+           <div class="mb-5">
+                <SfDateTimePicker Readonly=true TValue="DateTime?" Value="@model.CheckInTime"></SfDateTimePicker>
+           </div>
+            <div class="mb-5">
+                <SfDateTimePicker  TValue="DateTime?" @bind-Value="@model.CheckOutTime" Min="@MinDate" Max="@MaxDate"></SfDateTimePicker>
+           </div>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Submit">Update</MudButton>
+    </DialogActions>
+</MudDialog>
+@code{
+    [Parameter]
+    public UserCheckInModel model { get; set; }
+
+    [Parameter]
+    public List<PostLocationModel> postLocationModels { get; set; }
+
+    [Parameter]
+    public List<PostModel> postModels { get; set; }
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private List<PostModel> selectedPostModels { get; set; }
+    public DateTime MinDate { get; set; }  
+    public DateTime MaxDate { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        MinDate = new DateTime(model.CheckInTime.Value.Year, model.CheckInTime.Value.Month, model.CheckInTime.Value.Day, model.CheckInTime.Value.Hour, 0, 0);
+        MaxDate = new DateTime(model.CheckInTime.Value.Year, model.CheckInTime.Value.Month, model.CheckInTime.Value.Day, 23, 59,0);
+        selectedPostModels = new List<PostModel>();
+        selectedPostModels = postModels.Where(p => p.PostLocationIdString == model?.PostLocationIdString)?.ToList();
+
+    }
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+    private void Submit()
+    {
+        var validator = new UserCheckInValidator();
+        var result = validator.Validate(model);
+        if (result.IsValid)
+        {
+            model.PostName = selectedPostModels.Where(p => p.PostIdString == model.PostIdString).FirstOrDefault()?.PostName;
+            model.PostLocation = postLocationModels.Where(pl => pl.PostLocationIdString == model.PostLocationIdString).FirstOrDefault()?.PostLocationName;
+            MudDialog.Close(DialogResult.Ok<UserCheckInModel>(model));
+        }
+    }
+
+    private void OnValueChanged()
+    {
+        selectedPostModels = postModels.Where(p => p.PostLocationIdString == model?.PostLocationIdString)?.ToList();
+        // Do other stuff
+    }
+}

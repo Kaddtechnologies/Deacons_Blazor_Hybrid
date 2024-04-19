@@ -56,7 +56,123 @@ namespace Deacons.Hybrid.Shared.Services
             return await _dapperContrib.GetAll<User>();
         }
 
-        public async Task<IEnumerable<TeamUserModel>> GetAll()
+        public async Task<List<User>> GetAllCheckIns()
+        {
+
+            var results = new List<User>();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var lookup = new Dictionary<Guid, User>();
+                var userModel = connection.Query<User, AttendanceModel, PostLocationModel, User>(@"
+                                    SELECT u.*, a.*, pl.PostLocationId as PostId, pl.PostLocationName
+                                    FROM Users u
+                                    JOIN Attendance a ON u.UserId = a.UserId
+                                    Join PostLocations pl on a.PostLocationId = pl.PostLocationId
+                                    Order By a.CheckInTime Desc
+                                   "
+                      , (u, a, pl) => {
+                          User userModel;
+                          if (!lookup.TryGetValue(u.UserId, out userModel))
+                          {
+                              lookup.Add(u.UserId, userModel = u);
+                          }
+                          if (userModel.UserCheckIns == null)
+                          {
+                              userModel.UserCheckIns = new List<AttendanceModel>();
+                          }
+                          a.PostName = pl.PostLocationName;
+                         // a.PostName = p.PostName;
+                          userModel.UserCheckIns.Add(a);
+                          return userModel;
+                      },
+                    splitOn: "AttendanceId, PostId"
+                    ).AsQueryable();
+
+                results = lookup.Values.OrderBy(o => o?.UserCheckIns?.OrderBy(u => u.CheckInTime)).ToList();
+            }
+
+            return results;
+        }
+
+        public async Task<UserCheckInModel> UpdateAttendanceById(UserCheckInModel model)
+        {
+
+            var start = Convert.ToDateTime(model.CheckInTime).ToUniversalTime();
+            var end = Convert.ToDateTime(model.CheckOutTime).ToUniversalTime();
+            TimeZoneInfo tzi = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime localTime = TimeZoneInfo.ConvertTimeFromUtc(start, tzi);
+            DateTime localEndTime = TimeZoneInfo.ConvertTimeFromUtc(end, tzi);
+            model.CheckInTime = localTime;
+            model.CheckOutTime = localEndTime;
+            var sql = $@"Update Attendance
+                             Set CheckInTime = @CheckInTime,
+                                CheckOutTime = @CheckOutTime,
+                                PostLocationId = @PostLocationId,
+                                PostId = @PostId,
+                                PostName = @PostName
+                                Where AttendanceId = @AttendanceId;";
+            
+            var paramDetails = new DynamicParameters();
+
+            paramDetails.Add("@CheckInTime", model.CheckInTime);
+            paramDetails.Add("@CheckOutTime", model.CheckOutTime);
+            paramDetails.Add("@PostLocationId", model.PostLocationId);
+            paramDetails.Add("@PostName", model.PostName);
+            paramDetails.Add("@PostId", model.PostId);
+            paramDetails.Add("@AttendanceId", model.AttendanceId);
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                await connection.ExecuteScalarAsync<object>(sql, paramDetails);
+            }
+            return model;
+        }
+
+        public async Task<User> GetAllCheckInsByUserId(Guid id)
+        {
+
+            var results = new User();
+            var aql = $@"SELECT s.*, a.*, p.PostLocationId as PostId, p.PostLocationName
+                        FROM Users s
+                        JOIN Attendance a ON a.UserId = s.UserId
+                        Join PostLocations p on a.PostLocationId = p.PostLocationId
+                        Where a.UserId = '{id}'
+                        Order By a.CheckInTime DESC";
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var lookup = new Dictionary<Guid, User>();
+                var userModel = connection.Query<User, AttendanceModel, PostLocationModel, User>(aql,
+                                    (user, attendance, post) =>
+                                    {
+                                        User userModel;
+                                        if (!lookup.TryGetValue(user.UserId, out userModel))
+                                        {
+                                            lookup.Add(user.UserId, userModel = user);
+                                        }
+                                        if (userModel.UserCheckIns == null)
+                                        {
+                                            userModel.UserCheckIns = new List<AttendanceModel>();
+                                        }
+                                        attendance.PostLocation = post.PostLocationName;
+                                        userModel.UserCheckIns.Add(attendance);
+                                        return userModel;
+                                    },
+               splitOn: "AttendanceId, PostId");
+
+                results = lookup.Values.FirstOrDefault();
+            }
+
+            return results;
+        }
+
+
+        public async Task<List<ChurchEventsModel>> GetAllEventNames()
+        {
+            return (List<ChurchEventsModel>)await _dapperContrib.GetAll<ChurchEventsModel>();
+        }
+
+            public async Task<IEnumerable<TeamUserModel>> GetAll()
         {
             var results = new List<TeamUserModel>();
             var sql =

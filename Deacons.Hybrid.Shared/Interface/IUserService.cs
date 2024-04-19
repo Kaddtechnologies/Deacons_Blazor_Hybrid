@@ -19,5 +19,8 @@ namespace Deacons.Hybrid.Shared.Interface
         Task UpdateLocation(User model);
         Task UpdateNotifications(User model);
         Task<User> DisableUser(User user);
+        Task<List<User>> GetAllCheckIns();
+        Task<List<ChurchEventsModel>> GetAllEventNames();
+        Task<UserCheckInModel> UpdateAttendanceById(UserCheckInModel model);
     }
 }

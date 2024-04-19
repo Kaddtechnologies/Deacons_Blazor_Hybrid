@@ -1,3 +1,21 @@
 ﻿@page "/usermamagement"
 
-<Users />
+<Users AddNewUserClick="@AddNewUserClick" EditUserClick="@EditUserClick" />
+
+@code{
+
+    private void AddNewUserClick(MouseEventArgs e)
+    {
+        App.Current.MainPage.Navigation.PushModalAsync(new UserForm.UserForm());
+
+
+    }
+
+
+    private void EditUserClick(string userId)
+    {
+        App.Current.MainPage.Navigation.PushModalAsync(new UserForm.UserForm(userId));
+
+
+    }
+}
