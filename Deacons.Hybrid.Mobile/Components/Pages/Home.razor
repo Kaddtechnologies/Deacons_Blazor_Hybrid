@@ -1,3 +1,21 @@
 ﻿@page "/"
 
-<ManageCheckIn/>
+<ManageCheckIn DeleteUser="@DeleteUser" OpenEditScreen="@OpenEditScreen" />
+
+@code {
+
+    private void DeleteUser(MouseEventArgs e)
+    {
+        App.Current.MainPage.Navigation.PushModalAsync(new UserForm.UserForm());
+
+
+    }
+
+
+    private void OpenEditScreen(string userId)
+    {
+        App.Current.MainPage.Navigation.PushModalAsync(new UserForm.UserForm(userId));
+
+
+    }
+}
