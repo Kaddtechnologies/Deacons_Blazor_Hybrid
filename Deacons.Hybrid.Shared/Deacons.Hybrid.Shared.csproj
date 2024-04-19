@@ -6,13 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
+    <PackageReference Include="Blazored.FluentValidation" Version="2.1.0" />
     <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="Dapper.Contrib" Version="2.0.78" />
     <PackageReference Include="FirebaseAdmin" Version="2.4.0" />
@@ -43,6 +43,7 @@
     <PackageReference Include="Syncfusion.Blazor.Spinner" Version="25.1.38" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="25.1.38" />
     <PackageReference Include="Syncfusion.Licensing" Version="25.1.38" />
+    <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.3" />
   </ItemGroup>
 

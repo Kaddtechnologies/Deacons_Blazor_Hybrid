@@ -1,0 +1,20 @@
+﻿@page "/usermanagement"
+@inject NavigationManager _navigator
+
+<Users />
+
+@code 
+{
+
+
+    private void AddNewUserClick(MouseEventArgs e)
+    {
+        _navigator.NavigateTo($"userDetails");
+    }
+
+    private void EditUserClick(string userId)
+    {
+        _navigator.NavigateTo($"userDetails/{userId}");
+
+    }
+}

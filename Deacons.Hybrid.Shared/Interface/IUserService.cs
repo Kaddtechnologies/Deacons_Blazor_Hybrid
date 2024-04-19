@@ -6,7 +6,7 @@ namespace Deacons.Hybrid.Shared.Interface
     public interface IUsersService
     {
         Task<IEnumerable<TeamUserModel>> GetAll();
-        Task<User> Get(Guid id);
+        Task<object?> GetAllUsers();
         Task Create(User user);
         Task<RegistrationCodes> GetRegistrationCodeDetails(Guid registrationCode);
         Task UpdateRegistrationCodeDetails(RegistrationCodes registration, User user);
@@ -18,5 +18,9 @@ namespace Deacons.Hybrid.Shared.Interface
         Task UpdateBiometrics(User model);
         Task UpdateLocation(User model);
         Task UpdateNotifications(User model);
+        Task<User> DisableUser(User user);
+        Task<List<User>> GetAllCheckIns();
+        Task<List<ChurchEventsModel>> GetAllEventNames();
+        Task<UserCheckInModel> UpdateAttendanceById(UserCheckInModel model);
     }
 }

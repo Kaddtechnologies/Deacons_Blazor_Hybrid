@@ -1,5 +1,21 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<ManageCheckIn DeleteUser="@DeleteUser" OpenEditScreen="@OpenEditScreen" />
 
-Welcome to your new app.
+@code {
+
+    private void DeleteUser(MouseEventArgs e)
+    {
+        App.Current.MainPage.Navigation.PushModalAsync(new UserForm.UserForm());
+
+
+    }
+
+
+    private void OpenEditScreen(string userId)
+    {
+        App.Current.MainPage.Navigation.PushModalAsync(new UserForm.UserForm(userId));
+
+
+    }
+}

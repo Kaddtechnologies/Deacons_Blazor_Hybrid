@@ -2,7 +2,7 @@
 
 namespace Deacons.Hybrid.Shared.Models
 {
-    public class Email
+    public class GroupEmail
     {
         public string emailaddress { get; set; }
     }
@@ -10,7 +10,7 @@ namespace Deacons.Hybrid.Shared.Models
     public class Group
     {
         public string GroupName { get; set; }
-        public List<Email> Emails { get; set; }
+        public List<GroupEmail> Emails { get; set; }
     }
 
     public class UsersOrGroups

@@ -1,0 +1,9 @@
+﻿<#@ output extension=".txt" #>
+<#
+int major = 1;
+int minor = 2;
+int patch = 3;
+int build = (int)((DateTime.UtcNow - DateTime.Parse("2024-01-01")).TotalDays);
+string output = major + "." + minor + "." + patch + "." + build;
+#>
+<#= output #>

@@ -1,67 +1,187 @@
-﻿using Syncfusion.Maui.DataForm;
+﻿using Deacons.Hybrid.Shared.Models;
+using Syncfusion.Maui.DataForm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 namespace Deacons.Hybrid.Mobile.Components.UserForm
 {
-    public class UserFormModel
+    public class UserFormModel: BindableBase
     {
-        public UserFormModel() 
-        {
+        int? id;
+        string firstName;
+        string lastName;
+        string company;
+        string address;
+        string city;
+        string state;
+        string email;
+        string zipcode;
+        string phone;
+        string photoPath  = "https://pottershousedeacons.blob.core.windows.net/imagescontainer/avatars/1000006725.jpg";
+        Guid? titleId;
 
-            //this.ProfileImage = new Image();
-            //this.FirstName = string.Empty;
-            //this.LastName = string.Empty;
-            //this.Mobile = string.Empty;
-            //this.Event = string.Empty;
-            //this.EventDate = DateTime.Now;
-            //this.EventEndDate = DateTime.Now;
-            //this.StartTime = new TimeSpan();
-            //this.EndTime = new TimeSpan();
-            //this.State = string.Empty;
-            //this.Address = string.Empty;
-            //this.City = string.Empty;
-            //this.Zip = string.Empty;
+        public int? ID
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+                RaisePropertyChanged();
+            }
         }
 
-        [DataFormDisplayOptions(ColumnSpan = 2, ShowLabel = false)]
-        public string ProfileImage { get; set; }
+        [Required(ErrorMessage = "Deacon Title cannot be empty")]
+        public Guid? TitleId
+        {
+            get
+            {
+                return titleId;
+            }
+            set
+            {
+                titleId = value;
+                RaisePropertyChanged();
+            }
+        }
 
-        [Display(Prompt = "First name")]
-        [Required(ErrorMessage = "Name should not be empty")]
-        public string Name { get; set; }
+        [Required(ErrorMessage = "First Name cannot be empty")]
+        public string FirstName
+        {
+            get
+            {
+                return firstName;
+            }
+            set
+            {
+                firstName = value;
+                RaisePropertyChanged();
+            }
+        }
+        [Required(ErrorMessage = "Last Name cannot be empty")]
+        public string LastName
+        {
+            get
+            {
+                return lastName;
+            }
+            set
+            {
+                lastName = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string Company
+        {
+            get
+            {
+                return company;
+            }
+            set
+            {
+                company = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string Address
+        {
+            get
+            {
+                return address;
+            }
+            set
+            {
+                address = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string City
+        {
+            get
+            {
+                return city;
+            }
+            set
+            {
+                city = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string State
+        {
+            get
+            {
+                return state;
+            }
+            set
+            {
+                state = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string ZipCode
+        {
+            get
+            {
+                return zipcode;
+            }
+            set
+            {
+                zipcode = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string Phone
+        {
+            get
+            {
+                return phone;
+            }
+            set
+            {
+                phone = value;
+                RaisePropertyChanged();
+            }
+        }
 
-        [Display(Prompt = "Last name")]
-        public string LastName { get; set; }
+        public string Email
+        {
+            get
+            {
+                return email;
+            }
+            set
+            {
+                email = value;
+                RaisePropertyChanged();
+            }
+        }
 
-        [Display(Prompt = "Email")]
-        [DataFormDisplayOptions(ColumnSpan = 2)]
-        public string Email { get; set; }
-
-        [Display(Prompt = "Mobile")]
-        [Required]
-        [StringLength(50, MinimumLength = 3)]
-        public double? Mobile { get; set; }
-
-        [Display(Prompt = "Landline")]
-        public double? Landline { get; set; }
-
-        [Display(Prompt = "Address")]
-        [DataFormDisplayOptions(ColumnSpan = 2)]
-        public string Address { get; set; }
-
-        [Display(Prompt = "City")]
-        [DataFormDisplayOptions(ColumnSpan = 2)]
-        public string City { get; set; }
-
-        [Display(Prompt = "State")]
-        public string State { get; set; }
-
-        [Display(Prompt = "Zip code")]
-        [DataFormDisplayOptions(ShowLabel = false)]
-        public double? ZipCode { get; set; }
-
+        public string PhotoPath
+        {
+            get
+            {
+                return photoPath;
+            }
+            set
+            {
+                photoPath = value;
+                RaisePropertyChanged();
+            }
+        }
+    }
+    public class BindableBase : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
