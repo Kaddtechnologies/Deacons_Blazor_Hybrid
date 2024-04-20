@@ -1,9 +1,9 @@
 namespace Deacons.Hybrid.Mobile.Components.Pages;
 
-public partial class UserDetailsForm : ContentPage
-{
-	public UserDetailsForm()
+	public partial class UserDetailsForm : ContentPage
 	{
-		InitializeComponent();
+		public UserDetailsForm()
+		{
+			InitializeComponent();
+		}
 	}
-}

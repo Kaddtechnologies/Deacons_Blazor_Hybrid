@@ -5,6 +5,8 @@
 // licensing@syncfusion.com. Any infringement will be prosecuted under
 // applicable laws. 
 #endregion
+using Deacons.Hybrid.Mobile.Components.Pages.Messages.Model;
+using Deacons.Hybrid.Mobile.Components.Pages.Messages.ViewModel;
 using Microsoft.Maui.Platform;
 using SampleBrowser.Maui.Base;
 using Syncfusion.Maui.Core;
@@ -18,7 +20,7 @@ using Syncfusion.Maui.NavigationDrawer;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace Deacons.Hybrid.Mobiler;
+namespace Deacons.Hybrid.Mobile.Components.Pages.Messages.Helper;
 
 /// <summary>
 /// Base generic class for user-defined behaviors that can respond to conditions and events.

@@ -7,7 +7,7 @@
 #endregion
 using System.Globalization;
 
-namespace Deacons.Hybrid.Mobiler;
+namespace Deacons.Hybrid.Mobile.Components.Pages.Messages.Helper;
 
 #region DateTimeToStringConverter
 

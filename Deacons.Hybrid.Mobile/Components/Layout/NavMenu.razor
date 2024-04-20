@@ -1,6 +1,6 @@
 ﻿@using Deacons.Hybrid.Mobile.Components.Pages
-@using Deacons.Hybrid.Mobile.Components.Pages.Messages.View
 @using Deacons.Hybrid.Mobile.Components.UserForm
+@using Deacons.Hybrid.Mobile.Components.Pages.Messages.View
 
 @inject Deacons.Hybrid.Shared.Interface.IUsersService users
 <div class="top-row ps-3 navbar navbar-dark">
@@ -52,6 +52,8 @@
     }
     private void GoToMessages()
     {
-        App.Current.MainPage.Navigation.PushModalAsync(new GettingStartedMobile());
+        var contentPage = new ContentPage();
+        contentPage.Content = new GettingStartedMobile();
+        App.Current.MainPage.Navigation.PushModalAsync(contentPage);
     }
 }

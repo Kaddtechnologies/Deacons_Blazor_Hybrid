@@ -5,15 +5,10 @@
 // licensing@syncfusion.com. Any infringement will be prosecuted under
 // applicable laws. 
 #endregion
-using SampleBrowser.Maui.Base;
-
-namespace Deacons.Hybrid.Mobile.Components.Pages.Messages.View;
-
-public partial class GettingStartedDesktop : SampleView
+namespace Deacons.Hybrid.Mobile
 {
-    public GettingStartedDesktop()
-	{
-		InitializeComponent();
+    // All the code in this file is included in all platforms.
+    public class ControlConfig
+    {
     }
 }
-

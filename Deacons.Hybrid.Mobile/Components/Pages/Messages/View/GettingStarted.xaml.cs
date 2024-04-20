@@ -7,7 +7,7 @@
 #endregion
 using SampleBrowser.Maui.Base;
 
-namespace Deacons.Hybrid.Mobiler;
+namespace Deacons.Hybrid.Mobile.Components.Pages.Messages.View;
 
 public partial class GettingStarted : SampleView
 {

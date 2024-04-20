@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<localcore:SampleView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    <localcore:SampleView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            x:Class="Deacons.Hybrid.Mobiler.GettingStartedDesktop"
+            x:Class="Deacons.Hybrid.Mobile.Components.Pages.Messages.View.GettingStartedDesktop"
             xmlns:navigationdrawer="clr-namespace:Syncfusion.Maui.NavigationDrawer;assembly=Syncfusion.Maui.NavigationDrawer"
             xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
             xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=netstandard"
             xmlns:imageExtension="clr-namespace:SampleBrowser.Maui.Base.Converters;assembly=SampleBrowser.Maui.Base"
             xmlns:ListView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-            xmlns:local="clr-namespace:Deacons.Hybrid.Mobiler"
+            xmlns:local="clr-namespace:Deacons.Hybrid.Mobile.Components.Pages.Messages.Helper"
             xmlns:localcore="clr-namespace:SampleBrowser.Maui.Base;assembly=SampleBrowser.Maui.Base">
 
     <localcore:SampleView.Resources>

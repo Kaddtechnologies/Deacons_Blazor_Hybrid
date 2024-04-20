@@ -1,40 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localcore:SampleView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Deacons.Hybrid.Mobiler.GettingStartedMobile"
+             x:Class="Deacons.Hybrid.Mobile.Components.Pages.Messages.View.GettingStartedMobile"
              xmlns:navigationdrawer="clr-namespace:Syncfusion.Maui.NavigationDrawer;assembly=Syncfusion.Maui.NavigationDrawer"
              xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=netstandard"
              xmlns:imageExtension="clr-namespace:SampleBrowser.Maui.Base.Converters;assembly=SampleBrowser.Maui.Base"
              xmlns:ListView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-             xmlns:local="clr-namespace:Deacons.Hybrid.Mobiler"
+             xmlns:local="clr-namespace:Deacons.Hybrid.Mobile.Components.Pages.Messages.View"
+             xmlns:helper="clr-namespace:Deacons.Hybrid.Mobile.Components.Pages.Messages.Helper"
              xmlns:localcore="clr-namespace:SampleBrowser.Maui.Base;assembly=SampleBrowser.Maui.Base">
 
     <localcore:SampleView.Resources>
-        <local:DatetimeToStringConverter x:Key="dateTimeConverter" />
-        <local:TextColorConverter x:Key="textColorConverter" />
-        <local:FontAttributeConverter x:Key="fontAttributeConverter" />
-        <local:GroupHeaderTextConverter x:Key="groupHeaderTextConverter" />
+        <helper:DatetimeToStringConverter x:Key="dateTimeConverter" />
+        <helper:TextColorConverter x:Key="textColorConverter" />
+        <helper:FontAttributeConverter x:Key="fontAttributeConverter" />
+        <helper:GroupHeaderTextConverter x:Key="groupHeaderTextConverter" />
         <imageExtension:SfImageSourceConverter x:Key="imageconverter" />
     </localcore:SampleView.Resources>
 
     <localcore:SampleView.Behaviors>
-        <local:NavigationDrawerBehavior />
+        <helper:NavigationDrawerBehavior />
     </localcore:SampleView.Behaviors>
 
-    <Grid BackgroundColor="{AppThemeBinding Light={StaticResource TileBackgroundLight}, Dark={StaticResource TileBackground}}">
-        <navigationdrawer:SfNavigationDrawer x:Name="navigationDrawer">
+    <Grid BackgroundColor="WhiteSmoke">
+        <navigationdrawer:SfNavigationDrawer x:Name="navigationDrawer" Background="#250373">
             <navigationdrawer:SfNavigationDrawer.DrawerSettings>
-                <navigationdrawer:DrawerSettings DrawerHeaderHeight="177" DrawerWidth="320" ContentBackground="{AppThemeBinding Light={StaticResource SampleBrowserBackgroundLight}, Dark={StaticResource SampleBrowserBackground}}" DrawerFooterHeight="0">
+                <navigationdrawer:DrawerSettings DrawerHeaderHeight="177" DrawerWidth="320" ContentBackground="#3F0880" DrawerFooterHeight="0">
                     <navigationdrawer:DrawerSettings.DrawerHeaderView>
                         <VerticalStackLayout>
                             <Grid RowDefinitions="*,Auto,Auto" Padding="25,25,25,20">
-                                <Image Source="{imageExtension:SfImageResource person.png}" VerticalOptions="Center" WidthRequest="72" HeightRequest="72"/>
-                                <Label Grid.Row="1" Text="Leslie Alexander" Margin="0,5,0,0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20" WidthRequest="148" HeightRequest="24" HorizontalOptions="Center"/>
+                                <Image Source="https://pottershousedeacons.blob.core.windows.net/imagescontainer/avatars/1000006725.jpg" VerticalOptions="Center" WidthRequest="72" HeightRequest="72"/>
+                                <Label Grid.Row="1" Text="David Jones" Margin="0,5,0,0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20" WidthRequest="148" HeightRequest="24" HorizontalOptions="Center"/>
                                 <Label Grid.Row="2" Text="UX Designer" Margin="0,5,0,0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="14" WidthRequest="148" HeightRequest="24" HorizontalOptions="Center"/>
                             </Grid>
-                            <BoxView WidthRequest="264" HeightRequest="1" BackgroundColor="{AppThemeBinding Light={StaticResource FilledInputBorderLight1}, Dark={StaticResource FilledInputBorder}}"/>
+                            <BoxView WidthRequest="264" HeightRequest="1" BackgroundColor="#3F0880"/>
                         </VerticalStackLayout>
                     </navigationdrawer:DrawerSettings.DrawerHeaderView>
                     <navigationdrawer:DrawerSettings.DrawerContentView>
@@ -124,9 +125,9 @@
             </navigationdrawer:SfNavigationDrawer.DrawerSettings>
 
             <navigationdrawer:SfNavigationDrawer.ContentView>
-                <Grid RowDefinitions="Auto,*" Background="{AppThemeBinding Light={StaticResource SampleBrowserBackgroundLight}, Dark={StaticResource SampleBrowserBackground}}">
-                    <Grid ColumnDefinitions="Auto,*,Auto" Background="{AppThemeBinding Light={StaticResource PrimaryBackgroundLight}, Dark={StaticResource PrimaryBackground}}" HeightRequest="42" ColumnSpacing="10">
-                        <Border Grid.Column="0" StrokeThickness="0" HeightRequest="40" WidthRequest="40" BackgroundColor="Transparent">
+                <Grid RowDefinitions="Auto,*" Background="WhiteSmoke">
+                    <Grid ColumnDefinitions="Auto,*,Auto" Background="#3F0880" HeightRequest="42" ColumnSpacing="10">
+                        <Border Grid.Column="0" StrokeThickness="0" HeightRequest="40" WidthRequest="40" BackgroundColor="#00D21A1A">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="30"/>
                             </Border.StrokeShape>
@@ -135,7 +136,7 @@
                             </core:SfEffectsView>
                         </Border>
                         <Label Grid.Column="1" x:Name="titleName" Text="Inbox" TextColor="{AppThemeBinding Light={StaticResource PrimaryForegroundLight}, Dark={StaticResource PrimaryForeground}}" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
-                        <Image Grid.Column="2" Source="{imageExtension:SfImageResource person.png}" Margin="0,0,5,0"  VerticalOptions="Center" WidthRequest="35" HeightRequest="35"/>
+                        <Image Grid.Column="2" Source="https://pottershousedeacons.blob.core.windows.net/imagescontainer/avatars/1000006725.jpg" Margin="0,0,5,0"  VerticalOptions="Center" WidthRequest="35" HeightRequest="35"/>
                     </Grid>
 
                     <ListView:SfListView Grid.Row="1"

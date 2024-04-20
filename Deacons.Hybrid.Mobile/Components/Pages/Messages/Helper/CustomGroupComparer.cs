@@ -7,7 +7,7 @@
 #endregion
 using Syncfusion.Maui.DataSource.Extensions;
 
-namespace Deacons.Hybrid.Mobiler;
+namespace Deacons.Hybrid.Mobile.Components.Pages.Messages.Helper;
 
     #region CustomGroupComparer
 

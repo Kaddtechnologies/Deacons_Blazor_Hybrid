@@ -5,11 +5,12 @@
 // licensing@syncfusion.com. Any infringement will be prosecuted under
 // applicable laws. 
 #endregion
+using Deacons.Hybrid.Mobile.Components.Pages.Messages.Model;
 using Syncfusion.Maui.DataSource.Extensions;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace Deacons.Hybrid.Mobiler;
+namespace Deacons.Hybrid.Mobile.Components.Pages.Messages.ViewModel;
 
 /// <summary>
 /// ViewModel class of NavigationDrawer.

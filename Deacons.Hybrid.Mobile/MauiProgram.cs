@@ -8,7 +8,7 @@ using Deacons.Hybrid.Shared.Interface;
 using Deacons.Hybrid.Shared.Services.Interface;
 using Deacons.Hybrid.Shared.Services;
 using Azure.Storage.Blobs;
-using Microsoft.Maui.Controls;
+using SampleBrowser.Maui.Base.Hosting;
 
 namespace Deacons.Hybrid.Mobile
 {
@@ -22,10 +22,16 @@ namespace Deacons.Hybrid.Mobile
             builder
                 .UseMauiApp<App>()
             .ConfigureSyncfusionCore()
+            .ConfigureSampleBrowserBase()
+
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Roboto-Medium.ttf", "RobotoMedium");
+                    fonts.AddFont("Roboto-Regular.ttf", "Roboto");
                     fonts.AddFont("InputLayoutIcons.ttf", "InputLayoutIcons");
+
                 });
 
             builder.Services.AddMauiBlazorWebView(); 

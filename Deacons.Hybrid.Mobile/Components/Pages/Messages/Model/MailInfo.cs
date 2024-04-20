@@ -7,7 +7,7 @@
 #endregion
 using System.ComponentModel;
 
-namespace Deacons.Hybrid.Mobiler;
+namespace Deacons.Hybrid.Mobile.Components.Pages.Messages.Model;
 
 /// <summary>
 /// Class contains property and fields for NavigationDrawer.

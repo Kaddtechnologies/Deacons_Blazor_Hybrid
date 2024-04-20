@@ -7,7 +7,7 @@
 #endregion
 using System.Collections.ObjectModel;
 
-namespace Deacons.Hybrid.Mobiler;
+namespace Deacons.Hybrid.Mobile.Components.Pages.Messages.Model;
 
 /// <summary>
 /// A class used to assign collection values for a Model properties

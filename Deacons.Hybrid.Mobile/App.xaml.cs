@@ -16,9 +16,7 @@ namespace Deacons.Hybrid.Mobile
 
             AppCenter.Start("05b775fb-3acc-4b71-94a0-7dcc78cb68ca",
                   typeof(Analytics), typeof(Crashes));
-            Assembly assembly = typeof(App).GetTypeInfo().Assembly;
-            SampleBrowser.Maui.Base.BaseConfig.IsIndividualSB = true;
-            MainPage = SampleBrowser.Maui.Base.BaseConfig.MainPageInit(assembly);
+            MainPage = new MainPage();
         }
 
         bool OnReleaseAvailable(ReleaseDetails releaseDetails)
