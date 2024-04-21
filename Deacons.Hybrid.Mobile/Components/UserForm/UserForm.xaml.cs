@@ -4,8 +4,8 @@ using DevExpress.Maui.Controls;
 using MudBlazor;
 using System.Net.Http.Json;
 using System.Net.Mail;
-namespace Deacons.Hybrid.Mobile.Components.UserForm;
 
+namespace Deacons.Hybrid.Mobile.Components.UserForm;
 public partial class UserForm : ContentPage
 {
     IDialogService _dialogService;
@@ -16,7 +16,7 @@ public partial class UserForm : ContentPage
     List<User> DummySkeletonUsers = new List<User>(new User[3]);
     List<string> DeaconTitles { get; set; } = new();
     List<DeaconTitleModel> DeaconPositions { get; set; }
-
+    
     public string imgSrc = "https://pottershousedeacons.blob.core.windows.net/imagescontainer/avatars/default_avatar.jpg";
     bool Loading = true;
     public UserForm(string userId = "")	{
@@ -42,15 +42,17 @@ public partial class UserForm : ContentPage
            if(!string.IsNullOrEmpty(ProfileUser.FirstName)) 
             {
                 var userFormViewModel = new UserFormViewModel();
+                userFormViewModel.UserFormModel = new UserFormModel();
                 userFormViewModel.UserFormModel.FirstName = ProfileUser.FirstName;
                 userFormViewModel.UserFormModel.LastName = ProfileUser.LastName;
-                userFormViewModel.UserFormModel.Address = ProfileUser.Address;
-                userFormViewModel.UserFormModel.City = ProfileUser.City;
-                userFormViewModel.UserFormModel.ZipCode = ProfileUser.Zip;
-                userFormViewModel.UserFormModel.State = ProfileUser.State;
-                userFormViewModel.UserFormModel.PhotoPath = ProfileUser.AvatarUrl;
-                userFormViewModel.UserFormModel.Phone = ProfileUser.PhoneNumber;
-                userFormViewModel.UserFormModel.TitleId = ProfileUser.TitleId;
+                userFormViewModel.UserFormModel.Address = ProfileUser?.Address;
+                userFormViewModel.UserFormModel.City = ProfileUser?.City;
+                userFormViewModel.UserFormModel.ZipCode = ProfileUser?.Zip;
+                userFormViewModel.UserFormModel.Email = ProfileUser?.Email;
+                userFormViewModel.UserFormModel.State = StateList.TX;
+                userFormViewModel.UserFormModel.PhotoPath = ProfileUser?.AvatarUrl;
+                userFormViewModel.UserFormModel.Phone = ProfileUser?.PhoneNumber;
+                userFormViewModel.UserFormModel.TitleId = ProfileUser?.TitleId;
                 dataForm.DataObject = userFormViewModel.UserFormModel;
             }
         }

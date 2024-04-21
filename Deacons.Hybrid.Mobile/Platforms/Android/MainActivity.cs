@@ -15,7 +15,11 @@ namespace Deacons.Hybrid.Mobile
         {
           
         }
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            Window.SetSoftInputMode(Android.Views.SoftInput.AdjustPan);
+        }
 
-      
     }
 }

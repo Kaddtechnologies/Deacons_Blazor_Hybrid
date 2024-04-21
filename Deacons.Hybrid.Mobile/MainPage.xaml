@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Deacons.Hybrid.Mobile"
@@ -8,39 +8,40 @@
              x:Class="Deacons.Hybrid.Mobile.MainPage"
              BarTextColor="White"
              BarBackgroundColor="#2B0B98"
-             SelectedTabColor="Grey"
+             SelectedTabColor="White"
              UnselectedTabColor="SlateGrey"
              BackgroundColor="{DynamicResource PageBackgroundColor}"
-             xmlns:pages="clr-namespace:Deacons.Hybrid.Mobile.Components.Pages"
-             >
+             xmlns:pages="clr-namespace:Deacons.Hybrid.Mobile.Components.Pages">
 
-    <ContentPage Title="Event Scheduler" IconImageSource="/images/home.svg">
+    <ContentPage Title="Home"  IconImageSource="{StaticResource TabOne}">
         <BlazorWebView HostPage="wwwroot/index.html">
-             <BlazorWebView.RootComponents>
-                 <RootComponent Selector="#app" ComponentType="{x:Type pages:Home}" />
-             </BlazorWebView.RootComponents>
+            <BlazorWebView.RootComponents>
+                <RootComponent Selector="#app" ComponentType="{x:Type pages:Home}" />
+            </BlazorWebView.RootComponents>
         </BlazorWebView>
-     </ContentPage>
-<    <ContentPage Title="Event Scheduler" IconImageSource="images/calendar.svg">
+    </ContentPage>
+
+    <ContentPage Title="Scheduler" IconImageSource="{StaticResource TabTwo}">
         <BlazorWebView  HostPage="wwwroot/index.html">
             <BlazorWebView.RootComponents>
                 <RootComponent Selector="#app" ComponentType="{x:Type pages:Scheduler}" />
             </BlazorWebView.RootComponents>
         </BlazorWebView>
     </ContentPage>
-    <ContentPage Title="User Management" IconImageSource="images/users.svg">
-        <BlazorWebView  HostPage="wwwroot/index.html">
-            <BlazorWebView.RootComponents>
-                <RootComponent Selector="#app" ComponentType="{x:Type pages:UserManagement}" />
-            </BlazorWebView.RootComponents>
-        </BlazorWebView>
-    </ContentPage>
-    <ContentPage Title="Message Distribution" IconImageSource="images/message.svg">
-        <BlazorWebView  HostPage="wwwroot/index.html">
-            <BlazorWebView.RootComponents>
-                <RootComponent Selector="#app" ComponentType="{x:Type pages:Messages}" />
-            </BlazorWebView.RootComponents>
-        </BlazorWebView>
-    </ContentPage>
-    <pages:Settings/>
+    <ContentPage Title="Users" IconImageSource="{StaticResource TabThree}">
+            <BlazorWebView  HostPage="wwwroot/index.html">
+                <BlazorWebView.RootComponents>
+                    <RootComponent Selector="#app" ComponentType="{x:Type pages:UserManagement}" />
+                </BlazorWebView.RootComponents>
+            </BlazorWebView>
+        </ContentPage>
+    <ContentPage Title="Messages" IconImageSource="{StaticResource TabFour}">
+            <BlazorWebView  HostPage="wwwroot/index.html">
+                <BlazorWebView.RootComponents>
+                    <RootComponent Selector="#app" ComponentType="{x:Type pages:Messages}" />
+                </BlazorWebView.RootComponents>
+            </BlazorWebView>
+        </ContentPage>
+
+    <pages:Settings IconImageSource="{StaticResource TabFive}"/>
 </TabbedPage>

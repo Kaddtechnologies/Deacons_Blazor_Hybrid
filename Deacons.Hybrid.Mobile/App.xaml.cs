@@ -10,11 +10,11 @@ namespace Deacons.Hybrid.Mobile
         public App()
         {
             InitializeComponent();
-            Distribute.UpdateTrack = UpdateTrack.Private;
-            Distribute.ReleaseAvailable = OnReleaseAvailable;
+            //Distribute.UpdateTrack = UpdateTrack.Private;
+            //Distribute.ReleaseAvailable = OnReleaseAvailable;
 
-            AppCenter.Start("05b775fb-3acc-4b71-94a0-7dcc78cb68ca",
-                  typeof(Analytics), typeof(Crashes));
+            //AppCenter.Start("05b775fb-3acc-4b71-94a0-7dcc78cb68ca",
+            //      typeof(Analytics), typeof(Crashes));
             MainPage = new MainPage();
         }
 

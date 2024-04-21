@@ -1,5 +1,7 @@
 ﻿@page "/checkIn"
 @rendermode InteractiveRenderSettings.InteractiveRenderMode
+@using Deacons.Hybrid.Shared.Interface
+@using Deacons.Hybrid.Shared.Models
 @using Deacons.Hybrid.Shared.Services.Interface
 @using Deacons.Hybrid.Shared.Utility
 @using Microsoft.AspNetCore.Components.Web
@@ -505,11 +507,6 @@
     [Parameter]
     public RenderFragment? renderFragment { get; set; }
 
-    [Parameter]
-    public EventCallback<MouseEventArgs> AddNewUserClick { get; set; }
-
-    [Parameter]
-    public EventCallback<string> EditUserClick { get; set; }
 
 
     UserCheckInModel ProfileUser { get; set; } = new();

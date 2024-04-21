@@ -5,10 +5,9 @@
              x:Class="Deacons.Hybrid.Mobile.App">
     <Application.Resources>
         <ResourceDictionary>
-
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />-->
+                <!--<ResourceDictionary Source="Resources/Styles/Colors.xaml" />-->
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <LinearGradientBrush EndPoint="1,0" x:Key="PageBackgroundColor">
                 <GradientStop Color="#641f83"

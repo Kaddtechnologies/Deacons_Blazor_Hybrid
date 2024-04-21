@@ -19,7 +19,8 @@
 @inject IJSRuntime JSRuntime
 @inject HttpClient Http
 @using Syncfusion.Blazor.Notifications
-@rendermode InteractiveServer
+@using System.Reflection
+@rendermode InteractiveRenderSettings.InteractiveRenderMode
 
 @if (Show)
 {
@@ -268,12 +269,19 @@
     {
         timeZones = TimeZoneInfo.GetSystemTimeZones();
         //read path from config and users/groups data
-        string rootpath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "wwwroot");
-        string filepath = configuration?.GetSection("UserGroups")?.GetSection("FilePath")?.Value!;
-        string jsondata = File.ReadAllText(rootpath + "//" + filepath);
-        usersOrGroups = JsonConvert.DeserializeObject<UsersOrGroups>(jsondata);
-        GetEmailsForSelectedGroup();
+        var assembly = Assembly.GetExecutingAssembly();
+
+        var stream = assembly.GetManifestResourceStream($"{"Deacons.Hybrid.Shared"}.{"jsonfile.json"}");
+        using (StreamReader reader = new StreamReader(stream))
+        {
+            string jsonFile = reader.ReadToEnd(); //Make string equal to full file
+            usersOrGroups = JsonConvert.DeserializeObject<UsersOrGroups>(jsonFile);
+            GetEmailsForSelectedGroup();
+        } 
+      
     }
+   
+
     protected override async Task OnInitializedAsync()
     {
         try

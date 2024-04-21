@@ -1,0 +1,7 @@
+﻿@using Deacons.Hybrid.Shared.Pages
+<Router AppAssembly="@typeof(MauiProgram).Assembly" AdditionalAssemblies="new[] {typeof(ManageCheckIn).Assembly, typeof(EventScheduler).Assembly, typeof(Users).Assembly, typeof(MessagesDistribution).Assembly}">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+</Router>

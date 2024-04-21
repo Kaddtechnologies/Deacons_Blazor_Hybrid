@@ -34,7 +34,6 @@ namespace Deacons.Hybrid.Web.Server
             builder.Services.AddSingleton<ICalendarEventsService, CalendarEventsService>();
 
             builder.Services.AddMudServices();
-            builder.Services.AddSyncfusionBlazor();
             builder.Services.AddRazorPages();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration["ApiUri"]) });
 

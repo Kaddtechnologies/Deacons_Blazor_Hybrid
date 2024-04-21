@@ -1,14 +1,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Deacons.Hybrid.Mobile.Components.UserForm;assembly=Deacons.Hybrid.Mobile"
              xmlns:thickness ="clr-namespace:Microsoft.Maui;assembly=Microsoft.Maui"
+             xmlns:dxdf="clr-namespace:DevExpress.Maui.DataForm;assembly=DevExpress.Maui.Editors"
+              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
               xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
               xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-              xmlns:dxdf="clr-namespace:DevExpress.Maui.DataForm;assembly=DevExpress.Maui.Editors"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" ios:Page.UseSafeArea="true"
               xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" ios:Page.UseSafeArea="true" x:Class="Deacons.Hybrid.Mobile.Components.UserForm.UserForm"
               xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-              android:Application.WindowSoftInputModeAdjust="Resize">
+              android:Application.WindowSoftInputModeAdjust="Pan"
+              xmlns:icon="clr-namespace:Deacons.Hybrid.Mobile.Resources"
+              x:Class="Deacons.Hybrid.Mobile.Components.UserForm.UserForm">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Apply" Clicked="ToolbarItem_Clicked" Command="{Binding SaveCommand}"/>
@@ -30,21 +34,37 @@
             <Setter Property="CornerRadius" Value="0"/>
             <Setter Property="HeightRequest" Value="56"/>
         </Style>
+
+        <Style TargetType="dxe:EditBase" ApplyToDerivedTypes="True">
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="TextColor" Value="BlueViolet"/>
+        </Style>
     </ContentPage.Resources>
     <Grid>
         <ScrollView>
             <dx:DXStackLayout Orientation="Vertical" BackgroundColor="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource Black}}">
                 <Grid HeightRequest="140" WidthRequest="140" Margin="0,30,0,10">
+                   
+                    <StackLayout Padding="16">
+                        <Frame Padding="0"
+                            HorizontalOptions="Center"
+                            BorderColor="#dadada"
+                            WidthRequest="100"
+                            HeightRequest="100"
+                            CornerRadius="50"
+                            IsClippedToBounds="True" BackgroundColor="#8E0E0E" Background="#4D1212">
+                            <Image  x:Name="preview" Source="{Binding dataForm.DataObject.PhotoPath}"
+                                BackgroundColor="#2F0560"
+                                Aspect="AspectFill"/>
+                        </Frame>
+                    </StackLayout>
+                    <Label TextColor="#6750a4" Text="Upload Avatar" VerticalOptions="Center" HorizontalOptions="Center"/>
+                    <dx:DXBorder x:Name="editControl" BorderColor="White" BorderThickness="2" BackgroundColor="#340088" WidthRequest="48" HeightRequest="48" CornerRadius="70" HorizontalOptions="End" VerticalOptions="End">
+                        <Image Source="{StaticResource Edit}" WidthRequest="24" HeightRequest="24"/>
+                    </dx:DXBorder>
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="ImageTapped"/>
                     </Grid.GestureRecognizers>
-                    <Label TextColor="#6750a4" Text="Upload Avatar" VerticalOptions="Center" HorizontalOptions="Center"/>
-                    <dx:DXBorder CornerRadius="70" >
-                        <Image x:Name="preview" Source="{Binding EditedItem.PhotoPath}" WidthRequest="140" HeightRequest="140"/>
-                    </dx:DXBorder>
-                    <dx:DXBorder x:Name="editControl" BorderColor="White" BorderThickness="2" BackgroundColor="#e8def8" WidthRequest="48" HeightRequest="48" CornerRadius="70" HorizontalOptions="End" VerticalOptions="End">
-                        <Image Source="pencil" WidthRequest="24" HeightRequest="24"/>
-                    </dx:DXBorder>
                 </Grid>
                 <dxco:BottomSheet x:Name="bottomSheet" HalfExpandedRatio="0.3" AllowedState="HalfExpanded">
                     <dx:DXStackLayout>
@@ -60,18 +80,21 @@
                     <Border.Shadow>
                         <Shadow Brush="Gray" Offset="4,8" Radius="6" />
                     </Border.Shadow>
-                    <dxdf:DataFormView x:Name="dataForm" ValidateProperty="ValidateCustomerProperties" DataObject="{Binding EditedItem}" EditorLabelColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary_Dark}}" EditorLabelWidth="40" IsAutoGenerationEnabled="False" Margin="0,10,0,0">
-                        <dxdf:DataFormTextItem FieldName="FirstName" LabelIcon="editorsname" LabelText="" InplaceLabelText="First Name" IsInplaceLabelFloating="True"/>
-                        <dxdf:DataFormTextItem FieldName="LastName" IsLabelVisible="True" LabelText="" InplaceLabelText="Last Name" IsInplaceLabelFloating="True"/>
-                        <dxdf:DataFormMaskedItem FieldName="Phone" Keyboard="Telephone" Mask="+1 (000) 000-0000" IsLabelVisible="True" LabelIcon="editorsphone" InplaceLabelText="Phone" IsInplaceLabelFloating="True"/>
-                        <dxdf:DataFormTextItem FieldName="Email" IsLabelVisible="True" LabelIcon="editorsemail" InplaceLabelText="Email" IsInplaceLabelFloating="True"/>
-                        <dxdf:DataFormTextItem FieldName="Company" IsLabelVisible="True" LabelIcon="editorscompany" InplaceLabelText="Company" IsInplaceLabelFloating="True"/>
-                        <dxdf:DataFormTextItem FieldName="State" IsLabelVisible="True" LabelIcon="editorslocation" InplaceLabelText="State" IsInplaceLabelFloating="True"/>
-                        <dxdf:DataFormTextItem FieldName="City" IsLabelVisible="True" LabelText="" InplaceLabelText="City" IsInplaceLabelFloating="True"/>
-                        <dxdf:DataFormTextItem FieldName="Address" IsLabelVisible="True" LabelText="" InplaceLabelText="Street" IsInplaceLabelFloating="True"/>
-                        <dxdf:DataFormNumericItem FieldName="ZipCode" IsLabelVisible="True" LabelText="" InplaceLabelText="Zip" IsInplaceLabelFloating="True"/>
+                    <dxdf:DataFormView x:Name="dataForm"
+                       IsEditorLabelVisible="False"
+                       ContentPadding="12,0"                   
+                       GroupHeaderPadding="2,8"
+                       GroupHeaderBackgroundColor="#e6e6e6"
+                       GroupHeaderTextColor="#000000"
+                       AllowCollapseGroups="True"
+                       RowSeparatorColor="#aaaaaa"
+                       RowSeparatorThickness="1"
+                       IsLastRowSeparatorVisible="True">
                     </dxdf:DataFormView>
                 </Border>
+                <Grid>
+                    <buttons:SfButton x:Name="sfButton" Text="Update"/>
+                </Grid>
             </dx:DXStackLayout>
         </ScrollView>
     </Grid>

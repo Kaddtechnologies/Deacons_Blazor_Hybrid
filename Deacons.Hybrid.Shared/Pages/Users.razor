@@ -1,5 +1,6 @@
 ﻿@page "/users"
 @rendermode InteractiveRenderSettings.InteractiveRenderMode
+@using Deacons.Hybrid.Shared.Models
 @using Deacons.Hybrid.Shared.Utility
 @using Microsoft.AspNetCore.Components.Web
 @using MudBlazor
@@ -186,7 +187,7 @@
             <MudText>Roster</MudText>
         </MudItem>
     }
-    <MudItem Class="users-table mx-5 pb-8">
+    <MudItem Class="users-table mx-3 pb-8">
         <MudTable @bind-SelectedItem="ProfileUser" Elevation="0" RowsPerPage="10" Dense=true Items="@(Loading ? DummySkeletonUsers : SelectedUsers)" HeaderClass="table-header" Breakpoint="Breakpoint.Sm" Striped="true"
                   CustomHeader="true" CustomFooter="true">
             <HeaderContent>
@@ -209,11 +210,11 @@
                 {
                     <MudTHeadRow>
                         <MudTh Style="width: 88px;"></MudTh>
-                        <MudTh>First Name</MudTh>
-                        <MudTh>Last Name</MudTh>
-                        <MudTh>Email</MudTh>
-                        <MudTh>Phone Number</MudTh>
-                        <MudTh>Last Login date</MudTh>
+                        <MudTh Style="text-align:center">First Name</MudTh>
+                        <MudTh Style="text-align:center">Last Name</MudTh>
+                        <MudTh Style="text-align:center">Email</MudTh>
+                        <MudTh Style="text-align:center">Phone Number</MudTh>
+                        <MudTh Style="text-align:center">Last Login date</MudTh>
                         <MudTh Style="text-align:center">Action</MudTh>
                     </MudTHeadRow>
                 }
@@ -253,16 +254,16 @@
                             }
                         </MudAvatar>
                     </MudTd>
-                    <MudTd Class="pt-md-2 pt-4" DataLabel="First Name">@(context.FirstName ?? "")</MudTd>
-                    <MudTd DataLabel="Last Name">@(context.LastName ?? "")</MudTd>
-                    <MudTd DataLabel="Email">@(context.Email ?? "")</MudTd>
-                    <MudTd DataLabel="Phone Number">@(context.PhoneNumber ?? "")</MudTd>
-                    <MudTd DataLabel="Last Login Date">
-                        @(context.LastLoginDate is not null ? context.LastLoginDate.Value.ToString("dd MMMM, yyyy") : "-")
+                    <MudTd Class="pt-md-2 pt-4" DataLabel="First Name" Style="text-align:center">@(context.FirstName ?? "")</MudTd>
+                    <MudTd DataLabel="Last Name" Style="text-align:center">@(context.LastName ?? "")</MudTd>
+                    <MudTd DataLabel="Email" Style="text-align:center">@(context.Email ?? "")</MudTd>
+                    <MudTd DataLabel="Phone Number" Style="text-align:center">@(context.PhoneNumber ?? "")</MudTd>
+                    <MudTd DataLabel="Last Login Date" Style="text-align:center">
+                        @(context.LastLoginDate is not null ? context.LastLoginDate.Value.ToString("MM-dd-yyyy HH:mm:ss") : "-")
                     </MudTd>
                     <MudTd Class="action-button-class pb-3 pb-md-2">
                         <MudItem Class="action-buttons" Style="width: fit-content;margin: auto;">
-                            <MudButton @onclick=@(() => OpenEditScreen(UsersList?.FirstOrDefault()?.UserId.ToString())) DisableElevation Variant=Variant.Outlined><MudText>Edit</MudText></MudButton>
+                            <MudButton @onclick=@(() => OpenEditScreen(context?.UserId.ToString()!)) DisableElevation Variant=Variant.Outlined><MudText>Edit</MudText></MudButton>
                             <MudButton DisableElevation OnClick=@(async () => await DeleteUser(context)) Variant="Variant.Outlined"><MudText>Delete</MudText></MudButton>
                         </MudItem>
                     </MudTd>
