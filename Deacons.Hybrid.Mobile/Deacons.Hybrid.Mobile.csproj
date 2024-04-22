@@ -58,6 +58,7 @@
       <AndroidSigningStorePass>t3b3l8a1</AndroidSigningStorePass>
       <AndroidSigningKeyAlias>deaconadmin</AndroidSigningKeyAlias>
       <AndroidSigningKeyPass>t3b3l8a1</AndroidSigningKeyPass>
+      <ApplicationVersion>3</ApplicationVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
@@ -67,6 +68,7 @@
       <AndroidSigningStorePass>t3b3l8a1</AndroidSigningStorePass>
       <AndroidSigningKeyAlias>deaconadmin</AndroidSigningKeyAlias>
       <AndroidSigningKeyPass>t3b3l8a1</AndroidSigningKeyPass>
+      <ApplicationVersion>3</ApplicationVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
@@ -107,14 +109,24 @@
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
       <ApplicationId>com.deacons.admin.app</ApplicationId>
+      <ApplicationVersion>3</ApplicationVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
       <ApplicationId>com.deacons.admin.app</ApplicationId>
+      <ApplicationVersion>3</ApplicationVersion>
     </PropertyGroup>
 
     <PropertyGroup>
       <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.22621.0|AnyCPU'">
+      <ApplicationVersion>3</ApplicationVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.22621.0|AnyCPU'">
+      <ApplicationVersion>3</ApplicationVersion>
     </PropertyGroup>
 
     <ItemGroup>

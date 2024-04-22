@@ -3,14 +3,14 @@ name: CD Build
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: [ "develpment" ]
     paths-ignore:
       - "**.md"
       - '**/*.gitignore'
       - '**/*.gitattributes'
       - '**/*.yml'
   pull_request:
-    branches: [ "main" ]
+    branches: [ "develpment" ]
 
 env:
   BUILD_VERSION: '2.0'
@@ -29,22 +29,32 @@ jobs:
       xcodeVersion: ${{ env.XCODE_VERSION }}
       dotnetVersionTargets: ${{ env.DOTNET_VERSION_TARGETS }}
       csprojToBuild: ${{ env.CSPROJ_TO_BUILD }}
-      projectFolder: ${{ env.PROJECT_FOLDER }}
+      projectFolder: ${{ env.PROJECT_FOLDER }}   
+     
     steps:
-      - run: echo "Exposing env vars, because they can't be passed to nested workflows."
- 
-  build-android:
-    needs: vars
-    uses: ./.github/workflows/cd-android.yml
-    with:
-      dotnet-version: ${{ needs.vars.outputs.dotnetVersion }}
-      dotnet-version-target: ${{ needs.vars.outputs.dotnetVersionTargets }}
-      project-file: ${{ needs.vars.outputs.csprojToBuild }}
-      project-folder: ${{ needs.vars.outputs.projectFolder }}
-      build-config: 'Release'
-      build-version: ${{ needs.vars.outputs.buildVersion }}
-    secrets:
-      keystore: ${{ secrets.PLAY_KEYSTORE }}
-      keystore-alias: ${{ secrets.PLAY_KEYSTORE_ALIAS }}
-      keystore-password: ${{ secrets.PLAY_KEYSTORE_PASS }}
-      playstore-service-account: ${{ secrets.PLAYSTORE_SERVICE_ACC }} 
+     - name: Checkout code
+       uses: actions/checkout@v2
+
+     - name: Setup .NET SDK
+       uses: actions/setup-dotnet@v1
+       with:
+        dotnet-version: '8.x'
+
+     - name: Restore NuGet packages
+       run: dotnet restore
+
+     - name: Build and publish Maui app
+       run: dotnet publish -c Release -r net8.0-android --self-contained false
+
+     - name: Install Firebase CLI
+       run: |
+        curl -sL https://firebase.tools | bash
+        export PATH=$PATH:$HOME/.firebase/bin
+
+     - name: Upload to Firebase App Distribution
+       uses: wzieba/Firebase-Distribution-Github-Action@v1
+       with:
+            appId: '1:741869894335:android:7be6dd14f0a652512c240a'
+            serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+            groups: wifeandme
+            file: ./bin/Release/net8.0-android/com.deacons.admin.app.apk     

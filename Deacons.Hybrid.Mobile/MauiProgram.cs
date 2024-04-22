@@ -31,7 +31,8 @@ namespace Deacons.Hybrid.Mobile
             
             builder
                 .UseMauiApp<App>()
-                .ConfigureSyncfusionCore()            
+                .ConfigureSyncfusionCore()
+                .UseDevExpress()
                 .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
