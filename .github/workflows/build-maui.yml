@@ -55,6 +55,5 @@ jobs:
        uses: wzieba/Firebase-Distribution-Github-Action@v1
        with:
             appId: '1:741869894335:android:7be6dd14f0a652512c240a'
-            serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
             groups: wifeandme
             file: ./bin/Release/net8.0-android/com.deacons.admin.app.apk     
