@@ -67,3 +67,19 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+# Install Firebase tools
+- task: CmdLine@2
+  displayName: 'Install Firebase Tools'
+  inputs:
+    script: 'curl -sL firebase.tools | bash'
+    workingDirectory: '$(Agent.ToolsDirectory)'
+
+- task: CmdLine@2
+  displayName: 'Deploy app to Firebase'
+  inputs:
+    script: |
+      firebase appdistribution:distribute $(Build.ArtifactStagingDirectory)/drop \
+      --app $($FIREBASE_appid) \
+      --token "$(FirebaseApiKey)" \
+      --groups "$(FirebaseGroups)"
