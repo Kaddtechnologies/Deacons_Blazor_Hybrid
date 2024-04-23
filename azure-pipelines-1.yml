@@ -18,21 +18,29 @@ steps:
     inputs:
      script: 'dotnet workload install maui'
 
-  - task: NuGetCommand@2
+  - task: DotNetCoreCLI@2
+    displayName: 'Build IOS Binaries'
     inputs:
-      command: 'restore'
-      restoreSolution: '**/*.sln'
-
-  
-  
-  - script: dotnet maui build -t:SignAndroidPackage -p:Configuration=Release
-    displayName: 'Build Maui App for Android'
-
-  - task: DownloadBuildArtifacts@0
+        command: 'publish'
+        publishWebProjects: false
+        projects: '**/Deacons.Hybrid.Mobile.csproj'
+        arguments: '-f:net8.0-ios -c:Release /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false /p:RuntimeIdentifier=ios-arm64 /p:BuildIpa=true /p:Codesignkey="$(APPLE_CERTIFICATE_SIGNING_IDENTITY)" /p:CodesignProvision="$(APPLE_PROV_PROFILE_UUID)"'
+        zipAfterPublish: false
+        
+  - task: CopyFiles@2
+    displayName: 'Copy file from Build to Staging'
     inputs:
-      artifactName: 'drop'
-      downloadPath: '$(System.ArtifactsDirectory)/BuildOutput'
+        SourceFolder: '$(Agent.BuildDirectory)'
+        Contents: '**/*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        CleanTargetFolder: true
+        OverWrite: true
 
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish the Staging Files.'
+    inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
   - script: |
       npm install -g firebase-tools
       firebase login:ci --interactive
