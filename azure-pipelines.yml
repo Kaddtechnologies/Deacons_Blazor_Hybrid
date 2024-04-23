@@ -5,7 +5,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- development
 
 pool:
   vmImage: 'macOS-13'
