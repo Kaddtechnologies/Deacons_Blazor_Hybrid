@@ -18,6 +18,11 @@ steps:
       command: 'restore'
       restoreSolution: '**/*.sln'
 
+  - task: CmdLine@2
+    displayName: 'Install Maui Workload'
+    inputs:
+     script: 'dotnet workload install maui'
+  
   - script: dotnet maui build -t:SignAndroidPackage -p:Configuration=Release
     displayName: 'Build Maui App for Android'
 
