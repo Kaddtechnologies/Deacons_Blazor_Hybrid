@@ -79,7 +79,7 @@ steps:
   displayName: 'Deploy app to Firebase'
   inputs:
     script: |
-      firebase appdistribution:distribute $(Build.ArtifactStagingDirectory)/drop \
+      firebase appdistribution:distribute $(Build.ArtifactStagingDirectory)/*.ipa \
       --app $($FIREBASE_appid) \
       --token "$(FirebaseApiKey)" \
       --groups "$(FirebaseGroups)"
